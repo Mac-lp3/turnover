@@ -2,7 +2,8 @@ package org.mac.sim.domain;
 
 public class Employee {
 
-	int totalExperience;
+	private int totalExperience;
+	private int monthsToPeakEfficiency;
 
 	/**
 	 * New employees obviously start with zero experience
@@ -131,6 +132,14 @@ public class Employee {
 
 	public void setTotalExperience(int totalExperience) {
 		this.totalExperience = totalExperience;
+	}
+
+	public int getMonthsToPeakEfficiency() {
+		return monthsToPeakEfficiency;
+	}
+
+	public void setMonthsToPeakEfficiency(int monthsToPeakEfficiency) {
+		this.monthsToPeakEfficiency = monthsToPeakEfficiency;
 	}
 
 }
