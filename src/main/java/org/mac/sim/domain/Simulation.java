@@ -16,7 +16,7 @@ public class Simulation {
 	public Simulation(Department department, int yearsToSimulate) {
 
 		for (int i = 0; i < yearsToSimulate; i++) {
-
+			
 		}
 
 	}

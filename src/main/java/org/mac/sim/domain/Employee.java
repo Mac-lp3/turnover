@@ -32,57 +32,14 @@ public class Employee {
 
 	/**
 	 * An employee's productivity is based on how long they have been with the
-	 * company. A negative value for the first months indicates the additional
-	 * resources required to train a new employee.
+	 * company. These values are constructed based on the
+	 * numberOfMonthsToPeakProductivity value.
 	 * 
-	 * @return the productivity value (-.25 - 1) of this employee
+	 * @return This employee's productivity for a given month past start date
 	 */
 	public double getProductivity() {
-		
-		//this.productivityMap;
 
-		double productivity;
-
-		switch (totalExperience) {
-		case 0:
-			productivity = -.25;
-			break;
-		case 1:
-			productivity = 0;
-			break;
-		case 2:
-			productivity = .1;
-			break;
-		case 3:
-			productivity = .2;
-			break;
-		case 4:
-			productivity = .3;
-			break;
-		case 5:
-			productivity = .4;
-			break;
-		case 6:
-			productivity = .5;
-			break;
-		case 7:
-			productivity = .6;
-			break;
-		case 8:
-			productivity = .7;
-			break;
-		case 9:
-			productivity = .8;
-			break;
-		case 10:
-			productivity = .9;
-			break;
-		default:
-			productivity = 1;
-			break;
-		}
-
-		return productivity;
+		return this.productivityMap.get(totalExperience);
 	}
 
 	public double getTurnOverProbability() {

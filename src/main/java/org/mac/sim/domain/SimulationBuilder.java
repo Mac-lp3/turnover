@@ -12,17 +12,13 @@ public class SimulationBuilder {
 
 	public Simulation build() {
 
-		List<Employee> employees = new ArrayList<Employee>();
-		Employee employee;
-		for (int i = 0; i < totalEmployees; i++) {
-			employee = new Employee();
-			employee.setMonthsToPeakProductivity(monthsToPeakProductivity);
-			employees.add(employee);
-		}
-
 		Department department = new Department();
 		department.setTotalEmployees(totalEmployees);
-		department.setEmployees(employees);
+		department.setMonthsToPeakProductivity(monthsToPeakProductivity);
+
+		for (int i = 0; i < totalEmployees; i++) {
+			department.addNewEmployee();
+		}
 
 		return new Simulation(department, yearsToSimulate);
 
