@@ -1,9 +1,12 @@
 package org.mac.sim.domain;
 
+import java.util.Map;
+
 public class Employee {
 
 	private int totalExperience;
-	private int monthsToPeakEfficiency;
+	private int monthsToPeakProductivity;
+	private Map<Integer, Double> productivityMap;
 
 	/**
 	 * New employees obviously start with zero experience
@@ -35,6 +38,8 @@ public class Employee {
 	 * @return the productivity value (-.25 - 1) of this employee
 	 */
 	public double getProductivity() {
+		
+		//this.productivityMap;
 
 		double productivity;
 
@@ -134,12 +139,33 @@ public class Employee {
 		this.totalExperience = totalExperience;
 	}
 
-	public int getMonthsToPeakEfficiency() {
-		return monthsToPeakEfficiency;
+	public int getMonthsToPeakProductivity() {
+		return monthsToPeakProductivity;
 	}
 
-	public void setMonthsToPeakEfficiency(int monthsToPeakEfficiency) {
-		this.monthsToPeakEfficiency = monthsToPeakEfficiency;
+	/**
+	 * Constructs a map of efficiency values for each month once an employee is
+	 * on-boarded. Initial efficiency is -1/x (x being months to peak) to
+	 * represent the effort of training.
+	 * 
+	 * @param monthsToPeakEfficiency
+	 */
+	public void setMonthsToPeakProductivity(int monthsToPeakProductivity) {
+
+		this.monthsToPeakProductivity = monthsToPeakProductivity;
+
+		double tempProd;
+		for (int i = 0; i <= monthsToPeakProductivity; i++) {
+
+			if (i == 0) {
+				tempProd = -1 / this.monthsToPeakProductivity;
+			} else {
+				tempProd = i / this.monthsToPeakProductivity;
+			}
+
+			this.productivityMap.put(i, tempProd);
+
+		}
 	}
 
 }

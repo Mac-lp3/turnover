@@ -8,23 +8,23 @@ public class SimulationBuilder {
 	private int totalEmployees;
 	private double percentYearlyTurnOver;
 	private int yearsToSimulate;
+	private int monthsToPeakProductivity;
 
-	// for version 2
-	private int monthsToPeakEfficiency;
-
-	public void build() {
+	public Simulation build() {
 
 		List<Employee> employees = new ArrayList<Employee>();
 		Employee employee;
 		for (int i = 0; i < totalEmployees; i++) {
 			employee = new Employee();
-			employee.setMonthsToPeakEfficiency(monthsToPeakEfficiency);
+			employee.setMonthsToPeakProductivity(monthsToPeakProductivity);
 			employees.add(employee);
 		}
 
 		Department department = new Department();
 		department.setTotalEmployees(totalEmployees);
 		department.setEmployees(employees);
+
+		return new Simulation(department, yearsToSimulate);
 
 	}
 
@@ -44,12 +44,12 @@ public class SimulationBuilder {
 		this.percentYearlyTurnOver = percentYearlyTurnOver;
 	}
 
-	public int getMonthsToPeakEfficiency() {
-		return monthsToPeakEfficiency;
+	public int getMonthsToPeakProductivity() {
+		return monthsToPeakProductivity;
 	}
 
-	public void setMonthsToPeakEfficiency(int monthsToPeakEfficiency) {
-		this.monthsToPeakEfficiency = monthsToPeakEfficiency;
+	public void setMonthsToPeakProductivity(int monthsToPeakProductivity) {
+		this.monthsToPeakProductivity = monthsToPeakProductivity;
 	}
 
 	public int getYearsToSimulate() {
