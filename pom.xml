@@ -24,6 +24,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>jstl-api</artifactId>
+			<version>1.2-rev-1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>turnover</finalName>

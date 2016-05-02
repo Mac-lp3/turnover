@@ -1,8 +1,5 @@
 package org.mac.sim.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SimulationBuilder {
 
 	private int totalEmployees;
@@ -10,17 +7,16 @@ public class SimulationBuilder {
 	private int yearsToSimulate;
 	private int monthsToPeakProductivity;
 
+	// TODO enforce some actual rules here
 	public Simulation build() {
 
-		Department department = new Department();
-		department.setTotalEmployees(totalEmployees);
-		department.setMonthsToPeakProductivity(monthsToPeakProductivity);
+		// build turn over interval
+		double monthlyTurnOverInterval = Math.floor(totalEmployees * percentYearlyTurnOver) / 12;
 
-		for (int i = 0; i < totalEmployees; i++) {
-			department.addNewEmployee();
-		}
+		// Construct the department
+		Department department = new Department(totalEmployees, monthsToPeakProductivity);
 
-		return new Simulation(department, yearsToSimulate);
+		return new Simulation(department, monthlyTurnOverInterval, yearsToSimulate);
 
 	}
 

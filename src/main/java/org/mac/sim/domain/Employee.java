@@ -1,5 +1,7 @@
 package org.mac.sim.domain;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Employee {
@@ -12,6 +14,7 @@ public class Employee {
 	 * New employees obviously start with zero experience
 	 */
 	public Employee() {
+		productivityMap = new HashMap<Integer, Double>();
 		this.totalExperience = 0;
 	}
 
@@ -39,7 +42,15 @@ public class Employee {
 	 */
 	public double getProductivity() {
 
-		return this.productivityMap.get(totalExperience);
+		double productivity;
+		
+		if (this.productivityMap.containsKey(totalExperience)) {
+			productivity = this.productivityMap.get(totalExperience);
+		} else {
+			productivity = 1;
+		}
+
+		return productivity;
 	}
 
 	public double getTurnOverProbability() {
@@ -115,14 +126,12 @@ public class Employee {
 		for (int i = 0; i <= monthsToPeakProductivity; i++) {
 
 			if (i == 0) {
-				tempProd = -1 / this.monthsToPeakProductivity;
+				tempProd = -(1 / Float.valueOf(this.monthsToPeakProductivity));
 			} else {
-				tempProd = i / this.monthsToPeakProductivity;
+				tempProd = i / Float.valueOf(this.monthsToPeakProductivity);
 			}
 
 			this.productivityMap.put(i, tempProd);
-
 		}
 	}
-
 }

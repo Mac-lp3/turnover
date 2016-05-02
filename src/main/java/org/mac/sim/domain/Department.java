@@ -10,6 +10,17 @@ public class Department {
 	private int totalEmployees;
 	private int monthsToPeakProductivity;
 
+	public Department(int totalEmployees, int monthsToPeakProductivity) {
+
+		employees = new ArrayList<Employee>();
+		this.totalEmployees = totalEmployees;
+
+		this.monthsToPeakProductivity = monthsToPeakProductivity;
+		for (int i = 0; i < totalEmployees; i++) {
+			addNewEmployee();
+		}
+	}
+
 	public List<Employee> getEmployees() {
 		return employees;
 	}
@@ -22,16 +33,19 @@ public class Department {
 		return totalEmployees;
 	}
 
-	public void setTotalEmployees(int totalEmployees) {
-		this.totalEmployees = totalEmployees;
-	}
-
 	public int getMonthsToPeakProductivity() {
 		return monthsToPeakProductivity;
 	}
 
-	public void setMonthsToPeakProductivity(int monthsToPeakProductivity) {
-		this.monthsToPeakProductivity = monthsToPeakProductivity;
+	public void incrementExperience() {
+
+		int tempExp = 0;
+		for (Employee emp : this.employees) {
+			tempExp = emp.getTotalExperience();
+			tempExp++;
+			emp.setTotalExperience(tempExp);
+		}
+
 	}
 
 	/**
@@ -51,9 +65,8 @@ public class Department {
 	}
 
 	/**
-	 * Selects an employee to replace based on their individual turn over
-	 * probability. Replaces employee with highest probability if multiple
-	 * employees return as leave candidates.
+	 * Replaces employee with highest probability if multiple employees return
+	 * as leave candidates.
 	 */
 	public void executeTurnOver() {
 
@@ -72,13 +85,19 @@ public class Department {
 		} else {
 			terminateIndex = leaveCandidates.get(0);
 		}
-		
+
 		// Replace the leaving employee
 		employees.remove(terminateIndex);
 		addNewEmployee();
 
 	}
 
+	/**
+	 * Selects employees to terminate based on their individual turn over
+	 * probability. Can return a list of size 0 -> total employee size.
+	 * 
+	 * @return
+	 */
 	private List<Integer> turnOverLoop() {
 
 		List<Integer> leaveCandidates = new ArrayList<Integer>();
@@ -97,8 +116,8 @@ public class Department {
 
 		return leaveCandidates;
 	}
-	
-	public void addNewEmployee(){
+
+	public void addNewEmployee() {
 		Employee newGuy = new Employee();
 		newGuy.setMonthsToPeakProductivity(this.monthsToPeakProductivity);
 		employees.add(newGuy);
