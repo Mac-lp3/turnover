@@ -58,11 +58,24 @@ public class Simulation {
 				} else {
 					experienceMap.put(department.getMonthsToPeakProductivity() + "+", 1);
 				}
+			} else {
+
+				// Sort count by months of experience
+				if (experienceMap.containsKey(emp.getTotalExperience())) {
+					tempVal = experienceMap.get("" + emp.getTotalExperience());
+					tempVal++;
+					experienceMap.put("" + emp.getTotalExperience(), tempVal);
+				} else {
+					experienceMap.put("" + emp.getTotalExperience(), 1);
+				}
 			}
 		}
 
 		System.out.println("Simulation completed...");
 
-	}
+		for (String key : experienceMap.keySet()) {
+			System.out.println("Employees with " + key + " months of experience: " + experienceMap.get(key));
+		}
 
+	}
 }
