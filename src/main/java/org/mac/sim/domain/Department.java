@@ -112,6 +112,8 @@ public class Department {
 			if (random <= this.employees.get(i).getTurnOverProbability()) {
 				leaveCandidates.add(i);
 			}
+
+			random = Math.random();
 		}
 
 		return leaveCandidates;

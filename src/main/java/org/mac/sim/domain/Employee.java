@@ -1,6 +1,5 @@
 package org.mac.sim.domain;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class Employee {
 	public double getProductivity() {
 
 		double productivity;
-		
+
 		if (this.productivityMap.containsKey(totalExperience)) {
 			productivity = this.productivityMap.get(totalExperience);
 		} else {
