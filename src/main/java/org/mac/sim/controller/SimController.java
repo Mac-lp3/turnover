@@ -1,6 +1,7 @@
 package org.mac.sim.controller;
 
 import org.mac.sim.domain.SimulationBuilder;
+import org.mac.sim.thread.QueueManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,5 +19,13 @@ public class SimController {
 		sb.setYearsToSimulate(2);
 		sb.build();
 
+	}
+	
+	@RequestMapping("/thread")
+	public void runThreads(){
+		
+		System.out.println("does this work?");
+		QueueManager qm = new QueueManager(null, 0, 0);
+		qm.run();
 	}
 }
