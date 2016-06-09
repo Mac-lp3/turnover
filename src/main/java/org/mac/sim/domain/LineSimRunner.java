@@ -1,7 +1,6 @@
 package org.mac.sim.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Separate creation into a builder. Eventually.
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public class LineSimRunner {
 
-	private static volatile List QUEUE = new ArrayList();
+	private BlockingQueue queue;
 	private int ratePerPeriod; 
 	private int totalPeriods;
 
