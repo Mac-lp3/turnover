@@ -4,10 +4,14 @@ import java.util.concurrent.BlockingQueue;
 
 public class Worker extends Thread {
 
-	private int periodsToCompleteTask;
-	private int bufferPeriods;
+	private int periodsToCompleteTask = 0;
+	private int bufferPeriods = 1;
 	private BlockingQueue queue;
-	private boolean loop = true;
+	private boolean runFlag = true;
+	
+	public Worker(BlockingQueue queue) {
+		this.queue = queue;
+	}
 
 	public void run() {
 
@@ -16,31 +20,30 @@ public class Worker extends Thread {
 		long nextPeriod = 0;
 		long startTime = System.nanoTime();
 
-		while (loop) {
+		while (runFlag) {
 
 			try {
-				
-				// check queue. This method will wait if it has to.
+
+				// method will until populated if it must
 				queue.take();
-				// wait given service time + buffer time.
-				// TODO this is in millis... need to convert somehow
-				this.sleep((periodsToCompleteTask + bufferPeriods) * 1000);
 				
+				// wait given service time + buffer time.
+				sleep((periodsToCompleteTask + bufferPeriods) * 10);
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			// repeat until kill command
 		}
 	}
 
 	public synchronized void doStop() {
-		loop = true;
+		runFlag = false;
 		this.interrupt(); // break pool thread out of dequeue() call.
 	}
 
 	public synchronized boolean isStopped() {
-		return loop;
+		return runFlag;
 	}
 
 }

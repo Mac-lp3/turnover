@@ -2,11 +2,14 @@ package org.mac.sim.thread;
 
 import java.util.concurrent.BlockingQueue;
 
+import org.mac.sim.domain.WorkerTask;
+
 public class QueueManager extends Thread {
 
 	private BlockingQueue queue;
 	private int ratePerPeriod;
 	private int totalPeriods;
+	private boolean stop;
 
 	public QueueManager(BlockingQueue queue, int ratePerPeriod, int totalPeriods) {
 		this.queue = queue;
@@ -22,17 +25,22 @@ public class QueueManager extends Thread {
 	public void run() {
 
 		int i = 0;
+		int j = 0;
 		long currentPeriod = 0;
 		long nextPeriod = 0;
 		long startTime = System.nanoTime();
 
-		while (i < 9) {
+		while (i < totalPeriods) {
 
-			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), 10000000);
+			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), 1000000);
 
-			if (nextPeriod > currentPeriod + 1) {
+			if (nextPeriod >= currentPeriod + 1) {
+
 				// Next period reached. Add to the list.
-				queue.add(null);
+				for (j = 0; j < ratePerPeriod; j++) {
+					queue.add(new WorkerTask(1000000));
+				}
+				
 				i++;
 				currentPeriod = nextPeriod;
 			}
