@@ -2,15 +2,20 @@ package org.mac.sim.thread;
 
 import java.util.concurrent.BlockingQueue;
 
+import org.mac.sim.domain.WorkerTask;
+
 public class Worker extends Thread {
 
 	private int periodsToCompleteTask = 0;
 	private int bufferPeriods = 1;
-	private BlockingQueue queue;
+	private BlockingQueue<WorkerTask> queue;
 	private boolean runFlag = true;
-	
-	public Worker(BlockingQueue queue) {
+	private int tasksCompleted = 0;
+
+	public Worker(BlockingQueue<WorkerTask> queue, int periodsToCompleteTask, int bufferPeriods) {
 		this.queue = queue;
+		this.periodsToCompleteTask = periodsToCompleteTask;
+		this.bufferPeriods = bufferPeriods;
 	}
 
 	public void run() {
@@ -26,9 +31,10 @@ public class Worker extends Thread {
 
 				// method will until populated if it must
 				queue.take();
-				
+				tasksCompleted++;
+
 				// wait given service time + buffer time.
-				sleep((periodsToCompleteTask + bufferPeriods) * 10);
+				sleep((periodsToCompleteTask + bufferPeriods));
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -44,6 +50,10 @@ public class Worker extends Thread {
 
 	public synchronized boolean isStopped() {
 		return runFlag;
+	}
+
+	public int getTasksCompleted() {
+		return tasksCompleted;
 	}
 
 }

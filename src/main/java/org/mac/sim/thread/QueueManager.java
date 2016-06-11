@@ -10,6 +10,8 @@ public class QueueManager extends Thread {
 	private int ratePerPeriod;
 	private int totalPeriods;
 	private boolean stop;
+	private long periodsSpentInLoop = 0;
+	private int addActions = 0;
 
 	public QueueManager(BlockingQueue queue, int ratePerPeriod, int totalPeriods) {
 		this.queue = queue;
@@ -38,13 +40,24 @@ public class QueueManager extends Thread {
 
 				// Next period reached. Add to the list.
 				for (j = 0; j < ratePerPeriod; j++) {
-					queue.add(new WorkerTask(1000000));
+					queue.add(new WorkerTask(0));
+					addActions++;
 				}
-				
+
 				i++;
 				currentPeriod = nextPeriod;
 			}
 		}
+		
+		periodsSpentInLoop = currentPeriod;
+	}
+	
+	public long getPeriodsSpentInLoop(){
+		return periodsSpentInLoop;
+	}
+
+	public int getAddActions() {
+		return addActions;
 	}
 
 }
