@@ -47,25 +47,29 @@ public class QueueManager extends Thread {
 
 		int i = 0;
 		int j = 0;
-		long currentPeriod = 0;
 		long nextPeriod = 0;
 		long periodToCheck = 1;
 		long startTime = System.nanoTime();
 
 		while (i < totalPeriods) {
 
+			/*
+			 * A period is defined by 10000000 nanoseconds. This number may be
+			 * subject to change based on your CPU and the number of tasks to
+			 * add each period. If the tests fail, try altering this number to
+			 * better suit your hardware/model requirements.
+			 */
 			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), 10000000);
 
 			if (nextPeriod >= periodToCheck) {
 
-				// Next period reached. Add to the list.
+				// Next period reached. Add required tasks to the list.
 				for (j = 0; j < ratePerPeriod; j++) {
 					queue.add(new WorkerTask(0));
 					addActions++;
 				}
 
 				i++;
-				// currentPeriod = nextPeriod;
 				periodToCheck = nextPeriod + 1;
 			}
 		}
