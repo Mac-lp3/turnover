@@ -4,6 +4,14 @@ import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.domain.WorkerTask;
 
+/**
+ * This class encapsulates the task of adding tasks to the queue at a specified
+ * rate. It runs in it's own separate thread and adds a specified number of
+ * tasks every interval, for a given number of intervals.
+ * 
+ * @author Mac-LP3
+ *
+ */
 public class QueueManager extends Thread {
 
 	private BlockingQueue<WorkerTask> queue;
@@ -13,6 +21,15 @@ public class QueueManager extends Thread {
 	private long periodsSpentInLoop = 0;
 	private int addActions = 0;
 
+	/**
+	 * 
+	 * @param queue
+	 *            The queue to add tasks to.
+	 * @param ratePerPeriod
+	 *            The amount of tasks to add each period.
+	 * @param totalPeriods
+	 *            The number of periods to run.
+	 */
 	public QueueManager(BlockingQueue<WorkerTask> queue, int ratePerPeriod, int totalPeriods) {
 		this.queue = queue;
 		this.ratePerPeriod = ratePerPeriod;
@@ -25,9 +42,9 @@ public class QueueManager extends Thread {
 	 * arrivals.
 	 */
 	public void run() {
-		
+
 		this.stop = false;
-		
+
 		int i = 0;
 		int j = 0;
 		long currentPeriod = 0;
@@ -52,19 +69,19 @@ public class QueueManager extends Thread {
 				periodToCheck = nextPeriod + 1;
 			}
 		}
-		
+
 		periodsSpentInLoop = nextPeriod;
 
 	}
-	
-	public long getPeriodsSpentInLoop(){
+
+	public long getPeriodsSpentInLoop() {
 		return periodsSpentInLoop;
 	}
 
 	public int getAddActions() {
 		return addActions;
 	}
-	
+
 	public synchronized void doStop() {
 		stop = true;
 		this.interrupt(); // break pool thread out of dequeue() call.
