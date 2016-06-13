@@ -32,8 +32,14 @@ public class QueueManagerTest {
 		Assert.assertEquals(500, queue.size());
 	}
 
+	/**
+	 * Assert that the time intervals are large enough to hit the specified
+	 * number of periods. This may have to change depending on CPU value.
+	 * 
+	 * @throws InterruptedException
+	 */
 	@Test
-	public void workersTest() {
+	public void workersTest() throws InterruptedException {
 
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(500);
 		QueueManager qm = new QueueManager(queue, 5, 100);
@@ -44,22 +50,14 @@ public class QueueManagerTest {
 		w1.start();
 		w2.start();
 
-		// few extra nanos saved by declaring variable early (I think)
-		long endTime;
-		long startTime = System.nanoTime();
-		while (!queue.isEmpty()) {
-			System.out.println(queue.size());
-		}
-		endTime = System.nanoTime();
+		Thread.sleep(2000);
 
 		w1.doStop();
 		w2.doStop();
 
-		System.out.println("Execution time ??? " + Math.floor((endTime - startTime)) / 1000000);
-		System.out.println("Periods in loop: " + qm.getPeriodsSpentInLoop());
-		System.out.println("~~~" + qm.getAddActions());
-		System.out.println("~~~" + w1.getTasksCompleted());
-		System.out.println("~~~" + w2.getTasksCompleted());
+		Assert.assertEquals(500, qm.getAddActions());
+		Assert.assertEquals(500, w1.getTasksCompleted() + w2.getTasksCompleted());
+		Assert.assertEquals(100, qm.getPeriodsSpentInLoop());
 
 	}
 

@@ -6,14 +6,14 @@ import org.mac.sim.domain.WorkerTask;
 
 public class QueueManager extends Thread {
 
-	private BlockingQueue queue;
+	private BlockingQueue<WorkerTask> queue;
 	private int ratePerPeriod;
 	private int totalPeriods;
-	private boolean stop;
+	private boolean stop = true;
 	private long periodsSpentInLoop = 0;
 	private int addActions = 0;
 
-	public QueueManager(BlockingQueue queue, int ratePerPeriod, int totalPeriods) {
+	public QueueManager(BlockingQueue<WorkerTask> queue, int ratePerPeriod, int totalPeriods) {
 		this.queue = queue;
 		this.ratePerPeriod = ratePerPeriod;
 		this.totalPeriods = totalPeriods;
@@ -25,18 +25,21 @@ public class QueueManager extends Thread {
 	 * arrivals.
 	 */
 	public void run() {
-
+		
+		this.stop = false;
+		
 		int i = 0;
 		int j = 0;
 		long currentPeriod = 0;
 		long nextPeriod = 0;
+		long periodToCheck = 1;
 		long startTime = System.nanoTime();
 
 		while (i < totalPeriods) {
 
-			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), 1000000);
+			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), 10000000);
 
-			if (nextPeriod >= currentPeriod + 1) {
+			if (nextPeriod >= periodToCheck) {
 
 				// Next period reached. Add to the list.
 				for (j = 0; j < ratePerPeriod; j++) {
@@ -45,11 +48,13 @@ public class QueueManager extends Thread {
 				}
 
 				i++;
-				currentPeriod = nextPeriod;
+				// currentPeriod = nextPeriod;
+				periodToCheck = nextPeriod + 1;
 			}
 		}
 		
-		periodsSpentInLoop = currentPeriod;
+		periodsSpentInLoop = nextPeriod;
+
 	}
 	
 	public long getPeriodsSpentInLoop(){
@@ -58,6 +63,15 @@ public class QueueManager extends Thread {
 
 	public int getAddActions() {
 		return addActions;
+	}
+	
+	public synchronized void doStop() {
+		stop = true;
+		this.interrupt(); // break pool thread out of dequeue() call.
+	}
+
+	public synchronized boolean isStopped() {
+		return stop;
 	}
 
 }
