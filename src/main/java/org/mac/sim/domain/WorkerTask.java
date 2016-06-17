@@ -2,7 +2,7 @@ package org.mac.sim.domain;
 
 public class WorkerTask {
 
-	private int cyclesSinceCreation = 0;
+	private int periodsSinceCreation = 0;
 	private boolean served = false;
 	private long serviceTimeRequired;
 
@@ -10,12 +10,12 @@ public class WorkerTask {
 		this.serviceTimeRequired = serviceTimeRequired;
 	}
 
-	public int getCyclesSinceCreation() {
-		return cyclesSinceCreation;
+	public int getPeriodsSinceCreation() {
+		return periodsSinceCreation;
 	}
 
-	public void setCyclesSinceCreation(int cyclesSinceCreation) {
-		this.cyclesSinceCreation = cyclesSinceCreation;
+	public void setPeriodsSinceCreation(int periodsSinceCreation) {
+		this.periodsSinceCreation = periodsSinceCreation;
 	}
 
 	public boolean isServed() {

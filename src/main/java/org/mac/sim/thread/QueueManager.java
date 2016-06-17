@@ -3,6 +3,7 @@ package org.mac.sim.thread;
 import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.domain.WorkerTask;
+import org.mac.sim.global.PeriodConversionConstants;
 
 /**
  * This class encapsulates the task of adding tasks to the queue at a specified
@@ -59,7 +60,7 @@ public class QueueManager extends Thread {
 			 * add each period. If the tests fail, try altering this number to
 			 * better suit your hardware/model requirements.
 			 */
-			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), 10000000);
+			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), PeriodConversionConstants.PERIOD_LENGTH_NANOS);
 
 			if (nextPeriod >= periodToCheck) {
 

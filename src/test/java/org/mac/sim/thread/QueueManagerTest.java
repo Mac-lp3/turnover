@@ -50,7 +50,7 @@ public class QueueManagerTest {
 		w1.start();
 		w2.start();
 
-		Thread.sleep(2000);
+		Thread.sleep(10000);
 
 		w1.doStop();
 		w2.doStop();

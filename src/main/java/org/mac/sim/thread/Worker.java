@@ -3,15 +3,28 @@ package org.mac.sim.thread;
 import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.domain.WorkerTask;
+import org.mac.sim.global.PeriodConversionConstants;
 
 public class Worker extends Thread {
 
 	private int periodsToCompleteTask = 0;
-	private int bufferPeriods = 1;
+	private int bufferPeriods = 0;
 	private BlockingQueue<WorkerTask> queue;
 	private boolean runFlag = true;
 	private int tasksCompleted = 0;
 
+	/**
+	 * 
+	 * @param queue
+	 *            The queue to be operated upon
+	 * @param periodsToCompleteTask
+	 *            How many periods (in addition to the number of periods
+	 *            specified by the task) this specific worker needs to complete
+	 *            a task
+	 * @param bufferPeriods
+	 *            Number of periods this worker needs as "down time" before it
+	 *            is ready to preform the next task.
+	 */
 	public Worker(BlockingQueue<WorkerTask> queue, int periodsToCompleteTask, int bufferPeriods) {
 		this.queue = queue;
 		this.periodsToCompleteTask = periodsToCompleteTask;
@@ -21,20 +34,19 @@ public class Worker extends Thread {
 	public void run() {
 
 		// get start time / set up
-		long currentPeriod = 0;
-		long nextPeriod = 0;
-		long startTime = System.nanoTime();
+		long taskLength = 0;
 
 		while (runFlag) {
 
 			try {
 
-				// method will until populated if it must
-				queue.take();
+				// take() will automatically wait until populated if it must
+				taskLength = queue.take().getServiceTimeRequired();
 				tasksCompleted++;
 
-				// wait given service time + buffer time.
-				sleep((periodsToCompleteTask + bufferPeriods));
+				// wait service time + buffer time + task time.
+				sleep((periodsToCompleteTask + bufferPeriods + taskLength)
+						* PeriodConversionConstants.MILLI_TO_PERIOD_MULTIPLIER);
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
