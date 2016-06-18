@@ -4,6 +4,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import org.junit.Test;
+import org.mac.sim.clock.Clock;
+import org.mac.sim.clock.ClockBuilder;
 import org.mac.sim.domain.WorkerTask;
 
 import junit.framework.Assert;
@@ -17,17 +19,17 @@ public class QueueManagerTest {
 	public void runTest() {
 
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(25);
-		QueueManager qm = new QueueManager(queue, 5, 5);
+		QueueManager qm = new QueueManager(queue, 5, ClockBuilder.build(5));
 		qm.run();
 		Assert.assertEquals(25, queue.size());
 
 		queue = new ArrayBlockingQueue<WorkerTask>(50);
-		qm = new QueueManager(queue, 5, 10);
+		qm = new QueueManager(queue, 5, ClockBuilder.build(10));
 		qm.run();
 		Assert.assertEquals(50, queue.size());
 
 		queue = new ArrayBlockingQueue<WorkerTask>(500);
-		qm = new QueueManager(queue, 5, 100);
+		qm = new QueueManager(queue, 5, ClockBuilder.build(100));
 		qm.run();
 		Assert.assertEquals(500, queue.size());
 	}
@@ -42,7 +44,7 @@ public class QueueManagerTest {
 	public void workersTest() throws InterruptedException {
 
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(500);
-		QueueManager qm = new QueueManager(queue, 5, 100);
+		QueueManager qm = new QueueManager(queue, 5, ClockBuilder.build(100));
 		Worker w1 = new Worker(queue, 3, 3);
 		Worker w2 = new Worker(queue, 3, 3);
 

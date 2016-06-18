@@ -2,6 +2,7 @@ package org.mac.sim.thread;
 
 import java.util.concurrent.BlockingQueue;
 
+import org.mac.sim.clock.Clock;
 import org.mac.sim.domain.WorkerTask;
 import org.mac.sim.global.PeriodConversionConstants;
 
@@ -16,8 +17,9 @@ import org.mac.sim.global.PeriodConversionConstants;
 public class QueueManager extends Thread {
 
 	private BlockingQueue<WorkerTask> queue;
+	private Clock clock;
 	private int ratePerPeriod;
-	private int totalPeriods;
+	// private int totalPeriods;
 	private boolean stop = true;
 	private long periodsSpentInLoop = 0;
 	private int addActions = 0;
@@ -28,13 +30,13 @@ public class QueueManager extends Thread {
 	 *            The queue to add tasks to.
 	 * @param ratePerPeriod
 	 *            The amount of tasks to add each period.
-	 * @param totalPeriods
-	 *            The number of periods to run.
+	 * @param clock
+	 *            The clock tracking the passage of periods.
 	 */
-	public QueueManager(BlockingQueue<WorkerTask> queue, int ratePerPeriod, int totalPeriods) {
+	public QueueManager(final BlockingQueue<WorkerTask> queue, final int ratePerPeriod, final Clock clock) {
 		this.queue = queue;
 		this.ratePerPeriod = ratePerPeriod;
-		this.totalPeriods = totalPeriods;
+		this.clock = clock;
 	}
 
 	/**
@@ -45,14 +47,16 @@ public class QueueManager extends Thread {
 	public void run() {
 
 		this.stop = false;
+		this.periodsSpentInLoop = 0;
 
-		int i = 0;
 		int j = 0;
-		long nextPeriod = 0;
-		long periodToCheck = 1;
+		int tempTotalPeriods = clock.getTotalPeriods();
+		long nanoTimePeriodLenth = PeriodConversionConstants.PERIOD_LENGTH_NANOS;
+		long nextPeriod = 1;
+		long periodToCheck = 0;
 		long startTime = System.nanoTime();
 
-		while (i < totalPeriods) {
+		while (this.periodsSpentInLoop < tempTotalPeriods) {
 
 			/*
 			 * A period is defined by 10000000 nanoseconds. This number may be
@@ -60,9 +64,9 @@ public class QueueManager extends Thread {
 			 * add each period. If the tests fail, try altering this number to
 			 * better suit your hardware/model requirements.
 			 */
-			nextPeriod = Math.floorDiv((System.nanoTime() - startTime), PeriodConversionConstants.PERIOD_LENGTH_NANOS);
+			periodToCheck = Math.floorDiv((System.nanoTime() - startTime), nanoTimePeriodLenth);
 
-			if (nextPeriod >= periodToCheck) {
+			if (periodToCheck >= nextPeriod) {
 
 				// Next period reached. Add required tasks to the list.
 				for (j = 0; j < ratePerPeriod; j++) {
@@ -70,12 +74,10 @@ public class QueueManager extends Thread {
 					addActions++;
 				}
 
-				i++;
-				periodToCheck = nextPeriod + 1;
+				this.periodsSpentInLoop++;
+				nextPeriod = periodToCheck + 1;
 			}
 		}
-
-		periodsSpentInLoop = nextPeriod;
 
 	}
 
