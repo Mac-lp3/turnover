@@ -3,7 +3,7 @@ package org.mac.sim.clock;
 class ClockImpl implements Clock {
 
 	private int totalPeriods = 0;
-	private int currentPeriod = 0;
+	private volatile int currentPeriod = 0;
 	private int nextPeriod = 1;
 
 	ClockImpl(final int totalPeriods) {
