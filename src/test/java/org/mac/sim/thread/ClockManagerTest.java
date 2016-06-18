@@ -6,7 +6,7 @@ import org.mac.sim.clock.Clock;
 import org.mac.sim.clock.ClockBuilder;
 import org.mac.sim.clock.ClockManager;
 
-public class SimClockTest {
+public class ClockManagerTest {
 
 	/**
 	 * Ensure clock maintains current and max periods when the thread is stopped
