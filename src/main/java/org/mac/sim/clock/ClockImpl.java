@@ -34,4 +34,9 @@ class ClockImpl implements Clock {
 		this.nextPeriod = nextPeriod;
 	}
 
+	public void incrementPeriod() {
+		this.currentPeriod++;
+		this.nextPeriod = this.currentPeriod + 1;
+	}
+
 }

@@ -37,9 +37,9 @@ public class ClockManager extends Thread {
 
 			if (periodToCheck >= nextPeriod) {
 
-				tempCurrentPeriod++;
-				clock.setCurrentPeriod(tempCurrentPeriod);
-				nextPeriod = periodToCheck + 1;
+				clock.incrementPeriod();
+				tempCurrentPeriod = clock.getCurrentPeriod();
+				nextPeriod = tempCurrentPeriod + 1;
 			}
 		}
 

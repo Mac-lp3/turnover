@@ -38,4 +38,23 @@ public class SimClockTest {
 		Assert.assertTrue(clock.getCurrentPeriod() > tempPeriodCount);
 	}
 
+	/**
+	 * Ensure that the proper number of periods have passed.
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void accuracyTest() throws InterruptedException {
+
+		Clock clock = ClockBuilder.build(500);
+		ClockManager clockManager = new ClockManager(clock);
+
+		clockManager.start();
+		Thread.sleep(5000);
+		clockManager.doStop();
+
+		Assert.assertEquals(clock.getCurrentPeriod(), 500);
+		Assert.assertEquals(clock.getNextPeriod(), 501);
+	}
+
 }
