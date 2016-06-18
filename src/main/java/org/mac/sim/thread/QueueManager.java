@@ -4,7 +4,6 @@ import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
 import org.mac.sim.domain.WorkerTask;
-import org.mac.sim.global.PeriodConversionConstants;
 
 /**
  * This class encapsulates the task of adding tasks to the queue at a specified
@@ -16,10 +15,10 @@ import org.mac.sim.global.PeriodConversionConstants;
  */
 public class QueueManager extends Thread {
 
-	private BlockingQueue<WorkerTask> queue;
-	private Clock clock;
+	private volatile BlockingQueue<WorkerTask> queue;
+	private volatile Clock clock;
+
 	private int ratePerPeriod;
-	// private int totalPeriods;
 	private boolean stop = true;
 	private long periodsSpentInLoop = 0;
 	private int addActions = 0;
@@ -48,34 +47,24 @@ public class QueueManager extends Thread {
 
 		this.stop = false;
 		this.periodsSpentInLoop = 0;
-
 		int j = 0;
 		int tempTotalPeriods = clock.getTotalPeriods();
-		long nanoTimePeriodLenth = PeriodConversionConstants.PERIOD_LENGTH_NANOS;
-		long nextPeriod = 1;
-		long periodToCheck = 0;
-		long startTime = System.nanoTime();
 
-		while (this.periodsSpentInLoop < tempTotalPeriods) {
+		int currentPeriod = clock.getCurrentPeriod();
+		while (currentPeriod < tempTotalPeriods) {
 
-			/*
-			 * A period is defined by 10000000 nanoseconds. This number may be
-			 * subject to change based on your CPU and the number of tasks to
-			 * add each period. If the tests fail, try altering this number to
-			 * better suit your hardware/model requirements.
-			 */
-			periodToCheck = Math.floorDiv((System.nanoTime() - startTime), nanoTimePeriodLenth);
+			// watch clock for a period change
+			if (currentPeriod < clock.getCurrentPeriod()) {
 
-			if (periodToCheck >= nextPeriod) {
-
-				// Next period reached. Add required tasks to the list.
+				// Add the specified number of jobs to the queue
 				for (j = 0; j < ratePerPeriod; j++) {
 					queue.add(new WorkerTask(0));
 					addActions++;
 				}
 
 				this.periodsSpentInLoop++;
-				nextPeriod = periodToCheck + 1;
+				currentPeriod = clock.getCurrentPeriod();
+
 			}
 		}
 
