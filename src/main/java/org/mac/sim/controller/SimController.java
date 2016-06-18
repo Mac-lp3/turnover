@@ -1,5 +1,6 @@
 package org.mac.sim.controller;
 
+import org.mac.sim.clock.ClockBuilder;
 import org.mac.sim.domain.SimulationBuilder;
 import org.mac.sim.thread.QueueManager;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,12 @@ public class SimController {
 		sb.build();
 
 	}
-	
+
 	@RequestMapping("/thread")
-	public void runThreads(){
-		
+	public void runThreads() {
+
 		System.out.println("does this work?");
-		QueueManager qm = new QueueManager(null, 0, 0);
+		QueueManager qm = new QueueManager(null, 0, ClockBuilder.build(0));
 		qm.run();
 	}
 }
