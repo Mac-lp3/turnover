@@ -46,15 +46,13 @@ public class ClockManagerTest {
 	@Test
 	public void accuracyTest() throws InterruptedException {
 
-		Clock clock = ClockBuilder.build(500);
+		Clock clock = ClockBuilder.build(100);
 		ClockManager clockManager = new ClockManager(clock);
 
-		clockManager.start();
-		Thread.sleep(5000);
-		clockManager.doStop();
+		clockManager.run();
 
-		Assert.assertEquals(clock.getCurrentPeriod(), 500);
-		Assert.assertEquals(clock.getNextPeriod(), 501);
+		Assert.assertEquals(clock.getCurrentPeriod(), 100);
+		Assert.assertEquals(clock.getNextPeriod(), 101);
 	}
 
 }
