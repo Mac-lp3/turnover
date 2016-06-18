@@ -11,8 +11,8 @@ import org.mac.sim.global.PeriodConversionConstants;
  */
 public class ClockManager extends Thread {
 
-	private ClockImpl clock;
-	private boolean runFlag = false;
+	private volatile ClockImpl clock;
+	private volatile boolean runFlag = false;
 
 	public ClockManager(final Clock clock) {
 		this.clock = (ClockImpl) clock;
@@ -30,24 +30,41 @@ public class ClockManager extends Thread {
 
 		while (runFlag && tempCurrentPeriod < tempTotalPeriods) {
 
-			// Find how many nanos have passed since the start and divide by
-			// period length. Floor the result.
+			// nanos that have passed divide by period length (rounded down).
 			periodToCheck = Math.floorDiv((System.nanoTime() - startTime),
 					PeriodConversionConstants.PERIOD_LENGTH_NANOS);
 
+			// If value is larger than current, the period has changed
 			if (periodToCheck >= nextPeriod) {
 
+				// Increment the global period count
 				clock.incrementPeriod();
 				tempCurrentPeriod = clock.getCurrentPeriod();
 				nextPeriod = tempCurrentPeriod + 1;
+
+				// Yield & sleep so other threads can perform their task
+				try {
+					Thread.yield();
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// Should let the user know about this some how
+					e.printStackTrace();
+					doStop();
+				}
 			}
 		}
+
+		doStop();
 
 	}
 
 	public void doStop() {
 		runFlag = false;
 		this.interrupt(); // break pool thread out of dequeue() call.
+	}
+
+	public boolean isStopped() {
+		return !runFlag;
 	}
 
 }
