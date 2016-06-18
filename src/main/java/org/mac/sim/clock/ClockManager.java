@@ -42,11 +42,14 @@ public class ClockManager extends Thread {
 				tempCurrentPeriod = clock.getCurrentPeriod();
 				nextPeriod = tempCurrentPeriod + 1;
 
-				// Yield & sleep so other threads can perform their task
+				// Sleep so other threads can perform their task
 				try {
-					Thread.yield();
+
 					Thread.sleep(50);
-				} catch (InterruptedException e) {
+					// Reset start time
+					startTime = System.nanoTime();
+
+				} catch (Exception e) {
 					// Should let the user know about this some how
 					e.printStackTrace();
 					doStop();
