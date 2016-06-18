@@ -76,8 +76,8 @@ public class QueueManagerTest {
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
 		QueueManager qm = new QueueManager(queue, 5, hundredClock);
-		Worker w1 = new Worker(queue, 3, 3);
-		Worker w2 = new Worker(queue, 3, 3);
+		Worker w1 = new Worker(queue, 3, 3, hundredClock);
+		Worker w2 = new Worker(queue, 3, 3, hundredClock);
 
 		qm.start();
 		w1.start();

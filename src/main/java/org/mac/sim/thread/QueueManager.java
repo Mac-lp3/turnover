@@ -49,8 +49,8 @@ public class QueueManager extends Thread {
 		this.periodsSpentInLoop = 0;
 		int j = 0;
 		int tempTotalPeriods = clock.getTotalPeriods();
-
 		int currentPeriod = clock.getCurrentPeriod();
+
 		while (currentPeriod < tempTotalPeriods) {
 
 			// watch clock for a period change

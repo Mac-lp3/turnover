@@ -10,7 +10,7 @@ package org.mac.sim.global;
  */
 public class PeriodConversionConstants {
 
-	public static final long PERIOD_LENGTH_NANOS = 1000000;
+	public static final long PERIOD_LENGTH_NANOS = 500000;
 
 	public static final int MILLI_TO_PERIOD_MULTIPLIER = 1;
 
