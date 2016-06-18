@@ -6,4 +6,6 @@ public interface Clock {
 
 	public int getCurrentPeriod();
 
+	public int getNextPeriod();
+
 }

@@ -4,6 +4,7 @@ class ClockImpl implements Clock {
 
 	private int totalPeriods = 0;
 	private int currentPeriod = 0;
+	private int nextPeriod = 1;
 
 	ClockImpl(final int totalPeriods) {
 		this.totalPeriods = totalPeriods;
@@ -23,6 +24,14 @@ class ClockImpl implements Clock {
 
 	public void setCurrentPeriod(int currentPeriod) {
 		this.currentPeriod = currentPeriod;
+	}
+
+	public int getNextPeriod() {
+		return nextPeriod;
+	}
+
+	public void setNextPeriod(int nextPeriod) {
+		this.nextPeriod = nextPeriod;
 	}
 
 }
