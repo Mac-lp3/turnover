@@ -1,14 +1,18 @@
 package org.mac.sim.controller;
 
-import org.mac.sim.clock.ClockBuilder;
 import org.mac.sim.domain.SimulationBuilder;
-import org.mac.sim.thread.QueueManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping()
 public class SimController {
+
+	@RequestMapping("/")
+	public String index() {
+		System.out.println("plsplsplsplspl");
+		return "index";
+	}
 
 	@RequestMapping(path = "/run")
 	public void runIt() {
@@ -23,10 +27,10 @@ public class SimController {
 	}
 
 	@RequestMapping("/thread")
-	public void runThreads() {
+	public String runThreads() {
 
 		System.out.println("does this work?");
-		QueueManager qm = new QueueManager(null, 0, ClockBuilder.build(0));
-		qm.run();
+		return "index.html";
+
 	}
 }
