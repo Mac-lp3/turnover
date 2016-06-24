@@ -1,2 +1,2 @@
 # turnover
-A simulation meant to show how yearly turn over rates can impact a team's overall productivity.
+A simulation meant to model how well a pool of workers can handle a live queue of tasks. The simulation can take into account many variables, such as average time to 1) complete a task, 2) an individual worker's speed/aptitude, 3) an individual worker's down time between tasks, 4) burn out between break time (coming soon), 5) turn over and training time within your worker pool (coming soon).
