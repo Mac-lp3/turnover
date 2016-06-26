@@ -113,11 +113,11 @@ public class QueueManagerTest {
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
 		QueueManager qm = new QueueManager(queue, 10, hundredClock);
-		Worker w1 = new Worker(queue, 5, 5, hundredClock);
+		Worker w1 = new Worker(queue, 10, 5, hundredClock);
 		Worker w2 = new Worker(queue, 5, 5, hundredClock);
-		Worker w3 = new Worker(queue, 5, 5, hundredClock);
+		Worker w3 = new Worker(queue, 10, 5, hundredClock);
 		Worker w4 = new Worker(queue, 5, 5, hundredClock);
-		Worker w5 = new Worker(queue, 5, 5, hundredClock);
+		Worker w5 = new Worker(queue, 10, 5, hundredClock);
 		Worker w6 = new Worker(queue, 5, 5, hundredClock);
 
 		qm.start();
@@ -147,6 +147,17 @@ public class QueueManagerTest {
 				+ w4.getTasksCompleted() + w5.getTasksCompleted() + w6.getTasksCompleted();
 		Assert.assertEquals(1000, totalTasksCompleted);
 		Assert.assertEquals(100, qm.getPeriodsSpentInLoop());
+
+		// Assert the slower workers actually performed worse
+		Assert.assertTrue(w1.getTasksCompleted() < w2.getTasksCompleted());
+		Assert.assertTrue(w1.getTasksCompleted() < w4.getTasksCompleted());
+		Assert.assertTrue(w1.getTasksCompleted() < w6.getTasksCompleted());
+		Assert.assertTrue(w3.getTasksCompleted() < w2.getTasksCompleted());
+		Assert.assertTrue(w3.getTasksCompleted() < w4.getTasksCompleted());
+		Assert.assertTrue(w3.getTasksCompleted() < w6.getTasksCompleted());
+		Assert.assertTrue(w5.getTasksCompleted() < w2.getTasksCompleted());
+		Assert.assertTrue(w5.getTasksCompleted() < w2.getTasksCompleted());
+		Assert.assertTrue(w5.getTasksCompleted() < w2.getTasksCompleted());
 
 	}
 
