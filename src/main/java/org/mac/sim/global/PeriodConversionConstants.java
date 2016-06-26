@@ -12,6 +12,6 @@ public class PeriodConversionConstants {
 
 	public static final long PERIOD_LENGTH_NANOS = 500000;
 
-	public static final int MILLI_TO_PERIOD_MULTIPLIER = 1;
+	public static final double MILLI_TO_PERIOD_MULTIPLIER = .5;
 
 }
