@@ -4,7 +4,6 @@ import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
 import org.mac.sim.domain.WorkerTask;
-import org.mac.sim.global.PeriodConversionConstants;
 
 public class Worker extends Thread {
 
@@ -48,20 +47,23 @@ public class Worker extends Thread {
 			try {
 
 				// take() will automatically wait until populated if it must
-				taskLength = queue.take().getServiceTimeRequired();
-				tasksCompleted++;
+				if (!queue.isEmpty()) {
 
-				waitStartPeriod = clock.getCurrentPeriod();
+					taskLength = queue.take().getServiceTimeRequired();
+					tasksCompleted++;
 
-				while (waitStartPeriod + periodsToWait + taskLength < clock.getCurrentPeriod()) {
+					waitStartPeriod = clock.getCurrentPeriod();
+
+					// while (waitStartPeriod + periodsToWait + taskLength <
+					// clock.getCurrentPeriod()) {
+
 					// wait in loop for this time
-					// TODO notify other threads?
+					Thread.sleep(((waitStartPeriod + periodsToWait + taskLength) - clock.getCurrentPeriod()) / 2);
+					// }
 				}
-
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 
