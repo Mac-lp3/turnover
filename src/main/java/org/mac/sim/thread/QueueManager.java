@@ -59,8 +59,9 @@ public class QueueManager extends Thread {
 				// Add the specified number of jobs to the queue
 				for (j = 0; j < ratePerPeriod; j++) {
 					queue.add(new WorkerTask(0));
-					addActions++;
 				}
+
+				addActions = addActions + ratePerPeriod;
 
 				this.periodsSpentInLoop++;
 				currentPeriod = clock.getCurrentPeriod();
