@@ -45,7 +45,7 @@ public class ClockManager extends Thread {
 				// Sleep so other threads can perform their task
 				try {
 
-					Thread.sleep(60);
+					Thread.sleep(120);
 					// Reset start time
 					startTime = System.nanoTime();
 
