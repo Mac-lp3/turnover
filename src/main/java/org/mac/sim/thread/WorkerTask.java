@@ -1,4 +1,4 @@
-package org.mac.sim.domain;
+package org.mac.sim.thread;
 
 public class WorkerTask {
 
