@@ -3,7 +3,6 @@ package org.mac.sim.thread;
 import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
-import org.mac.sim.domain.WorkerTask;
 
 /**
  * This class encapsulates the task of adding tasks to the queue at a specified
@@ -13,7 +12,7 @@ import org.mac.sim.domain.WorkerTask;
  * @author Mac-LP3
  *
  */
-public class QueueManager extends Thread {
+public class WorkQueueManager extends Thread {
 
 	private volatile BlockingQueue<WorkerTask> queue;
 	private volatile Clock clock;
@@ -32,7 +31,7 @@ public class QueueManager extends Thread {
 	 * @param clock
 	 *            The clock tracking the passage of periods.
 	 */
-	public QueueManager(final BlockingQueue<WorkerTask> queue, final int ratePerPeriod, final Clock clock) {
+	public WorkQueueManager(final BlockingQueue<WorkerTask> queue, final int ratePerPeriod, final Clock clock) {
 		this.queue = queue;
 		this.ratePerPeriod = ratePerPeriod;
 		this.clock = clock;
