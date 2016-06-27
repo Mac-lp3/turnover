@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.mac.sim.clock.Clock;
 import org.mac.sim.clock.ClockBuilder;
 import org.mac.sim.clock.ClockManager;
-import org.mac.sim.domain.WorkerTask;
 
 import junit.framework.Assert;
 
@@ -25,7 +24,7 @@ public class QueueManagerTest {
 
 		Clock fivePeriodClock = ClockBuilder.build(5);
 		ClockManager fiveClockManager = new ClockManager(fivePeriodClock);
-		QueueManager qm = new QueueManager(queue, 5, fivePeriodClock);
+		WorkQueueManager qm = new WorkQueueManager(queue, 5, fivePeriodClock);
 		qm.start();
 		fiveClockManager.start();
 
@@ -39,7 +38,7 @@ public class QueueManagerTest {
 
 		Clock tenPeriodClock = ClockBuilder.build(10);
 		ClockManager tenClockManager = new ClockManager(tenPeriodClock);
-		QueueManager qm2 = new QueueManager(queue, 5, tenPeriodClock);
+		WorkQueueManager qm2 = new WorkQueueManager(queue, 5, tenPeriodClock);
 		qm2.start();
 		tenClockManager.start();
 
@@ -52,7 +51,7 @@ public class QueueManagerTest {
 		queue = new ArrayBlockingQueue<WorkerTask>(500);
 		Clock hundredPeriodClock = ClockBuilder.build(100);
 		ClockManager hundredClockManager = new ClockManager(hundredPeriodClock);
-		qm = new QueueManager(queue, 5, hundredPeriodClock);
+		qm = new WorkQueueManager(queue, 5, hundredPeriodClock);
 		qm.start();
 		hundredClockManager.start();
 
@@ -75,7 +74,7 @@ public class QueueManagerTest {
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(500);
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
-		QueueManager qm = new QueueManager(queue, 5, hundredClock);
+		WorkQueueManager qm = new WorkQueueManager(queue, 5, hundredClock);
 		Worker w1 = new Worker(queue, 3, 3, hundredClock);
 		Worker w2 = new Worker(queue, 3, 3, hundredClock);
 
@@ -112,7 +111,7 @@ public class QueueManagerTest {
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(1000);
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
-		QueueManager qm = new QueueManager(queue, 10, hundredClock);
+		WorkQueueManager qm = new WorkQueueManager(queue, 10, hundredClock);
 		Worker w1 = new Worker(queue, 10, 5, hundredClock);
 		Worker w2 = new Worker(queue, 5, 5, hundredClock);
 		Worker w3 = new Worker(queue, 10, 5, hundredClock);

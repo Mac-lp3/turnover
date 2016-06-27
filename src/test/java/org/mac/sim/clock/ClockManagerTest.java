@@ -1,4 +1,4 @@
-package org.mac.sim.thread;
+package org.mac.sim.clock;
 
 import org.junit.Assert;
 import org.junit.Test;
