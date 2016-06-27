@@ -5,6 +5,6 @@ public interface Simulation {
 	/**
 	 * Runs the simulation logic. Should return some report after completion.
 	 */
-	public void execut();
+	public void execute();
 
 }

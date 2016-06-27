@@ -27,7 +27,7 @@ class SimulationImpl implements Simulation {
 
 	}
 
-	public void execut() {
+	public void execute() {
 
 		double previousTurnOverValue = 0;
 		double currentTurnOverValue = 0;
