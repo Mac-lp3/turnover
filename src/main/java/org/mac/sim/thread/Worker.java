@@ -3,7 +3,6 @@ package org.mac.sim.thread;
 import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
-import org.mac.sim.domain.WorkerTask;
 
 public class Worker extends Thread {
 
