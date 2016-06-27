@@ -10,13 +10,13 @@ public class SimulationBuilder {
 	// TODO enforce some actual rules here
 	public Simulation build() {
 
-		// build turn over interval
+		// calculate turn over interval
 		double monthlyTurnOverInterval = Math.floor(totalEmployees * percentYearlyTurnOver) / 12;
 
 		// Construct the department
 		Department department = new Department(totalEmployees, monthsToPeakProductivity);
 
-		return new Simulation(department, monthlyTurnOverInterval, yearsToSimulate);
+		return new SimulationImpl(department, monthlyTurnOverInterval, yearsToSimulate);
 
 	}
 
