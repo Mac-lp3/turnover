@@ -28,9 +28,7 @@ public class QueueManagerTest {
 		qm.start();
 		fiveClockManager.start();
 
-		while (!fiveClockManager.isStopped()) {
-
-		}
+		fiveClockManager.join();
 
 		Assert.assertEquals(25, queue.size());
 
@@ -42,9 +40,7 @@ public class QueueManagerTest {
 		qm2.start();
 		tenClockManager.start();
 
-		while (!tenClockManager.isStopped()) {
-
-		}
+		tenClockManager.join();
 
 		Assert.assertEquals(50, queue.size());
 
@@ -55,9 +51,7 @@ public class QueueManagerTest {
 		qm.start();
 		hundredClockManager.start();
 
-		while (!hundredClockManager.isStopped()) {
-
-		}
+		hundredClockManager.join();
 
 		Assert.assertEquals(500, queue.size());
 	}
@@ -83,10 +77,7 @@ public class QueueManagerTest {
 		w2.start();
 		cm.start();
 
-		Thread.sleep(200);
-		while (!cm.isStopped()) {
-
-		}
+		cm.join();
 
 		cm.doStop();
 		w1.doStop();
@@ -128,10 +119,7 @@ public class QueueManagerTest {
 		w6.start();
 		cm.start();
 
-		Thread.sleep(200);
-		while (!cm.isStopped()) {
-
-		}
+		cm.join();
 
 		cm.doStop();
 		w1.doStop();
