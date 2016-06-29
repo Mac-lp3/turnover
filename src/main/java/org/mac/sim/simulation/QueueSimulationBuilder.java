@@ -56,8 +56,9 @@ public class QueueSimulationBuilder {
 	 * @return
 	 */
 	public Simulation build() {
+
 		Simulation queueSimulation = new QueueSimulationImpl(clock, workers, taskQueue, tasksPerPeriod);
-		return null;
+		return queueSimulation;
 	}
 
 	/**
