@@ -1,6 +1,8 @@
 package org.mac.sim.domain;
 
 import org.junit.Test;
+import org.mac.sim.simulation.Simulation;
+import org.mac.sim.simulation.SimulationBuilder;
 
 public class SimulationTest {
 
