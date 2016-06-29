@@ -22,6 +22,7 @@ public class QueueSimulationBuilder {
 	private ArrayList<Worker> workers;
 	private Clock clock;
 	private BlockingQueue<WorkerTask> taskQueue;
+	private int tasksPerPeriod;
 
 	/**
 	 * 
@@ -32,6 +33,7 @@ public class QueueSimulationBuilder {
 	 */
 	public QueueSimulationBuilder(final Clock clock, final int tasksPerPeriod) {
 		this.clock = clock;
+		this.tasksPerPeriod = tasksPerPeriod;
 		this.taskQueue = new ArrayBlockingQueue<WorkerTask>(tasksPerPeriod * clock.getTotalPeriods());
 	}
 
@@ -45,6 +47,7 @@ public class QueueSimulationBuilder {
 	 */
 	public QueueSimulationBuilder(final int totalPeriods, final int tasksPerPeriod) {
 		this.clock = ClockBuilder.build(totalPeriods);
+		this.tasksPerPeriod = tasksPerPeriod;
 		this.taskQueue = new ArrayBlockingQueue<WorkerTask>(tasksPerPeriod * totalPeriods);
 	}
 
@@ -53,7 +56,7 @@ public class QueueSimulationBuilder {
 	 * @return
 	 */
 	public Simulation build() {
-
+		Simulation queueSimulation = new QueueSimulationImpl(clock, workers, taskQueue, tasksPerPeriod);
 		return null;
 	}
 

@@ -13,6 +13,7 @@ public class ClockManager extends Thread {
 
 	private volatile ClockImpl clock;
 	private volatile boolean runFlag = false;
+	private int sleepInterval = 120;
 
 	public ClockManager(final Clock clock) {
 		this.clock = (ClockImpl) clock;
@@ -45,7 +46,7 @@ public class ClockManager extends Thread {
 				// Sleep so other threads can perform their task
 				try {
 
-					Thread.sleep(120);
+					Thread.sleep(sleepInterval);
 					// Reset start time
 					startTime = System.nanoTime();
 
