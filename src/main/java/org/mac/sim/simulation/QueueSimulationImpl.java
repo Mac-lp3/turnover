@@ -55,13 +55,14 @@ class QueueSimulationImpl implements Simulation {
 		clockManager.join();
 		queueManager.join();
 
-		// Stop the queueManager
-		queueManager.doStop();
-
 		// Stop each worker
+		int totalTasksCompleted = 0;
 		for (Worker worker : workers) {
 			worker.doStop();
+			totalTasksCompleted += worker.getTasksCompleted();
 		}
+
+		queueManager.getPeriodsSpentInLoop();
 	}
 
 }
