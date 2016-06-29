@@ -1,8 +1,6 @@
 package org.mac.sim.simulation;
 
 import org.junit.Test;
-import org.mac.sim.simulation.Simulation;
-import org.mac.sim.simulation.SimulationBuilder;
 
 public class SimulationTest {
 
@@ -16,6 +14,15 @@ public class SimulationTest {
 		sb.setPercentYearlyTurnOver(.06);
 		sb.setYearsToSimulate(2);
 		Simulation sim = sb.build();
+		sim.execute();
+	}
+
+	@Test
+	public void simulationBuilderTest() throws InterruptedException {
+
+		QueueSimulationBuilder qsb = new QueueSimulationBuilder(50, 10);
+		qsb.addWorkers(5);
+		Simulation sim = qsb.build();
 		sim.execute();
 	}
 }
