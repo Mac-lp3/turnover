@@ -68,6 +68,8 @@ public class WorkQueueManager extends Thread {
 			}
 		}
 
+		doStop();
+
 	}
 
 	public long getPeriodsSpentInLoop() {
