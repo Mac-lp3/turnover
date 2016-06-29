@@ -1,4 +1,6 @@
-package org.mac.sim.domain;
+package org.mac.sim.simulation;
+
+import org.mac.sim.domain.Department;
 
 public class SimulationBuilder {
 

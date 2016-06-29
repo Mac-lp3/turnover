@@ -1,6 +1,9 @@
-package org.mac.sim.domain;
+package org.mac.sim.simulation;
 
 import java.util.HashMap;
+
+import org.mac.sim.domain.Department;
+import org.mac.sim.domain.Employee;
 
 /**
  * Class which executes the simulation loop and maintains the result data.
