@@ -6,25 +6,29 @@ import java.util.List;
 import org.mac.sim.thread.SimpleWorker;
 import org.mac.sim.thread.WorkerTask;
 
-public class SimpleQueueSimulationImpl implements Simulation {
+class SimpleQueueSimulationImpl implements Simulation {
 
 	private int periodsToRun = 0;
 	private List<SimpleWorker> workers;
+	private int tasksPerPeriod = 0;
+	private List<WorkerTask> completedTasks;
+
+	public SimpleQueueSimulationImpl(final int periodsToRun, final List<SimpleWorker> workers,
+			final int tasksPerPeriod) {
+		this.periodsToRun = periodsToRun;
+		this.workers = workers;
+		this.tasksPerPeriod = tasksPerPeriod;
+	}
 
 	public void execute() throws InterruptedException {
 
-		ArrayList<SimpleWorker> workers = new ArrayList<SimpleWorker>();
 		ArrayList<WorkerTask> tasks = new ArrayList<WorkerTask>();
-		ArrayList<WorkerTask> completedTasks = new ArrayList<WorkerTask>();
-
-		for (int i = 0; i < 10; i++) {
-			workers.add(new SimpleWorker());
-		}
+		completedTasks = new ArrayList<WorkerTask>();
 
 		WorkerTask tempCompletedTask = null;
 		for (int i = 0; i < periodsToRun; i++) {
 
-			for (int j = 0; j < 5; j++) {
+			for (int j = 0; j < tasksPerPeriod; j++) {
 				tasks.add(new WorkerTask(j + 1));
 			}
 
@@ -44,49 +48,11 @@ public class SimpleQueueSimulationImpl implements Simulation {
 			System.out.println(worker.getTasksCompleted());
 		}
 
-		System.out.println("~~~~~~~~");
-
-		for (WorkerTask task : tasks) {
-			System.out.println(task.getPeriodsInQueue());
-		}
-
 	}
 
-	/**
-	 * Adds the given number of workers to the Worker pool. The workers will
-	 * have values of 0 for their buffer periods and their time to complete a
-	 * task.
-	 * 
-	 * @param numberOfWorkers
-	 */
-	public void addWorkers(final int numberOfWorkers) {
-
-		if (workers == null) {
-			workers = new ArrayList<SimpleWorker>();
-		}
-
-		for (int i = 0; i < numberOfWorkers; i++) {
-			workers.add(new SimpleWorker());
-		}
-	}
-
-	/**
-	 * Adds the given number of workers to the Worker pool. The workers will be
-	 * assigned the provided buffer period and time to complete task values.
-	 * 
-	 * @param numberOfWorkers
-	 * @param periodsToCompleteTask
-	 * @param bufferPeriods
-	 */
-	public void addWorkers(final int numberOfWorkers, final int periodsToCompleteTask, final int bufferPeriods) {
-
-		if (workers == null) {
-			workers = new ArrayList<SimpleWorker>();
-		}
-
-		for (int i = 0; i < numberOfWorkers; i++) {
-			workers.add(new SimpleWorker(periodsToCompleteTask, bufferPeriods));
-		}
+	public List<WorkerTask> getCompletedTasks() {
+		// TODO Auto-generated method stub
+		return completedTasks;
 	}
 
 }
