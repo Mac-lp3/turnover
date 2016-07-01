@@ -2,20 +2,12 @@ package org.mac.sim.thread;
 
 public class WorkerTask {
 
-	private int periodsSinceCreation = 0;
+	private int periodsInQueue = 0;
 	private boolean served = false;
 	private long serviceTimeRequired;
 
 	public WorkerTask(long serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
-	}
-
-	public int getPeriodsSinceCreation() {
-		return periodsSinceCreation;
-	}
-
-	public void setPeriodsSinceCreation(int periodsSinceCreation) {
-		this.periodsSinceCreation = periodsSinceCreation;
 	}
 
 	public boolean isServed() {
@@ -32,6 +24,14 @@ public class WorkerTask {
 
 	public void setServiceTimeRequired(long serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
+	}
+
+	public void incrementPeriodsInQueue() {
+		periodsInQueue++;
+	}
+
+	public int getPeriodsInQueue() {
+		return periodsInQueue;
 	}
 
 }
