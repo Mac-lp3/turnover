@@ -1,9 +1,11 @@
 package org.mac.sim.simulation;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mac.sim.domain.Department;
 import org.mac.sim.domain.Employee;
+import org.mac.sim.thread.WorkerTask;
 
 /**
  * Class which executes the simulation loop and maintains the result data.
@@ -92,5 +94,10 @@ class SimulationImpl implements Simulation {
 			System.out.println("Employees with " + key + " months of experience: " + experienceMap.get(key));
 		}
 
+	}
+
+	public List<WorkerTask> getCompletedTasks() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

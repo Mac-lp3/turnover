@@ -65,4 +65,9 @@ class QueueSimulationImpl implements Simulation {
 		queueManager.getPeriodsSpentInLoop();
 	}
 
+	public List<WorkerTask> getCompletedTasks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
