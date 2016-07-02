@@ -5,6 +5,7 @@ public class WorkerTask {
 	private int periodsInQueue = 0;
 	private boolean served = false;
 	private long serviceTimeRequired;
+	private int arrivalPeriod;
 
 	public WorkerTask(long serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
@@ -32,6 +33,14 @@ public class WorkerTask {
 
 	public int getPeriodsInQueue() {
 		return periodsInQueue;
+	}
+
+	public int getArrivalPeriod() {
+		return arrivalPeriod;
+	}
+
+	public void setArrivalPeriod(int arrivalPeriod) {
+		this.arrivalPeriod = arrivalPeriod;
 	}
 
 }
