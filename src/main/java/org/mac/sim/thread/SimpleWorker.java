@@ -2,7 +2,9 @@ package org.mac.sim.thread;
 
 import java.util.List;
 
-public class SimpleWorker {
+import org.mac.sim.domain.Worker;
+
+public class SimpleWorker implements Worker {
 	private int periodsToCompleteTask = 0;
 	private int bufferPeriods = 0;
 	private int nextActionablePeriod = 0;

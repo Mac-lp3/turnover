@@ -1,10 +1,12 @@
 package org.mac.sim.thread;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
+import org.mac.sim.domain.Worker;
 
-public class Worker extends Thread {
+public class ThreadWorker extends Thread implements Worker {
 
 	private int periodsToCompleteTask = 0;
 	private int bufferPeriods = 0;
@@ -25,7 +27,7 @@ public class Worker extends Thread {
 	 *            Number of periods this worker needs as "down time" before it
 	 *            is ready to preform the next task.
 	 */
-	public Worker(BlockingQueue<WorkerTask> queue, int periodsToCompleteTask, int bufferPeriods, Clock clock) {
+	public ThreadWorker(BlockingQueue<WorkerTask> queue, int periodsToCompleteTask, int bufferPeriods, Clock clock) {
 		this.queue = queue;
 		this.periodsToCompleteTask = periodsToCompleteTask;
 		this.bufferPeriods = bufferPeriods;
@@ -77,6 +79,11 @@ public class Worker extends Thread {
 
 	public int getTasksCompleted() {
 		return tasksCompleted;
+	}
+
+	public WorkerTask action(int currentPeriod, List<WorkerTask> taskQueue) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
