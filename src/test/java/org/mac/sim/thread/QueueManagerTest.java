@@ -69,8 +69,8 @@ public class QueueManagerTest {
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
 		WorkQueueManager qm = new WorkQueueManager(queue, 5, hundredClock);
-		Worker w1 = new Worker(queue, 3, 3, hundredClock);
-		Worker w2 = new Worker(queue, 3, 3, hundredClock);
+		ThreadWorker w1 = new ThreadWorker(queue, 3, 3, hundredClock);
+		ThreadWorker w2 = new ThreadWorker(queue, 3, 3, hundredClock);
 
 		qm.start();
 		w1.start();
@@ -103,12 +103,12 @@ public class QueueManagerTest {
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
 		WorkQueueManager qm = new WorkQueueManager(queue, 10, hundredClock);
-		Worker w1 = new Worker(queue, 10, 5, hundredClock);
-		Worker w2 = new Worker(queue, 5, 5, hundredClock);
-		Worker w3 = new Worker(queue, 10, 5, hundredClock);
-		Worker w4 = new Worker(queue, 5, 5, hundredClock);
-		Worker w5 = new Worker(queue, 10, 5, hundredClock);
-		Worker w6 = new Worker(queue, 5, 5, hundredClock);
+		ThreadWorker w1 = new ThreadWorker(queue, 10, 5, hundredClock);
+		ThreadWorker w2 = new ThreadWorker(queue, 5, 5, hundredClock);
+		ThreadWorker w3 = new ThreadWorker(queue, 10, 5, hundredClock);
+		ThreadWorker w4 = new ThreadWorker(queue, 5, 5, hundredClock);
+		ThreadWorker w5 = new ThreadWorker(queue, 10, 5, hundredClock);
+		ThreadWorker w6 = new ThreadWorker(queue, 5, 5, hundredClock);
 
 		qm.start();
 		w1.start();

@@ -4,17 +4,11 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
-import org.mac.sim.clock.ClockManager;
-import org.mac.sim.thread.WorkQueueManager;
-import org.mac.sim.thread.Worker;
+import org.mac.sim.domain.Worker;
+import org.mac.sim.thread.ThreadWorker;
 import org.mac.sim.thread.WorkerTask;
 
-class QueueSimulationImpl implements Simulation {
-
-	private ClockManager clockManager;
-	private WorkQueueManager queueManager;
-	private List<Worker> workers;
-	private BlockingQueue<WorkerTask> taskQueue;
+class QueueSimulationImpl extends Simulation {
 
 	/**
 	 * Constructs required managers.
@@ -23,15 +17,13 @@ class QueueSimulationImpl implements Simulation {
 	 * @param workers
 	 * @param taskQueue
 	 * @param ratePerPeriod
+	 * @throws InterruptedException
 	 */
 	QueueSimulationImpl(final Clock clock, final List<Worker> workers, final BlockingQueue<WorkerTask> taskQueue,
-			final int ratePerPeriod) {
+			final int ratePerPeriod) throws InterruptedException {
 
+		super(clock, workers, taskQueue, ratePerPeriod);
 		// TODO must set proper sleep interval
-		this.clockManager = new ClockManager(clock);
-		this.workers = workers;
-		this.taskQueue = taskQueue;
-		this.queueManager = new WorkQueueManager(taskQueue, ratePerPeriod, clock);
 	}
 
 	/**
@@ -45,7 +37,7 @@ class QueueSimulationImpl implements Simulation {
 
 		// Start each worker
 		for (Worker worker : workers) {
-			worker.start();
+			((ThreadWorker) worker).start();
 		}
 
 		// Start the clock
@@ -58,7 +50,7 @@ class QueueSimulationImpl implements Simulation {
 		// Stop each worker
 		int totalTasksCompleted = 0;
 		for (Worker worker : workers) {
-			worker.doStop();
+			((ThreadWorker) worker).doStop();
 			totalTasksCompleted += worker.getTasksCompleted();
 		}
 

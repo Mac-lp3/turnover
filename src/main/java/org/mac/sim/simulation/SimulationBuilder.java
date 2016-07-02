@@ -18,7 +18,9 @@ public class SimulationBuilder {
 		// Construct the department
 		Department department = new Department(totalEmployees, monthsToPeakProductivity);
 
-		return new SimulationImpl(department, monthlyTurnOverInterval, yearsToSimulate);
+		// return new SimulationImpl(department, monthlyTurnOverInterval,
+		// yearsToSimulate);
+		return null;
 
 	}
 

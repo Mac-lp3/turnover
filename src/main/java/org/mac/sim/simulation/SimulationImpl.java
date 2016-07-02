@@ -13,7 +13,7 @@ import org.mac.sim.thread.WorkerTask;
  * @author Home
  *
  */
-class SimulationImpl implements Simulation {
+class SimulationImpl {
 
 	private Department department;
 	private double monthlyTurnOverInterval;
@@ -23,9 +23,12 @@ class SimulationImpl implements Simulation {
 	 * Constructor which runs the simulation.
 	 * 
 	 * @param department
+	 * @throws InterruptedException
 	 */
-	SimulationImpl(Department department, double monthlyTurnOverInterval, int yearsToSimulate) {
+	SimulationImpl(Department department, double monthlyTurnOverInterval, int yearsToSimulate)
+			throws InterruptedException {
 
+		// super();
 		this.department = department;
 		this.monthlyTurnOverInterval = monthlyTurnOverInterval;
 		this.yearsToSimulate = yearsToSimulate;

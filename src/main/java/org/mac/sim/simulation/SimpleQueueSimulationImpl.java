@@ -3,49 +3,47 @@ package org.mac.sim.simulation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mac.sim.thread.SimpleWorker;
+import org.mac.sim.domain.Worker;
 import org.mac.sim.thread.WorkerTask;
 
-class SimpleQueueSimulationImpl implements Simulation {
+class SimpleQueueSimulationImpl extends Simulation {
 
-	private int periodsToRun = 0;
-	private List<SimpleWorker> workers;
-	private int tasksPerPeriod = 0;
-	private List<WorkerTask> completedTasks;
-
-	public SimpleQueueSimulationImpl(final int periodsToRun, final List<SimpleWorker> workers,
-			final int tasksPerPeriod) {
-		this.periodsToRun = periodsToRun;
-		this.workers = workers;
-		this.tasksPerPeriod = tasksPerPeriod;
+	public SimpleQueueSimulationImpl(final int periodsToRun, final List<Worker> workers, final int tasksPerPeriod)
+			throws InterruptedException {
+		super(periodsToRun, workers, tasksPerPeriod);
 	}
 
-	public void execute() throws InterruptedException {
+	@Override
+	protected void execute() throws InterruptedException {
 
 		ArrayList<WorkerTask> tasks = new ArrayList<WorkerTask>();
 		completedTasks = new ArrayList<WorkerTask>();
 
 		WorkerTask tempCompletedTask = null;
+		WorkerTask tempNewTask = null;
 		for (int i = 0; i < periodsToRun; i++) {
 
+			// Add required tasks per period
 			for (int j = 0; j < tasksPerPeriod; j++) {
-				tasks.add(new WorkerTask(j + 1));
+				tempNewTask = new WorkerTask(j + 1);
+				tempNewTask.setArrivalPeriod(i);
+				tasks.add(tempNewTask);
 			}
 
-			for (SimpleWorker worker : workers) {
+			// Allow each worker to act (or wait)
+			for (Worker worker : workers) {
+
+				// If a task was completed, add it to the completed list
 				tempCompletedTask = worker.action(i, tasks);
 				if (tempCompletedTask != null) {
 					completedTasks.add(tempCompletedTask);
 				}
 			}
 
+			// Update remaining tasks
 			for (WorkerTask task : tasks) {
 				task.incrementPeriodsInQueue();
 			}
-		}
-
-		for (SimpleWorker worker : workers) {
-			System.out.println(worker.getTasksCompleted());
 		}
 
 	}

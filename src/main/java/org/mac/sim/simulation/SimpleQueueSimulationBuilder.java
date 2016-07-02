@@ -2,12 +2,13 @@ package org.mac.sim.simulation;
 
 import java.util.ArrayList;
 
+import org.mac.sim.domain.Worker;
 import org.mac.sim.thread.SimpleWorker;
 import org.mac.sim.thread.WorkerTask;
 
 public class SimpleQueueSimulationBuilder {
 
-	private ArrayList<SimpleWorker> workers;
+	private ArrayList<Worker> workers;
 	private ArrayList<WorkerTask> tasks;
 	private int tasksPerPeriod;
 	private int periodsToRun;
@@ -27,7 +28,7 @@ public class SimpleQueueSimulationBuilder {
 	public void addWorkers(final int numberOfWorkers) {
 
 		if (workers == null) {
-			workers = new ArrayList<SimpleWorker>();
+			workers = new ArrayList<Worker>();
 		}
 
 		for (int i = 0; i < numberOfWorkers; i++) {
@@ -46,7 +47,7 @@ public class SimpleQueueSimulationBuilder {
 	public void addWorkers(final int numberOfWorkers, final int periodsToCompleteTask, final int bufferPeriods) {
 
 		if (workers == null) {
-			workers = new ArrayList<SimpleWorker>();
+			workers = new ArrayList<Worker>();
 		}
 
 		for (int i = 0; i < numberOfWorkers; i++) {
@@ -57,8 +58,9 @@ public class SimpleQueueSimulationBuilder {
 	/**
 	 * 
 	 * @return
+	 * @throws InterruptedException
 	 */
-	public Simulation build() {
+	public Simulation build() throws InterruptedException {
 
 		Simulation queueSimulation = new SimpleQueueSimulationImpl(periodsToRun, workers, tasksPerPeriod);
 		return queueSimulation;
