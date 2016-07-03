@@ -24,7 +24,7 @@ public class QueueManagerTest {
 
 		Clock fivePeriodClock = ClockBuilder.build(5);
 		ClockManager fiveClockManager = new ClockManager(fivePeriodClock);
-		WorkQueueManager qm = new WorkQueueManager(queue, 5, fivePeriodClock);
+		TaskQueueManager qm = new TaskQueueManager(queue, 5, fivePeriodClock);
 		qm.start();
 		fiveClockManager.start();
 
@@ -36,7 +36,7 @@ public class QueueManagerTest {
 
 		Clock tenPeriodClock = ClockBuilder.build(10);
 		ClockManager tenClockManager = new ClockManager(tenPeriodClock);
-		WorkQueueManager qm2 = new WorkQueueManager(queue, 5, tenPeriodClock);
+		TaskQueueManager qm2 = new TaskQueueManager(queue, 5, tenPeriodClock);
 		qm2.start();
 		tenClockManager.start();
 
@@ -47,7 +47,7 @@ public class QueueManagerTest {
 		queue = new ArrayBlockingQueue<WorkerTask>(500);
 		Clock hundredPeriodClock = ClockBuilder.build(100);
 		ClockManager hundredClockManager = new ClockManager(hundredPeriodClock);
-		qm = new WorkQueueManager(queue, 5, hundredPeriodClock);
+		qm = new TaskQueueManager(queue, 5, hundredPeriodClock);
 		qm.start();
 		hundredClockManager.start();
 
@@ -68,7 +68,7 @@ public class QueueManagerTest {
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(500);
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
-		WorkQueueManager qm = new WorkQueueManager(queue, 5, hundredClock);
+		TaskQueueManager qm = new TaskQueueManager(queue, 5, hundredClock);
 		ThreadWorker w1 = new ThreadWorker(queue, 3, 3, hundredClock);
 		ThreadWorker w2 = new ThreadWorker(queue, 3, 3, hundredClock);
 
@@ -102,7 +102,7 @@ public class QueueManagerTest {
 		BlockingQueue<WorkerTask> queue = new ArrayBlockingQueue<WorkerTask>(1000);
 		Clock hundredClock = ClockBuilder.build(100);
 		ClockManager cm = new ClockManager(hundredClock);
-		WorkQueueManager qm = new WorkQueueManager(queue, 10, hundredClock);
+		TaskQueueManager qm = new TaskQueueManager(queue, 10, hundredClock);
 		ThreadWorker w1 = new ThreadWorker(queue, 10, 5, hundredClock);
 		ThreadWorker w2 = new ThreadWorker(queue, 5, 5, hundredClock);
 		ThreadWorker w3 = new ThreadWorker(queue, 10, 5, hundredClock);

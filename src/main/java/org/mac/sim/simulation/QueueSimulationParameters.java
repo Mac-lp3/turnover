@@ -2,19 +2,19 @@ package org.mac.sim.simulation;
 
 import org.mac.sim.clock.ClockManager;
 import org.mac.sim.global.SimulationParameters;
-import org.mac.sim.thread.WorkQueueManager;
+import org.mac.sim.thread.TaskQueueManager;
 
 class QueueSimulationParameters implements SimulationParameters {
 
 	private ClockManager clockManager;
-	private WorkQueueManager queueManager;
+	private TaskQueueManager queueManager;
 
 	/**
 	 * 
 	 * @param clockManager
 	 * @param queueManager
 	 */
-	QueueSimulationParameters(final ClockManager clockManager, final WorkQueueManager queueManager) {
+	QueueSimulationParameters(final ClockManager clockManager, final TaskQueueManager queueManager) {
 		this.clockManager = clockManager;
 		this.queueManager = queueManager;
 	}
@@ -23,7 +23,7 @@ class QueueSimulationParameters implements SimulationParameters {
 		return clockManager;
 	}
 
-	public WorkQueueManager getQueueManager() {
+	public TaskQueueManager getQueueManager() {
 		return queueManager;
 	}
 
