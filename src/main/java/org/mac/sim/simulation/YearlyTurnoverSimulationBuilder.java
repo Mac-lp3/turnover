@@ -2,7 +2,7 @@ package org.mac.sim.simulation;
 
 import org.mac.sim.domain.Department;
 
-public class SimulationBuilder {
+public class YearlyTurnoverSimulationBuilder {
 
 	private int totalEmployees;
 	private double percentYearlyTurnOver;

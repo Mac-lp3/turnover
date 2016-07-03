@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.mac.sim.domain.Department;
 import org.mac.sim.domain.Employee;
+import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
 /**
@@ -13,7 +14,7 @@ import org.mac.sim.thread.WorkerTask;
  * @author Home
  *
  */
-class SimulationImpl {
+class YearlyTurnoverSimulationImpl {
 
 	private Department department;
 	private double monthlyTurnOverInterval;
@@ -25,17 +26,19 @@ class SimulationImpl {
 	 * @param department
 	 * @throws InterruptedException
 	 */
-	SimulationImpl(Department department, double monthlyTurnOverInterval, int yearsToSimulate)
-			throws InterruptedException {
+	YearlyTurnoverSimulationImpl(final YearlyTurnoverSimulationParameters params) throws InterruptedException {
 
-		// super();
-		this.department = department;
-		this.monthlyTurnOverInterval = monthlyTurnOverInterval;
-		this.yearsToSimulate = yearsToSimulate;
+		// super(params);
 
 	}
 
-	public void execute() {
+	public void execute(SimulationParameters params) {
+
+		YearlyTurnoverSimulationParameters inputParams = (YearlyTurnoverSimulationParameters) params;
+
+		this.department = inputParams.getDepartment();
+		this.monthlyTurnOverInterval = inputParams.getMonthlyTurnOverInterval();
+		this.yearsToSimulate = inputParams.getYearsToSimulate();
 
 		double previousTurnOverValue = 0;
 		double currentTurnOverValue = 0;
