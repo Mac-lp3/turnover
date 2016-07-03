@@ -3,6 +3,7 @@ package org.mac.sim.simulation;
 import java.util.ArrayList;
 
 import org.mac.sim.domain.Worker;
+import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.SimpleWorker;
 
 /**
@@ -65,12 +66,13 @@ public class SimpleQueueSimulationBuilder {
 	/**
 	 * 
 	 * @return
-	 * @throws InterruptedException
+	 * @throws TurnoverException
 	 */
-	public Simulation build() throws InterruptedException {
+	public Simulation build() throws TurnoverException {
 
 		Simulation queueSimulation = new SimpleQueueSimulationImpl(workers,
 				new SimpleQueueSimulationParameters(periodsToRun, tasksPerPeriod));
+
 		return queueSimulation;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mac.sim.domain.Worker;
+import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
@@ -17,13 +18,12 @@ import org.mac.sim.thread.WorkerTask;
 class SimpleQueueSimulationImpl extends Simulation {
 
 	public SimpleQueueSimulationImpl(final List<Worker> workers, final SimpleQueueSimulationParameters params)
-			throws InterruptedException {
+			throws TurnoverException {
 
 		super(workers, params);
 	}
 
-	@Override
-	protected void execute(final SimulationParameters params) throws InterruptedException {
+	protected void execute(final SimulationParameters params) throws TurnoverException {
 
 		// Retrieve input details
 		SimpleQueueSimulationParameters inputParams = (SimpleQueueSimulationParameters) params;

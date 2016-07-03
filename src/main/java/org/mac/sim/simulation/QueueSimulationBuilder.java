@@ -8,6 +8,7 @@ import org.mac.sim.clock.Clock;
 import org.mac.sim.clock.ClockBuilder;
 import org.mac.sim.clock.ClockManager;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.ThreadWorker;
 import org.mac.sim.thread.WorkQueueManager;
 import org.mac.sim.thread.WorkerTask;
@@ -57,9 +58,10 @@ public class QueueSimulationBuilder {
 	/**
 	 * 
 	 * @return
+	 * @throws TurnoverException
 	 * @throws InterruptedException
 	 */
-	public Simulation build() throws InterruptedException {
+	public Simulation build() throws TurnoverException {
 
 		QueueSimulationParameters inputParams = new QueueSimulationParameters(new ClockManager(clock),
 				new WorkQueueManager(taskQueue, tasksPerPeriod, clock));

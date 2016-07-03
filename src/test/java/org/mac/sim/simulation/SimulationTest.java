@@ -2,6 +2,7 @@ package org.mac.sim.simulation;
 
 import org.junit.Test;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.WorkerTask;
 
 public class SimulationTest {
@@ -20,7 +21,7 @@ public class SimulationTest {
 	}
 
 	@Test
-	public void simulationBuilderTest() throws InterruptedException {
+	public void simulationBuilderTest() throws TurnoverException {
 
 		QueueSimulationBuilder qsb = new QueueSimulationBuilder(50, 10);
 		qsb.addWorkers(5);
@@ -28,7 +29,7 @@ public class SimulationTest {
 	}
 
 	@Test
-	public void simpleQueueSimulationTest() throws InterruptedException {
+	public void simpleQueueSimulationTest() throws TurnoverException {
 
 		SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(100, 8);
 		qsb.addWorkers(5, 10, 5);

@@ -3,6 +3,7 @@ package org.mac.sim.simulation;
 import java.util.List;
 
 import org.mac.sim.domain.Worker;
+import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
@@ -26,7 +27,7 @@ public abstract class Simulation {
 	 * @throws InterruptedException
 	 */
 	protected Simulation(final List<Worker> workers, final SimulationParameters simulationParameters)
-			throws InterruptedException {
+			throws TurnoverException {
 
 		this.workers = workers;
 		execute(simulationParameters);
@@ -39,7 +40,7 @@ public abstract class Simulation {
 	 * 
 	 * @throws InterruptedException
 	 */
-	protected abstract void execute(final SimulationParameters params) throws InterruptedException;
+	protected abstract void execute(final SimulationParameters params) throws TurnoverException;
 
 	public List<WorkerTask> getCompletedTasks() {
 		return completedTasks;
