@@ -12,7 +12,7 @@ import org.mac.sim.clock.Clock;
  * @author Mac-LP3
  *
  */
-public class WorkQueueManager extends Thread {
+public class TaskQueueManager extends Thread {
 
 	private volatile BlockingQueue<WorkerTask> queue;
 	private volatile Clock clock;
@@ -31,7 +31,7 @@ public class WorkQueueManager extends Thread {
 	 * @param clock
 	 *            The clock tracking the passage of periods.
 	 */
-	public WorkQueueManager(final BlockingQueue<WorkerTask> queue, final int ratePerPeriod, final Clock clock) {
+	public TaskQueueManager(final BlockingQueue<WorkerTask> queue, final int ratePerPeriod, final Clock clock) {
 		this.queue = queue;
 		this.ratePerPeriod = ratePerPeriod;
 		this.clock = clock;
