@@ -4,17 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mac.sim.domain.Worker;
+import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
+/**
+ * Simulations how a pool of workers accomplish a live queue of tasks by using a
+ * for loop.
+ * 
+ * @author Home
+ *
+ */
 class SimpleQueueSimulationImpl extends Simulation {
 
-	public SimpleQueueSimulationImpl(final int periodsToRun, final List<Worker> workers, final int tasksPerPeriod)
+	public SimpleQueueSimulationImpl(final List<Worker> workers, final SimpleQueueSimulationParameters params)
 			throws InterruptedException {
-		super(periodsToRun, workers, tasksPerPeriod);
+
+		super(workers, params);
 	}
 
 	@Override
-	protected void execute() throws InterruptedException {
+	protected void execute(final SimulationParameters params) throws InterruptedException {
+
+		// Retrieve input details
+		SimpleQueueSimulationParameters inputParams = (SimpleQueueSimulationParameters) params;
+		int periodsToRun = inputParams.getPeriodsToRun();
+		int tasksPerPeriod = inputParams.getTasksPerPeriod();
 
 		ArrayList<WorkerTask> tasks = new ArrayList<WorkerTask>();
 		completedTasks = new ArrayList<WorkerTask>();

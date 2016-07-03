@@ -1,17 +1,15 @@
 package org.mac.sim.simulation;
 
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 
-import org.mac.sim.clock.Clock;
-import org.mac.sim.clock.ClockManager;
 import org.mac.sim.domain.Worker;
-import org.mac.sim.thread.WorkQueueManager;
+import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
 /**
- * Executes the simulation logic and provides access to workers/tasks for
- * analysis.
+ * Implementations of this class will maintain the actual simulation logic. This
+ * class provides access methods to the worker and completed task lists for
+ * analysis later.
  * 
  * @author Home
  *
@@ -20,11 +18,6 @@ public abstract class Simulation {
 
 	protected List<WorkerTask> completedTasks;
 	protected List<Worker> workers;
-	protected int tasksPerPeriod;
-	protected int periodsToRun;
-	protected ClockManager clockManager;
-	protected BlockingQueue<WorkerTask> taskQueue;
-	protected WorkQueueManager queueManager;
 
 	/**
 	 * Constructor enforces that the simulation logic is executed before the
@@ -32,22 +25,12 @@ public abstract class Simulation {
 	 * 
 	 * @throws InterruptedException
 	 */
-	protected Simulation(final int periodsToRun, final List<Worker> workers, final int tasksPerPeriod)
+	protected Simulation(final List<Worker> workers, final SimulationParameters simulationParameters)
 			throws InterruptedException {
-		this.periodsToRun = periodsToRun;
-		this.tasksPerPeriod = tasksPerPeriod;
-		this.workers = workers;
-		execute();
-	}
-	
-	protected Simulation(final Clock clock, final List<Worker> workers, final BlockingQueue<WorkerTask> taskQueue,
-			final int ratePerPeriod) throws InterruptedException {
 
-		this.clockManager = new ClockManager(clock);
 		this.workers = workers;
-		this.taskQueue = taskQueue;
-		this.queueManager = new WorkQueueManager(taskQueue, ratePerPeriod, clock);
-		execute();
+		execute(simulationParameters);
+
 	}
 
 	/**
@@ -56,7 +39,7 @@ public abstract class Simulation {
 	 * 
 	 * @throws InterruptedException
 	 */
-	protected abstract void execute() throws InterruptedException;
+	protected abstract void execute(final SimulationParameters params) throws InterruptedException;
 
 	public List<WorkerTask> getCompletedTasks() {
 		return completedTasks;

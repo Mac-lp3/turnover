@@ -6,8 +6,10 @@ import java.util.concurrent.BlockingQueue;
 
 import org.mac.sim.clock.Clock;
 import org.mac.sim.clock.ClockBuilder;
+import org.mac.sim.clock.ClockManager;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.thread.ThreadWorker;
+import org.mac.sim.thread.WorkQueueManager;
 import org.mac.sim.thread.WorkerTask;
 
 /**
@@ -59,7 +61,10 @@ public class QueueSimulationBuilder {
 	 */
 	public Simulation build() throws InterruptedException {
 
-		Simulation queueSimulation = new QueueSimulationImpl(clock, workers, taskQueue, tasksPerPeriod);
+		QueueSimulationParameters inputParams = new QueueSimulationParameters(new ClockManager(clock),
+				new WorkQueueManager(taskQueue, tasksPerPeriod, clock));
+
+		Simulation queueSimulation = new QueueSimulationImpl(workers, inputParams);
 		return queueSimulation;
 	}
 

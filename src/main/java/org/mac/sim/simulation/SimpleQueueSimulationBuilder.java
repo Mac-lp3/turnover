@@ -4,12 +4,19 @@ import java.util.ArrayList;
 
 import org.mac.sim.domain.Worker;
 import org.mac.sim.thread.SimpleWorker;
-import org.mac.sim.thread.WorkerTask;
 
+/**
+ * The purpose of this class is to collect all of the simulation parameters and
+ * construct any specific classes and set any required internal values
+ * accordingly. It uses reasonable defaults for any required but not specified
+ * functionality.
+ * 
+ * @author Mac-LP3
+ *
+ */
 public class SimpleQueueSimulationBuilder {
 
 	private ArrayList<Worker> workers;
-	private ArrayList<WorkerTask> tasks;
 	private int tasksPerPeriod;
 	private int periodsToRun;
 
@@ -62,7 +69,8 @@ public class SimpleQueueSimulationBuilder {
 	 */
 	public Simulation build() throws InterruptedException {
 
-		Simulation queueSimulation = new SimpleQueueSimulationImpl(periodsToRun, workers, tasksPerPeriod);
+		Simulation queueSimulation = new SimpleQueueSimulationImpl(workers,
+				new SimpleQueueSimulationParameters(periodsToRun, tasksPerPeriod));
 		return queueSimulation;
 	}
 }

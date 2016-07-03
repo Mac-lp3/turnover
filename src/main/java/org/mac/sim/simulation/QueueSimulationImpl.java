@@ -1,11 +1,12 @@
 package org.mac.sim.simulation;
 
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 
-import org.mac.sim.clock.Clock;
+import org.mac.sim.clock.ClockManager;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.ThreadWorker;
+import org.mac.sim.thread.WorkQueueManager;
 import org.mac.sim.thread.WorkerTask;
 
 class QueueSimulationImpl extends Simulation {
@@ -19,10 +20,10 @@ class QueueSimulationImpl extends Simulation {
 	 * @param ratePerPeriod
 	 * @throws InterruptedException
 	 */
-	QueueSimulationImpl(final Clock clock, final List<Worker> workers, final BlockingQueue<WorkerTask> taskQueue,
-			final int ratePerPeriod) throws InterruptedException {
+	QueueSimulationImpl(final List<Worker> workers, final QueueSimulationParameters inputParameters)
+			throws InterruptedException {
 
-		super(clock, workers, taskQueue, ratePerPeriod);
+		super(workers, inputParameters);
 		// TODO must set proper sleep interval
 	}
 
@@ -30,7 +31,11 @@ class QueueSimulationImpl extends Simulation {
 	 * Executes the simulation with the constructed clock manager, queue
 	 * manager, and workers.
 	 */
-	public void execute() throws InterruptedException {
+	public void execute(final SimulationParameters params) throws InterruptedException {
+
+		QueueSimulationParameters inputParams = (QueueSimulationParameters) params;
+		WorkQueueManager queueManager = inputParams.getQueueManager();
+		ClockManager clockManager = inputParams.getClockManager();
 
 		// Start the queue manager
 		queueManager.start();
@@ -47,11 +52,12 @@ class QueueSimulationImpl extends Simulation {
 		clockManager.join();
 		queueManager.join();
 
+		// TODO verify that all tasks/workers have finished
+
 		// Stop each worker
-		int totalTasksCompleted = 0;
 		for (Worker worker : workers) {
+			// TODO get completed tasks from each worker.
 			((ThreadWorker) worker).doStop();
-			totalTasksCompleted += worker.getTasksCompleted();
 		}
 
 		queueManager.getPeriodsSpentInLoop();
