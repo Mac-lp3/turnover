@@ -4,10 +4,10 @@ public class WorkerTask {
 
 	private int periodsInQueue = 0;
 	private boolean served = false;
-	private long serviceTimeRequired;
+	private int serviceTimeRequired;
 	private int arrivalPeriod;
 
-	public WorkerTask(long serviceTimeRequired) {
+	public WorkerTask(int serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
 	}
 
@@ -19,11 +19,11 @@ public class WorkerTask {
 		this.served = served;
 	}
 
-	public long getServiceTimeRequired() {
+	public int getServiceTimeRequired() {
 		return serviceTimeRequired;
 	}
 
-	public void setServiceTimeRequired(long serviceTimeRequired) {
+	public void setServiceTimeRequired(int serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
 	}
 
