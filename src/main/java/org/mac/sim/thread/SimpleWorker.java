@@ -1,5 +1,6 @@
 package org.mac.sim.thread;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.mac.sim.domain.Worker;
@@ -19,14 +20,14 @@ public class SimpleWorker implements Worker {
 		this.bufferPeriods = bufferPeriods;
 	}
 
-	public WorkerTask action(final int currentPeriod, List<WorkerTask> taskQueue) {
+	public WorkerTask action(final int currentPeriod, Collection<WorkerTask> taskQueue) {
 
 		int tempTaskLength = 0;
 		WorkerTask tempTask = null;
 
 		if (currentPeriod >= nextActionablePeriod && !taskQueue.isEmpty()) {
 
-			tempTask = taskQueue.remove(0);
+			tempTask = ((List<WorkerTask>) taskQueue).remove(0);
 
 			tempTaskLength = Integer.valueOf(Long.toString(tempTask.getServiceTimeRequired()));
 

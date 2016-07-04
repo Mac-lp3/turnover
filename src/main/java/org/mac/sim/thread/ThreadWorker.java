@@ -1,5 +1,7 @@
 package org.mac.sim.thread;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -14,6 +16,7 @@ public class ThreadWorker extends Thread implements Worker {
 	private volatile Clock clock;
 	private boolean runFlag = true;
 	private int tasksCompleted = 0;
+	private List<WorkerTask> completedTasks = new ArrayList<WorkerTask>();
 
 	/**
 	 * 
@@ -37,33 +40,27 @@ public class ThreadWorker extends Thread implements Worker {
 	public void run() {
 
 		// get start time / set up
-		long taskLength = 0;
+		int taskLength = 0;
 		int waitStartPeriod = 0;
 		int periodsToWait = periodsToCompleteTask + bufferPeriods;
-
+		WorkerTask tempTask = null;
 		runFlag = true;
 
 		while (runFlag) {
 
-			try {
+			if (!queue.isEmpty()) {
 
-				// take() will automatically wait until populated if it must
-				if (!queue.isEmpty()) {
+				waitStartPeriod = clock.getCurrentPeriod();
+				tempTask = action(waitStartPeriod, queue);
+				taskLength = tempTask.getServiceTimeRequired();
 
-					taskLength = queue.take().getServiceTimeRequired();
-					tasksCompleted++;
-
-					waitStartPeriod = clock.getCurrentPeriod();
-
-					// while (waitStartPeriod + periodsToWait + taskLength <
-					// clock.getCurrentPeriod()) {
-
-					// wait in loop for this time
+				try {
+					// sleep for the calculated time
 					Thread.sleep(((waitStartPeriod + periodsToWait + taskLength) - clock.getCurrentPeriod()) / 2);
-					// }
+
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -81,9 +78,29 @@ public class ThreadWorker extends Thread implements Worker {
 		return tasksCompleted;
 	}
 
-	public WorkerTask action(int currentPeriod, List<WorkerTask> taskQueue) {
-		// TODO Auto-generated method stub
-		return null;
+	public WorkerTask action(int currentPeriod, Collection<WorkerTask> taskQueue) {
+
+		WorkerTask tempTask = null;
+
+		try {
+
+			// take() will automatically wait until populated if it must
+			tempTask = ((BlockingQueue<WorkerTask>) taskQueue).take();
+			completedTasks.add(tempTask);
+			tasksCompleted++;
+
+		} catch (InterruptedException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return tempTask;
+
+	}
+
+	public List<WorkerTask> getCompletedTasks() {
+		return completedTasks;
 	}
 
 }
