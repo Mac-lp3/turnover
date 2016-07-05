@@ -12,15 +12,6 @@ import org.mac.sim.thread.WorkerTask;
 
 class QueueSimulationImpl extends Simulation {
 
-	/**
-	 * Constructs required managers.
-	 * 
-	 * @param clock
-	 * @param workers
-	 * @param taskQueue
-	 * @param ratePerPeriod
-	 * @throws InterruptedException
-	 */
 	QueueSimulationImpl(final List<Worker> workers, final QueueSimulationParameters inputParameters)
 			throws TurnoverException {
 
@@ -61,6 +52,7 @@ class QueueSimulationImpl extends Simulation {
 		// TODO verify that all tasks/workers have finished
 
 		// Stop each worker
+
 		for (Worker worker : workers) {
 			// TODO get completed tasks from each worker.
 			((ThreadWorker) worker).doStop();

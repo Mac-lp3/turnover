@@ -64,7 +64,6 @@ public class TaskQueueManager extends Thread {
 
 				this.periodsSpentInLoop++;
 				currentPeriod = clock.getCurrentPeriod();
-
 			}
 		}
 
