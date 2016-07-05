@@ -10,7 +10,7 @@ public class SimController {
 	@RequestMapping("/")
 	public String index() {
 
-		return "index";
+		return "app/template";
 	}
 
 }
