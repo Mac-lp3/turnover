@@ -1,4 +1,4 @@
-<html>
+<html ng-app="turnover">
 
 <head>
 <title>Turnover</title>
@@ -9,35 +9,16 @@
 
 	<div class="container" style="max-width: 800;">
 
-		<div class="jumbotron"
-			style="text-align: center; background-image: url(media/bw-city-blueprint.jpg); background-position: 55% 35%;">
-			<h1 style="margin-bottom: 20px;">Turnover</h1>
-			<p class="lead">Model your businessy stuff.</p>
-		</div>
-
-		<div class="row" style="text-align: center;">
-			<h3 style="margin-bottom: 20px;">See how efficiently a group of
-				workers can complete a live queue of tasks.</h3>
-			<p class="lead">Gain insight into your call center, help desk,
-				business unit, and/or taco stand.</p>
-			<p class="lead">
-				<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&nbsp;Free
-				and <a href="https://github.com/Mac-lp3/turnover">open source</a>&nbsp;<span
-					class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-			</p>
-		</div>
-
-		<div class="row">
-			<p style="text-align: center;">
-				<button type="button" class="btn btn-default btn-lg">Get
-					Started</button>
-			</p>
-		</div>
+		<div ng-view></div>
 
 	</div>
 
 	<script src="js/jquery-2.2.2.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-route.js"></script>
+	<script src="app.js"></script>
+
 </body>
 
 </html>
