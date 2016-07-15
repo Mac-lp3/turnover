@@ -1,0 +1,56 @@
+<!-- Modal -->
+<div class="modal fade" id="quickStartModal" tabindex="-1" role="dialog" aria-labelledby="Quick Start">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="quickStartModalLabel">Quick Start</h4>
+			</div>
+			<div class="modal-body">
+
+				<form>
+
+					
+					<div class="control-label">
+						<label for="periodUnit">How many minutes/hours/days to run</label>
+					</div>
+
+	            	<div class="form-inline col-sm-12">
+	            		<div class="form-group col-md-6 col-sm-6">
+		                	<label for="periodUnit" class="control-label">Units</label>
+		                    <select class="form-control" id="periodUnit">
+								<option value="Minutes">Minutes</option>
+								<option value="Hours">Hours</option>
+								<option value="Days">Days</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+	                		<label for="inputValue" class="control-label">Amount</label>
+	                    	<input type="number" class="form-control" id="inputValue">
+		                </div>
+	                </div>
+
+	                <div class="control-label">
+						<label for="periodUnit">Tasks per minute/hour/day</label>
+					</div>
+
+					<div class="form-inline col-sm-12">
+		                <div class="form-group col-md-6 col-sm-6">
+				            <label for="totalWorkers" class="control-label">Workers</label>
+				            <input type="number" class="form-control" id="totalWorkers">
+		            	</div>
+
+		            	<div class="form-group col-md-6 col-sm-6">	
+			                <label for="taskRate" class="control-label">Tasks</label>
+			                <input type="number" class="form-control" id="taskRate">
+		            	</div>
+		            </div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
