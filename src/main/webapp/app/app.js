@@ -12,3 +12,7 @@ turnover.config(['$routeProvider', function($routeProvider) {
     });
 
 }]);
+
+turnover.controller('HomeController', ['$location', function ($location) {
+
+}]);
