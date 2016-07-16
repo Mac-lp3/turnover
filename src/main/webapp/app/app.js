@@ -1,5 +1,8 @@
 'use strict';
 
+const angular = require('angular');
+const ngRoute = require('angular-route');
+
 const turnover = angular.module('turnover', ['ngRoute']);
 
 turnover.config(['$routeProvider', function($routeProvider) {
@@ -13,6 +16,4 @@ turnover.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-turnover.controller('HomeController', ['$location', function ($location) {
-
-}]);
+turnover.controller('HomeController', ['$http', '$location', require('./partials/home/homeController')]);

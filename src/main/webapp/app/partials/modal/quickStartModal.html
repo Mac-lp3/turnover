@@ -18,7 +18,7 @@
 	            	<div class="form-inline col-sm-12">
 	            		<div class="form-group col-md-6 col-sm-6">
 		                	<label for="periodUnit" class="control-label">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-		                    <select class="form-control" id="periodUnit" style="min-width:175px;">
+		                    <select class="form-control" id="periodUnit" style="min-width:175px;" ng-model="homeCtrl.quickStartUnits">
 								<option value="Minutes">Minutes</option>
 								<option value="Hours">Hours</option>
 								<option value="Days">Days</option>
@@ -26,7 +26,7 @@
 						</div>
 						<div class="form-group col-md-6 col-sm-6" style="margin-bottom: 10px;">
 	                		<label for="inputValue" class="control-label">Amount&nbsp;</label>
-	                    	<input type="number" class="form-control" id="inputValue">
+	                    	<input type="number" class="form-control" id="inputValue" ng-model="homeCtrl.quickStartPeriods">
 		                </div>
 	                </div>
 
@@ -37,12 +37,12 @@
 					<div class="form-inline col-sm-12">
 		                <div class="form-group col-md-6 col-sm-6">
 				            <label for="totalWorkers" class="control-label">Workers</label>
-				            <input type="number" class="form-control" id="totalWorkers">
+				            <input type="number" class="form-control" id="totalWorkers" ng-model="homeCtrl.quickStartWorkers">
 		            	</div>
 
 		            	<div class="form-group col-md-6 col-sm-6">	
-			                <label for="taskRate" class="control-label">Tasks&nbsp;&nbsp;&nbsp;&nbsp;</label>
-			                <input type="number" class="form-control" id="taskRate">
+			                <label for="taskRate" class="control-label" >Tasks&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			                <input type="number" class="form-control" id="taskRate" ng-model="homeCtrl.quickStartRate">
 		            	</div>
 		            </div>
 
@@ -51,7 +51,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-default">Save changes</button>
+				<button type="button" class="btn btn-default" ng-click="homeCtrl.quickStart()">Execute</button>
 			</div>
 		</div>
 	</div>
