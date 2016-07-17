@@ -2,41 +2,41 @@ package org.mac.sim.domain;
 
 public class SimulationForm {
 
-	private int numberOfWorkers;
-	private int periodsToRun;
-	private String periodUnits;
-	private int tasksPerPeriod;
+	private String quickStartUnits;
+	private int quickStartPeriods;
+	private int quickStartWorkers;
+	private int quickStartRate;
 
-	public int getNumberOfWorkers() {
-		return numberOfWorkers;
+	public String getQuickStartUnits() {
+		return quickStartUnits;
 	}
 
-	public void setNumberOfWorkers(int numberOfWorkers) {
-		this.numberOfWorkers = numberOfWorkers;
+	public void setQuickStartUnits(String quickStartUnits) {
+		this.quickStartUnits = quickStartUnits;
 	}
 
-	public int getPeriodsToRun() {
-		return periodsToRun;
+	public int getQuickStartPeriods() {
+		return quickStartPeriods;
 	}
 
-	public void setPeriodsToRun(int periodsToRun) {
-		this.periodsToRun = periodsToRun;
+	public void setQuickStartPeriods(int quickStartPeriods) {
+		this.quickStartPeriods = quickStartPeriods;
 	}
 
-	public String getPeriodUnits() {
-		return periodUnits;
+	public int getQuickStartWorkers() {
+		return quickStartWorkers;
 	}
 
-	public void setPeriodUnits(String periodUnits) {
-		this.periodUnits = periodUnits;
+	public void setQuickStartWorkers(int quickStartWorkers) {
+		this.quickStartWorkers = quickStartWorkers;
 	}
 
-	public int getTasksPerPeriod() {
-		return tasksPerPeriod;
+	public int getQuickStartRate() {
+		return quickStartRate;
 	}
 
-	public void setTasksPerPeriod(int tasksPerPeriod) {
-		this.tasksPerPeriod = tasksPerPeriod;
+	public void setQuickStartRate(int quickStartRate) {
+		this.quickStartRate = quickStartRate;
 	}
 
 }
