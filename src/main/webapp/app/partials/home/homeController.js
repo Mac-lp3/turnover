@@ -17,15 +17,16 @@ module.exports = function ($http, $location) {
 			url: 'api/simulation?type=simple',
 			data: {
 
-				quickStartUnits: self.quickStartUnits,
-				quickStartPeriods: self.quickStartPeriods,
-				quickStartWorkers: self.quickStartPeriods,
-				quickStartRate: self.quickStartRate
-
+				simulationForm: {
+					quickStartUnits: self.quickStartUnits,
+					quickStartPeriods: self.quickStartPeriods,
+					quickStartWorkers: self.quickStartPeriods,
+					quickStartRate: self.quickStartRate
+				}
 			}
 
 		}).then(function success(response){
-			
+
 		});
 	};
 
