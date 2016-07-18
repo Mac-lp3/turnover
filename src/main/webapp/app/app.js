@@ -2,7 +2,6 @@
 
 const angular = require('angular');
 const ngRoute = require('angular-route');
-
 const turnover = angular.module('turnover', ['ngRoute']);
 
 turnover.config(['$routeProvider', function($routeProvider) {
@@ -14,6 +13,14 @@ turnover.config(['$routeProvider', function($routeProvider) {
          controllerAs : 'homeCtrl'
     });
 
+    $routeProvider.when('/results', {
+         templateUrl : 'app/partials/results/results.html',
+         controller : 'ResultsController',
+         controllerAs : 'resultsCtrl'
+    });
+
 }]);
 
-turnover.controller('HomeController', ['$http', '$location', require('./partials/home/homeController')]);
+turnover.service('ResultsService', ['$location', require('./partials/home/homeController')]);
+turnover.controller('HomeController', ['$http', '$location', 'ResultsService', require('./partials/home/homeController')]);
+turnover.controller('ResultsController', ['$http', '$location', 'ResultsService', require('./partials/results/resultsController')]);
