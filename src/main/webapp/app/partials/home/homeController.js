@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($http, $location) {
+module.exports = function ($http, $location, resultsService) {
 
 	const self = this;
 
@@ -8,6 +8,8 @@ module.exports = function ($http, $location) {
 	self.quickStartPeriods = '';
 	self.quickStartWorkers = '';
 	self.quickStartRate = '';
+	self.quickStartTaskTime = '';
+	self.quickStartRestTime = '';
 
 	self.quickStart = function () {
 		
@@ -21,12 +23,15 @@ module.exports = function ($http, $location) {
 					quickStartUnits: self.quickStartUnits,
 					quickStartPeriods: self.quickStartPeriods,
 					quickStartWorkers: self.quickStartPeriods,
-					quickStartRate: self.quickStartRate
+					quickStartRate: self.quickStartRate,
+					quickStartTaskTime: self.quickStartTaskTime,
+					quickStartRestTime: self.quickStartRestTime
 				}
 			}
 
 		}).then(function success(response){
 
+			resultsService.setSimulationResults(response.data);
 		});
 	};
 

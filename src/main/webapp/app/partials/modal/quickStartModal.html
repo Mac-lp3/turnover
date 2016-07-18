@@ -6,35 +6,35 @@
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title" id="quickStartModalLabel">Quick Start</h4>
 			</div>
-			<div class="modal-body" style="min-height: 160px;">
+			<div class="modal-body" style="min-height: 230px;">
 
 				<form>
 
 					
 					<div class="control-label">
-						<label for="periodUnit">How many minutes/hours/days to run</label>
+						<label for="periodUnit">How many minutes/hours/days to simulate?</label>
 					</div>
 
-	            	<div class="form-inline col-sm-12">
+	            	<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 	            		<div class="form-group col-md-6 col-sm-6">
 		                	<label for="periodUnit" class="control-label">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 		                    <select class="form-control" id="periodUnit" style="min-width:175px;" ng-model="homeCtrl.quickStartUnits">
-								<option value="Minutes">Minutes</option>
+								<option value="Minutes" selected>Minutes</option>
 								<option value="Hours">Hours</option>
 								<option value="Days">Days</option>
 							</select>
 						</div>
-						<div class="form-group col-md-6 col-sm-6" style="margin-bottom: 10px;">
+						<div class="form-group col-md-6 col-sm-6" >
 	                		<label for="inputValue" class="control-label">Amount&nbsp;</label>
 	                    	<input type="number" class="form-control" id="inputValue" ng-model="homeCtrl.quickStartPeriods">
 		                </div>
 	                </div>
 
 	                <div class="control-label">
-						<label for="periodUnit">How many workers and tasks per minute/hour/day</label>
+						<label for="workerDetails">How many workers and tasks per minute/hour/day?</label>
 					</div>
 
-					<div class="form-inline col-sm-12">
+					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 		                <div class="form-group col-md-6 col-sm-6">
 				            <label for="totalWorkers" class="control-label">Workers</label>
 				            <input type="number" class="form-control" id="totalWorkers" ng-model="homeCtrl.quickStartWorkers">
@@ -43,6 +43,22 @@
 		            	<div class="form-group col-md-6 col-sm-6">	
 			                <label for="taskRate" class="control-label" >Tasks&nbsp;&nbsp;&nbsp;&nbsp;</label>
 			                <input type="number" class="form-control" id="taskRate" ng-model="homeCtrl.quickStartRate">
+		            	</div>
+		            </div>
+
+		            <div class="control-label">
+						<label for="workerSpeed">How long does it take a worker to complete a task?</label>
+					</div>
+
+					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+		                <div class="form-group col-md-6 col-sm-6">
+				            <label for="taskTime" class="control-label">Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				            <input type="number" class="form-control" id="taskTime" ng-model="homeCtrl.quickStartTaskTime">
+		            	</div>
+
+		            	<div class="form-group col-md-6 col-sm-6" style="padding-left:0px;">
+			                <label for="restTime" class="control-label">Rest Time</label>
+			                <input type="number" class="form-control" id="group" ng-model="homeCtrl.quickStartRestTime">
 		            	</div>
 		            </div>
 

@@ -6,6 +6,8 @@ public class SimulationForm {
 	private int quickStartPeriods;
 	private int quickStartWorkers;
 	private int quickStartRate;
+	private int quickStartTaskTime;
+	private int quickStartRestTime;
 
 	public String getQuickStartUnits() {
 		return quickStartUnits;
@@ -37,6 +39,22 @@ public class SimulationForm {
 
 	public void setQuickStartRate(int quickStartRate) {
 		this.quickStartRate = quickStartRate;
+	}
+
+	public int getQuickStartRestTime() {
+		return quickStartRestTime;
+	}
+
+	public void setQuickStartRestTime(int quickStartRestTime) {
+		this.quickStartRestTime = quickStartRestTime;
+	}
+
+	public int getQuickStartTaskTime() {
+		return quickStartTaskTime;
+	}
+
+	public void setQuickStartTaskTime(int quickStartTaskTime) {
+		this.quickStartTaskTime = quickStartTaskTime;
 	}
 
 }
