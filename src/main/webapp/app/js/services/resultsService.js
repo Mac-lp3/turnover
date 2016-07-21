@@ -13,4 +13,8 @@ module.exports = function($location) {
 		$location.path('/results');
 	};
 
+	self.getSimulationResults = function() {
+		return this.simulationResults;
+	};
+
 };
