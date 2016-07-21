@@ -21,6 +21,6 @@ turnover.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-turnover.service('ResultsService', ['$location', require('./partials/home/homeController')]);
+turnover.service('ResultsService', ['$location', require('./js/services/resultsService')]);
 turnover.controller('HomeController', ['$http', '$location', 'ResultsService', require('./partials/home/homeController')]);
 turnover.controller('ResultsController', ['$http', '$location', 'ResultsService', require('./partials/results/resultsController')]);
