@@ -50,6 +50,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 				// If a task was completed, add it to the completed list
 				tempCompletedTask = worker.action(i, tasks);
 				if (tempCompletedTask != null) {
+					tempCompletedTask.setPeriodServiced(i);
 					completedTasks.add(tempCompletedTask);
 				}
 			}

@@ -6,6 +6,7 @@ public class WorkerTask {
 	private boolean served = false;
 	private int serviceTimeRequired;
 	private int arrivalPeriod;
+	private int periodServiced;
 
 	public WorkerTask(int serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
@@ -41,6 +42,14 @@ public class WorkerTask {
 
 	public void setArrivalPeriod(int arrivalPeriod) {
 		this.arrivalPeriod = arrivalPeriod;
+	}
+
+	public int getPeriodServiced() {
+		return periodServiced;
+	}
+
+	public void setPeriodServiced(int periodServiced) {
+		this.periodServiced = periodServiced;
 	}
 
 }
