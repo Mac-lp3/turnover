@@ -4,7 +4,7 @@ import org.mac.sim.domain.SimulationForm;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.simulation.SimpleQueueSimulationBuilder;
 import org.mac.sim.simulation.Simulation;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ public class ApiController {
 
 	@RequestMapping(path = "/simulation", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
 	public Simulation postSimulationForm(@RequestParam(value = "type", required = false) String type,
-			@ModelAttribute SimulationForm simulationForm) {
+			@RequestBody SimulationForm simulationForm) {
 
 		Simulation sim = null;
 
@@ -43,5 +43,4 @@ public class ApiController {
 		return sim;
 
 	}
-
 }
