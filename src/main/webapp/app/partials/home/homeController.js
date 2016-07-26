@@ -4,7 +4,7 @@ module.exports = function ($http, $location, resultsService) {
 
 	const self = this;
 
-	self.quickStartUnits = 'Minutes';
+	self.quickStartUnits = 'minutes';
 	self.quickStartPeriods = 0;
 	self.quickStartWorkers = 0;
 	self.quickStartRate = 0;

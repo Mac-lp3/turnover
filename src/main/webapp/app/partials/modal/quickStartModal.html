@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body" style="min-height: 230px;">
 
-				<form>
+				<form name="quickStartForm">
 
 					<div class="control-label">
 						<label for="periodUnit">How many minutes/hours/days to simulate?</label>
@@ -19,15 +19,21 @@
 	            		<div class="form-group col-md-6 col-sm-6">
 		                	<label for="periodUnit" class="control-label">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 		                    <select class="form-control" id="periodUnit" style="min-width:175px;" ng-model="homeCtrl.quickStartUnits">
-								<option value="Minutes" selected>Minutes</option>
-								<option value="Hours">Hours</option>
-								<option value="Days">Days</option>
+								<option value="minutes" selected>Minutes</option>
+								<option value="hours">Hours</option>
+								<option value="days">Days</option>
 							</select>
 						</div>
 						
-						<div class="form-group col-md-6 col-sm-6" >
+						<div class="form-group col-md-6 col-sm-6">
 	                		<label for="inputValue" class="control-label">Amount&nbsp;</label>
-	                    	<input type="number" class="form-control" id="inputValue" ng-model="homeCtrl.quickStartPeriods" min="0" required>
+	                    	<input type="number" class="form-control" name="simLength" id="inputValue" ng-model="homeCtrl.quickStartPeriods" min="0" required>
+
+	                    	<!-- validation message -->
+	                    	<div ng-messages="quickStartForm.simLength.$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
 		                </div>
 	                </div>
 
@@ -38,13 +44,25 @@
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 		                <div class="form-group col-md-6 col-sm-6">
 				            <label for="totalWorkers" class="control-label">Workers</label>
-				            <input type="number" class="form-control" id="totalWorkers" ng-model="homeCtrl.quickStartWorkers" min="0" required>
+				            <input type="number" class="form-control" id="totalWorkers" ng-model="homeCtrl.quickStartWorkers" name="totalWorkers" min="0" required>
+
+				            <!-- validation message -->
+				            <div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
 		            	</div>
 
 		            	<div class="form-group col-md-6 col-sm-6">	
 			                <label for="taskRate" class="control-label" >Tasks&nbsp;&nbsp;&nbsp;&nbsp;</label>
-			                <input type="number" class="form-control" id="taskRate" ng-model="homeCtrl.quickStartRate" min="0" required>
-		            	</div>
+			                <input type="number" class="form-control" id="taskRate" ng-model="homeCtrl.quickStartRate" name="arrivalRate" min="0" required>
+		            		
+		            		<!-- validation message -->
+		            		<div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
 		            </div>
 
 		            <div class="control-label">
@@ -54,12 +72,24 @@
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 		                <div class="form-group col-md-6 col-sm-6">
 				            <label for="taskTime" class="control-label">Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-				            <input type="number" class="form-control" id="taskTime" ng-model="homeCtrl.quickStartTaskTime" min="0" required>
+				            <input type="number" class="form-control" id="taskTime" ng-model="homeCtrl.quickStartTaskTime" name="taskLength" min="0" required>
+
+				            <!-- validation message -->
+		            		<div ng-messages="quickStartForm.taskLength.$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
 		            	</div>
 
 		            	<div class="form-group col-md-6 col-sm-6" style="padding-left:0px;">
 			                <label for="restTime" class="control-label">Rest Time</label>
-			                <input type="number" class="form-control" id="group" ng-model="homeCtrl.quickStartRestTime" min="0" required>
+			                <input type="number" class="form-control" id="group" ng-model="homeCtrl.quickStartRestTime" name="restTime" min="0" required>
+
+			                <!-- validation message -->
+		            		<div ng-messages="quickStartForm.restTime.$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
 		            	</div>
 		            </div>
 
