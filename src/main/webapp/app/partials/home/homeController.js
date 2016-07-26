@@ -4,12 +4,12 @@ module.exports = function ($http, $location, resultsService) {
 
 	const self = this;
 
-	self.quickStartUnits = '';
-	self.quickStartPeriods = '';
-	self.quickStartWorkers = '';
-	self.quickStartRate = '';
-	self.quickStartTaskTime = '';
-	self.quickStartRestTime = '';
+	self.quickStartUnits = 'Minutes';
+	self.quickStartPeriods = 0;
+	self.quickStartWorkers = 0;
+	self.quickStartRate = 0;
+	self.quickStartTaskTime = 0;
+	self.quickStartRestTime = 0;
 
 	self.quickStart = function () {
 		
