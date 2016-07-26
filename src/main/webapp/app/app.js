@@ -2,7 +2,8 @@
 
 const angular = require('angular');
 const ngRoute = require('angular-route');
-const turnover = angular.module('turnover', ['ngRoute']);
+const ngMessages = require('angular-messages');
+const turnover = angular.module('turnover', ['ngRoute', 'ngMessages']);
 
 turnover.config(['$routeProvider', function($routeProvider) {
 
