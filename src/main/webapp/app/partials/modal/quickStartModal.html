@@ -1,17 +1,17 @@
 <!-- Modal -->
-<div class="modal fade" id="quickStartModal" tabindex="-1" role="dialog" aria-labelledby="Quick Start">
+<div class="modal" id="quickStartModal" tabindex="-1" role="dialog" aria-labelledby="Quick Start">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="quickStartModalLabel">Quick Start</h4>
+			<div class="modal-header" style="border-bottom: 0px; padding-bottom: 0px;">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<P class="lead" id="quickStartModalLabel">Quick Start</P>
 			</div>
-			<div class="modal-body" style="min-height: 230px;">
+			<div class="modal-body" style="min-height: 230px; padding-top: 0px;">
 
 				<form name="quickStartForm">
 
 					<div class="control-label">
-						<label for="periodUnit">How many minutes/hours/days to simulate?</label>
+						<label for="periodUnit" style="font-weight: normal;">How many minutes/hours/days to simulate?</label>
 					</div>
 
 	            	<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
@@ -38,7 +38,7 @@
 	                </div>
 
 	                <div class="control-label">
-						<label for="workerDetails">How many workers and tasks per minute/hour/day?</label>
+						<label for="workerDetails" style="font-weight: normal;">How many workers and tasks per minute/hour/day?</label>
 					</div>
 
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
@@ -66,7 +66,7 @@
 		            </div>
 
 		            <div class="control-label">
-						<label for="workerSpeed">How long does it take a worker to complete a task?</label>
+						<label for="workerSpeed" style="font-weight: normal;">How long does it take a worker to complete a task?</label>
 					</div>
 
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
@@ -96,7 +96,7 @@
 				</form>
 
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" style="border-top: 0px;">
 				<button type="button" class="btn" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-default" data-target="#quickStartModal" data-dismiss="modal" ng-click="homeCtrl.quickStart()">Execute</button>
 			</div>
