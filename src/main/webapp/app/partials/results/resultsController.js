@@ -100,8 +100,10 @@ module.exports = function ($http, $location, resultsService) {
 		 	options: {
 		 		scales: {
 		 			yAxes: [{
-		 				suggestedMin: 0,
-		 				beginAtZero: true
+		 				ticks: {
+		 					suggestedMin: 0,
+		 					beginAtZero: true
+		 				}
 		 			}]
 		 		}
 		 	}
