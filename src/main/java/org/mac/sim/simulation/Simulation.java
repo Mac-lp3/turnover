@@ -42,6 +42,15 @@ public abstract class Simulation {
 	 */
 	protected abstract void execute(final SimulationParameters params) throws TurnoverException;
 
+	/**
+	 * When adding tasks to the queue, a length must be specified. This method
+	 * should provide some logical default value or generate a value according
+	 * to the user's request.
+	 * 
+	 * @return
+	 */
+	protected abstract int getTaskLength();
+
 	public List<WorkerTask> getCompletedTasks() {
 		return completedTasks;
 	}

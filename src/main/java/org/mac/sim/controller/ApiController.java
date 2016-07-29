@@ -23,8 +23,7 @@ public class ApiController {
 		// TODO make this a const
 		if ("simple".equalsIgnoreCase(type)) {
 
-			SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simulationForm.getQuickStartPeriods(),
-					simulationForm.getQuickStartRate());
+			SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simulationForm);
 
 			qsb.addWorkers(simulationForm.getQuickStartWorkers(), simulationForm.getQuickStartTaskTime(),
 					simulationForm.getQuickStartRestTime());

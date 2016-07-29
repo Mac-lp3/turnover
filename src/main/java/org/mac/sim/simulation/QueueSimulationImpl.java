@@ -66,4 +66,10 @@ class QueueSimulationImpl extends Simulation {
 		return null;
 	}
 
+	@Override
+	protected int getTaskLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

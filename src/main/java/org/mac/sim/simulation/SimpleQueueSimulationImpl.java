@@ -2,6 +2,7 @@ package org.mac.sim.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.mac.sim.domain.Worker;
 import org.mac.sim.exception.TurnoverException;
@@ -17,10 +18,15 @@ import org.mac.sim.thread.WorkerTask;
  */
 class SimpleQueueSimulationImpl extends Simulation {
 
+	// Used for task length generation
+	private Random random;
+	private int defaultTaskLength = 0;
+
 	public SimpleQueueSimulationImpl(final List<Worker> workers, final SimpleQueueSimulationParameters params)
 			throws TurnoverException {
 
 		super(workers, params);
+		this.defaultTaskLength = params.getDefaultTaskLength();
 	}
 
 	protected void execute(final SimulationParameters params) throws TurnoverException {
@@ -39,7 +45,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 
 			// Add required tasks per period
 			for (int j = 0; j < tasksPerPeriod; j++) {
-				tempNewTask = new WorkerTask(j + 1);
+				tempNewTask = new WorkerTask(getTaskLength());
 				tempNewTask.setArrivalPeriod(i);
 				tasks.add(tempNewTask);
 			}
@@ -66,6 +72,18 @@ class SimpleQueueSimulationImpl extends Simulation {
 	public List<WorkerTask> getCompletedTasks() {
 		// TODO Auto-generated method stub
 		return completedTasks;
+	}
+
+	@Override
+	protected int getTaskLength() {
+		
+		random = new Random();
+		
+		if (defaultTaskLength == 0) {
+			return random.nextInt(10 - 1) + 1;
+		}
+
+		return defaultTaskLength;
 	}
 
 }

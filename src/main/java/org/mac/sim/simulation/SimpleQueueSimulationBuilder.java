@@ -2,6 +2,7 @@ package org.mac.sim.simulation;
 
 import java.util.ArrayList;
 
+import org.mac.sim.domain.SimulationForm;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.SimpleWorker;
@@ -15,15 +16,19 @@ import org.mac.sim.thread.SimpleWorker;
  * @author Mac-LP3
  *
  */
-public class SimpleQueueSimulationBuilder {
+public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 
 	private ArrayList<Worker> workers;
 	private int tasksPerPeriod;
 	private int periodsToRun;
+	private int defaultTaskLength;
 
-	public SimpleQueueSimulationBuilder(final int periodsToRun, final int tasksPerPeriod) {
-		this.tasksPerPeriod = tasksPerPeriod;
-		this.periodsToRun = periodsToRun;
+	public SimpleQueueSimulationBuilder(SimulationForm simulationForm) {
+
+		super(simulationForm);
+		this.tasksPerPeriod = simulationForm.getQuickStartRate();
+		this.periodsToRun = simulationForm.getQuickStartPeriods();
+		this.defaultTaskLength = simulationForm.getQuickStartTaskTime();
 	}
 
 	/**
@@ -71,8 +76,16 @@ public class SimpleQueueSimulationBuilder {
 	public Simulation build() throws TurnoverException {
 
 		Simulation queueSimulation = new SimpleQueueSimulationImpl(workers,
-				new SimpleQueueSimulationParameters(periodsToRun, tasksPerPeriod));
+				new SimpleQueueSimulationParameters(periodsToRun, tasksPerPeriod, defaultTaskLength));
 
 		return queueSimulation;
+	}
+
+	public int getDefaultTaskLength() {
+		return defaultTaskLength;
+	}
+
+	public void setDefaultTaskLength(int defaultTaskLength) {
+		this.defaultTaskLength = defaultTaskLength;
 	}
 }
