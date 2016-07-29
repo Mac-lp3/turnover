@@ -20,7 +20,7 @@ module.exports = function ($http, $location, resultsService) {
 			data: {
 				quickStartUnits: self.quickStartUnits,
 				quickStartPeriods: self.quickStartPeriods,
-				quickStartWorkers: self.quickStartPeriods,
+				quickStartWorkers: self.quickStartWorkers,
 				quickStartRate: self.quickStartRate,
 				quickStartTaskTime: self.quickStartTaskTime,
 				quickStartRestTime: self.quickStartRestTime
