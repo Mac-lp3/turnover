@@ -5,3 +5,4 @@
 .DS_store
 target/
 src/main/webapp/app/node_modules/
+**/bundle.js
