@@ -1,0 +1,84 @@
+<div class="container" style="max-width: 800;">
+
+	<form name="advancedForm">
+
+		<div class="row text-center">
+			<h2 style="border-bottom: 1px solid #ccc;">Clock Configuration <small>What are time units? How many of them to simulate?</small></h2>
+		</div>
+
+		<!--  Clock input area -->
+		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+    		<div class="form-group col-md-6 col-sm-6">
+            	<label for="periodUnit" class="control-label">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <select class="form-control" id="periodUnit" style="min-width:175px;" ng-model="advancedCtrl.periodUnits">
+					<option value="minutes" selected>Minutes</option>
+					<option value="hours">Hours</option>
+					<option value="days">Days</option>
+				</select>
+			</div>
+			
+			<div class="form-group col-md-6 col-sm-6">
+        		<label for="totalPeriods" class="control-label">Total&nbsp;</label>
+            	<input type="number" class="form-control" name="simLength" id="totalPeriods" ng-model="advancedCtrl.totalPeriods" min="0" required>
+
+            	<!-- validation message -->
+            	<div ng-messages="quickStartForm.simLength.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+			<h2 style="border-bottom: 1px solid #ccc;">Task Rate <small>How many tasks per period? Are there priods of high/low volume?</small></h2>
+		</div>
+
+		<!-- Task rate config. For each goes here -->
+		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+            
+            <!-- Rate input -->
+            <div class="form-group col-md-3 col-sm-3">
+            	<!-- TODO index added to vars -->
+	            <label for="arrivalRate" class="control-label">Arrival Rate</label>
+	            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
+
+	            <!-- validation message -->
+	            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+        	</div>
+
+        	<div class="form-group col-md-3 col-sm-3">
+        		<!-- TODO index added to vars -->
+                <label for="taskTime" class="control-label">Task Length</label>
+                <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
+        		
+        		<!-- validation message -->
+        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+			</div>
+
+			<div class="form-group col-md-3 col-sm-3">
+                <label for="startPeriod" class="control-label">Start Period</label>
+                <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
+        		
+        		<!-- validation message -->
+        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+			</div>
+
+		</div>
+
+		<!-- Button to add more task configurations -->
+		<div class="col-md-12 text-center">
+			<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+		</div>
+
+	</form>
+
+</div>
