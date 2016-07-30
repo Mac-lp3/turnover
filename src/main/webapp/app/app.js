@@ -20,8 +20,15 @@ turnover.config(['$routeProvider', function($routeProvider) {
          controllerAs : 'resultsCtrl'
     });
 
+    $routeProvider.when('/advanced', {
+         templateUrl : 'app/partials/advanced/advanced.html',
+         controller : 'AdvancedController',
+         controllerAs : 'advancedCtrl'
+    });
+
 }]);
 
 turnover.service('ResultsService', ['$location', require('./js/services/resultsService')]);
 turnover.controller('HomeController', ['$http', '$location', 'ResultsService', require('./partials/home/homeController')]);
 turnover.controller('ResultsController', ['$http', '$location', 'ResultsService', require('./partials/results/resultsController')]);
+turnover.controller('AdvancedController', ['$http', '$location', 'ResultsService', require('./partials/advanced/advancedController')]);
