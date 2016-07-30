@@ -37,7 +37,7 @@
 		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
             
             <!-- Rate input -->
-            <div class="form-group col-md-3 col-sm-3">
+            <div class="form-group col-md-4 col-sm-4">
             	<!-- TODO index added to vars -->
 	            <label for="arrivalRate" class="control-label">Arrival Rate</label>
 	            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
@@ -49,7 +49,7 @@
 				</div -->
         	</div>
 
-        	<div class="form-group col-md-3 col-sm-3">
+        	<div class="form-group col-md-4 col-sm-4">
         		<!-- TODO index added to vars -->
                 <label for="taskTime" class="control-label">Task Length</label>
                 <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
@@ -61,7 +61,7 @@
 				</div -->
 			</div>
 
-			<div class="form-group col-md-3 col-sm-3">
+			<div class="form-group col-md-4 col-sm-4">
                 <label for="startPeriod" class="control-label">Start Period</label>
                 <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
         		
@@ -81,6 +81,65 @@
 
 		<div class="row text-center">
 			<h2 style="border-bottom: 1px solid #ccc;">Workers <small>How many workers? When do they arrive and leave? How fast do they work?</small></h2>
+		</div>
+
+		<!-- Task rate config. For each goes here -->
+		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+            
+            <!-- Rate input -->
+            <div class="form-group col-md-3 col-sm-3">
+            	<!-- TODO index added to vars -->
+	            <label for="totalWorkers" class="control-label">Total Workers</label>
+	            <input type="number" class="form-control" id="totalWorkers" name="totalWorkers" min="0" required>
+
+	            <!-- validation message -->
+	            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+        	</div>
+
+        	<div class="form-group col-md-3 col-sm-3">
+        		<label for="experienceModifier" class="control-label">Task Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <select class="form-control" id="experienceModifier" style="min-width:175px;" experienceModifier>
+					<option value="-1">Senior (-1)</option>
+					<option value="0" selected>Standard (0)</option>
+					<option value="1">Junior (+1)</option>
+				</select>
+        		
+        		<!-- validation message -->
+        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+			</div>
+
+			<div class="form-group col-md-3 col-sm-3">
+                <label for="workerArrivalPeriod" class="control-label">Arrival Period</label>
+                <input type="number" class="form-control" id="workerArrivalPeriod" name="workerArrivalPeriod" min="0" required>
+        		
+        		<!-- validation message -->
+        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+			</div>
+
+			<div class="form-group col-md-3 col-sm-3">
+                <label for="workerStopPeriod" class="control-label">Stop Period</label>
+                <input type="number" class="form-control" id="workerStopPeriod" name="workerStopPeriod" min="0" required>
+        		
+        		<!-- validation message -->
+        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+					<div ng-message="min">Greater than 0 please</div>
+					<div ng-message="required">Cannot be empty</div>
+				</div -->
+			</div>
+		</div>
+
+		<!-- Button to add more worker configurations -->
+		<div class="col-md-12 text-center">
+			<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 		</div>
 
 	</form>
