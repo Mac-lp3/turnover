@@ -30,53 +30,129 @@
         </div>
 
         <div class="row text-center">
-			<h2 style="border-bottom: 1px solid #ccc;">Task Rate <small>How many tasks per period? Are there priods of high/low volume?</small></h2>
+	        	
+	    	<ul class="nav nav-pills" style="display: inline-block;">
+				<li role="presentation" ><a href="" class="lead controll-pills" ng-click="advancedCtrl.showLinearConfig()" ng-class="{'controll-pills-active' : advancedCtrl.isLinear}">Linear Task Config</a></li>
+				<li role="presentation"><a href="" class="lead controll-pills" ng-click="advancedCtrl.showProbabilityConfig()" ng-class="{'controll-pills-active' : advancedCtrl.isProbability}">Probability Task Config</a></li>
+			</ul>
+			
 		</div>
 
-		<!-- Task rate config. For each goes here -->
-		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-            
-            <!-- Rate input -->
-            <div class="form-group col-md-4 col-sm-4">
-            	<!-- TODO index added to vars -->
-	            <label for="arrivalRate" class="control-label">Arrival Rate</label>
-	            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
-
-	            <!-- validation message -->
-	            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
-        	</div>
-
-        	<div class="form-group col-md-4 col-sm-4">
-        		<!-- TODO index added to vars -->
-                <label for="taskTime" class="control-label">Task Length</label>
-                <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
-        		
-        		<!-- validation message -->
-        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
+		<div ng-show="advancedCtrl.isLinear">
+		    <div class="row text-center">
+				<h2 style="border-bottom: 1px solid #ccc;">Linear Task Rate <small>How many tasks per period? Are there priods of high/low volume?</small></h2>
 			</div>
 
-			<div class="form-group col-md-4 col-sm-4">
-                <label for="startPeriod" class="control-label">Start Period</label>
-                <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
-        		
-        		<!-- validation message -->
-        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
+			<!-- Task rate config. For each goes here -->
+			<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+	            
+	            <!-- Rate input -->
+	            <div class="form-group col-md-4 col-sm-4">
+	            	<!-- TODO index added to vars -->
+		            <label for="arrivalRate" class="control-label">Arrival Rate</label>
+		            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
+
+		            <!-- validation message -->
+		            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+	        	</div>
+
+	        	<div class="form-group col-md-4 col-sm-4">
+	        		<!-- TODO index added to vars -->
+	                <label for="taskTime" class="control-label">Task Length</label>
+	                <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
+	        		
+	        		<!-- validation message -->
+	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+				</div>
+
+				<div class="form-group col-md-4 col-sm-4">
+	                <label for="startPeriod" class="control-label">Start Period</label>
+	                <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
+	        		
+	        		<!-- validation message -->
+	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+				</div>
+
+			</div>
+
+			<!-- Button to add more task configurations -->
+			<div class="col-md-12 text-center">
+				<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 			</div>
 
 		</div>
 
-		<!-- Button to add more task configurations -->
-		<div class="col-md-12 text-center">
-			<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+		<div ng-show="advancedCtrl.isProbability">
+			<div class="row text-center">
+				<h2 style="border-bottom: 1px solid #ccc;">Random Task Rate <small>How many tasks per period? High/low time? What % of each?</small></h2>
+			</div>
+
+			<!-- Task rate config. For each goes here -->
+			<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+	            
+	            <!-- Rate input -->
+	            <div class="form-group col-md-3 col-sm-3">
+	            	<!-- TODO index added to vars -->
+		            <label for="arrivalRate" class="control-label">Arrival Rate</label>
+		            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
+
+		            <!-- validation message -->
+		            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+	        	</div>
+
+	        	<div class="form-group col-md-3 col-sm-3">
+	        		<!-- TODO index added to vars -->
+	                <label for="lowTaskTime" class="control-label">Low Task Time</label>
+	                <input type="number" class="form-control" id="lowTaskTime" name="highTaskTime" min="0" required>
+	        		
+	        		<!-- validation message -->
+	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+				</div>
+
+				<div class="form-group col-md-3 col-sm-3">
+	        		<!-- TODO index added to vars -->
+	                <label for="highTaskTime" class="control-label">High Task Time</label>
+	                <input type="number" class="form-control" id="highTaskTime" name="lowTaskTime" min="0" required>
+	        		
+	        		<!-- validation message -->
+	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+				</div>
+
+				<div class="form-group col-md-3 col-sm-3">
+	                <label for="taskProportion" class="control-label">Proportion /100</label>
+	                <input type="number" class="form-control" id="taskProportion" name="taskProportion" min="1" max="100" style="width: 100%;" required>
+	        		<!-- validation message -->
+	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div -->
+				</div>
+
+			</div>
+
+			<!-- Button to add more task configurations -->
+			<div class="col-md-12 text-center">
+				<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+			</div>
+
 		</div>
 
 		<div class="row text-center">
