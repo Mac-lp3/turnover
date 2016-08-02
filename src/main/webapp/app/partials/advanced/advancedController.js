@@ -6,7 +6,7 @@ module.exports = function ($http, $location, resultsService) {
 	self.periodUnits = 'minutes';
 	self.totalPeriods = 0;
 	self.isProbability = false;
-	self.isLinear = false;
+	self.isLinear = true; // default
 
 	self.showLinearConfig = () => {
 		self.isProbability = false;
