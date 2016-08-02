@@ -2,108 +2,194 @@
 
 	<form name="advancedForm">
 
-		<div class="row text-center">
-			<h2 style="border-bottom: 1px solid #ccc;">Clock Configuration <small>What are time units? How many of them to simulate?</small></h2>
-		</div>
+		<!-- Clock config row -->
+		<div class="row">
 
-		<!--  Clock input area -->
-		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-    		<div class="form-group col-md-6 col-sm-6">
-            	<label for="periodUnit" class="control-label">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <select class="form-control" id="periodUnit" style="min-width:175px;" ng-model="advancedCtrl.periodUnits">
-					<option value="minutes" selected>Minutes</option>
-					<option value="hours">Hours</option>
-					<option value="days">Days</option>
-				</select>
-			</div>
-			
-			<div class="form-group col-md-6 col-sm-6">
-        		<label for="totalPeriods" class="control-label">Total&nbsp;</label>
-            	<input type="number" class="form-control" name="simLength" id="totalPeriods" ng-model="advancedCtrl.totalPeriods" min="0" required>
+			<!-- lead label-->
+			<h2 class="text-center" style="border-bottom: 1px solid #ccc;">Clock Configuration <small>What are time units? How many of them to simulate?</small></h2>
 
-            	<!-- validation message -->
-            	<div ng-messages="quickStartForm.simLength.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
+			<!--  Clock input area -->
+			<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+
+    			<div class="form-group col-md-6 col-sm-6">
+            		<label for="periodUnit" class="control-label">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                	<select class="form-control" id="periodUnit" style="min-width:175px;" ng-model="advancedCtrl.periodUnits">
+						<option value="minutes" selected>Minutes</option>
+						<option value="hours">Hours</option>
+						<option value="days">Days</option>
+					</select>
 				</div>
-            </div>
+			
+				<div class="form-group col-md-6 col-sm-6">
+        			<label for="totalPeriods" class="control-label">Total&nbsp;</label>
+            		<input type="number" class="form-control" name="simLength" id="totalPeriods" ng-model="advancedCtrl.totalPeriods" min="0" required>
+
+            		<!-- validation message -->
+            		<div ng-messages="quickStartForm.simLength.$error" style="color:red" role="alert">
+						<div ng-message="min">Greater than 0 please</div>
+						<div ng-message="required">Cannot be empty</div>
+					</div>
+            	</div>
+        	</div>
         </div>
 
-        <div class="row text-center">
+        <!-- Controll pills -->
+        <div class="row text-center" style="margin-top:20px;">
 	        	
 	    	<ul class="nav nav-pills" style="display: inline-block;">
-				<li role="presentation" ><a href="" class="lead controll-pills" ng-click="advancedCtrl.showLinearConfig()" ng-class="{'controll-pills-active' : advancedCtrl.isLinear}">Linear Task Config</a></li>
-				<li role="presentation"><a href="" class="lead controll-pills" ng-click="advancedCtrl.showProbabilityConfig()" ng-class="{'controll-pills-active' : advancedCtrl.isProbability}">Probability Task Config</a></li>
+				<li role="presentation" ><a href="" class="lead controll-pills" ng-click="advancedCtrl.showLinearConfig()" ng-class="{'controll-pills-active' : advancedCtrl.isLinear}">Linear Based Tasks</a></li>
+				<li role="presentation"><a href="" class="lead controll-pills" ng-click="advancedCtrl.showProbabilityConfig()" ng-class="{'controll-pills-active' : advancedCtrl.isProbability}">Probability Based Tasks</a></li>
 			</ul>
 			
 		</div>
 
+		<!-- linear config row -->
 		<div ng-show="advancedCtrl.isLinear">
-		    <div class="row text-center">
-				<h2 style="border-bottom: 1px solid #ccc;">Linear Task Rate <small>How many tasks per period? Are there priods of high/low volume?</small></h2>
-			</div>
+		    <div class="row">
+		    	<!-- lead label-->
+				<h2 class="text-center" style="margin-top: 0px; border-bottom: 1px solid #ccc;">Linear Task Rate <small>Tasks are added to the queue at a constant rate, with a constant work time to complete, starting at a specified time. Add multiple for periods of high/low volume.</small></h2>
+			
 
-			<!-- Task rate config. For each goes here -->
-			<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-	            
-	            <!-- Rate input -->
-	            <div class="form-group col-md-4 col-sm-4">
-	            	<!-- TODO index added to vars -->
-		            <label for="arrivalRate" class="control-label">Arrival Rate</label>
-		            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
+				<!-- Task rate config. For each goes here -->
+				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+		            
+		            <!-- Rate input -->
+		            <div class="form-group col-md-4 col-sm-4">
+		            	<!-- TODO index added to vars -->
+			            <label for="arrivalRate" class="control-label">Arrival Rate</label>
+			            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
 
-		            <!-- validation message -->
-		            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
-	        	</div>
+			            <!-- validation message -->
+			            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+		        	</div>
 
-	        	<div class="form-group col-md-4 col-sm-4">
-	        		<!-- TODO index added to vars -->
-	                <label for="taskTime" class="control-label">Task Length</label>
-	                <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
-	        		
-	        		<!-- validation message -->
-	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
+		        	<div class="form-group col-md-4 col-sm-4">
+		        		<!-- TODO index added to vars -->
+		                <label for="taskTime" class="control-label">Task Length</label>
+		                <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
+		        		
+		        		<!-- validation message -->
+		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+					</div>
+
+					<div class="form-group col-md-4 col-sm-4">
+		                <label for="startPeriod" class="control-label">Start Period</label>
+		                <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
+		        		
+		        		<!-- validation message -->
+		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+					</div>
+
 				</div>
 
-				<div class="form-group col-md-4 col-sm-4">
-	                <label for="startPeriod" class="control-label">Start Period</label>
-	                <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
-	        		
-	        		<!-- validation message -->
-	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
+				<!-- Button to add more task configurations -->
+				<div class="col-md-12 text-center">
+					<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 				</div>
 
-			</div>
-
-			<!-- Button to add more task configurations -->
-			<div class="col-md-12 text-center">
-				<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 			</div>
 
 		</div>
 
 		<div ng-show="advancedCtrl.isProbability">
-			<div class="row text-center">
-				<h2 style="border-bottom: 1px solid #ccc;">Random Task Rate <small>How many tasks per period? High/low time? What % of each?</small></h2>
+			<div class="row">
+				<h2 class="text-center" style="margin-top: 0px; border-bottom: 1px solid #ccc;">Random Task Rate <small>Tasks are added to the queue at a constant rate, but with a random work time (between provided bounds). For multiple ranges, specify how many out of 100 for each.</small></h2>
+			
+
+				<!-- Task rate config. For each goes here -->
+				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+		            
+		            <!-- Rate input -->
+		            <div class="form-group col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2">
+		            	<!-- TODO index added to vars -->
+			            <label for="arrivalRate" class="control-label">Arrival Rate</label>
+			            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required style="width: 100%;">
+
+			            <!-- validation message -->
+			            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+		        	</div>
+
+		        	<div class="form-group col-md-2 col-sm-2">
+		        		<!-- TODO index added to vars -->
+		                <label for="lowTaskTime" class="control-label">Low Bound</label>
+		                <input type="number" class="form-control" id="lowTaskTime" name="highTaskTime" min="0" required style="width: 100%;">
+		        		
+		        		<!-- validation message -->
+		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+					</div>
+
+					<div class="form-group col-md-2 col-sm-2">
+		        		<!-- TODO index added to vars -->
+		                <label for="highTaskTime" class="control-label">High Bound</label>
+		                <input type="number" class="form-control" id="highTaskTime" name="lowTaskTime" min="0" required style="width: 100%;">
+		        		
+		        		<!-- validation message -->
+		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+					</div>
+
+					<div class="form-group col-md-2 col-sm-2">
+		                <label for="taskProportion" class="control-label">X/100</label>
+		                <input type="number" class="form-control" id="taskProportion" name="taskProportion" min="1" max="100" required style="width: 100%;">
+		        		<!-- validation message -->
+		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+					</div>
+
+					<div class="form-group col-md-2 col-sm-2">
+		                <label for="probStartPeriod" class="control-label">Start Period</label>
+		                <input type="number" class="form-control" id="probStartPeriod" name="probStartPeriod" min="0" required style="width: 100%;">
+		        		
+		        		<!-- validation message -->
+		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div -->
+					</div>
+
+				</div>
+			
+				<!-- Button to add more task configurations -->
+				<div class="col-md-12 text-center">
+					<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				</div>
+
 			</div>
 
+		</div>
+
+		<div class="row">
+
+			<!-- workers lead label -->
+			<h2 class="text-center" style="border-bottom: 1px solid #ccc;">Workers <small>How many workers? When do they arrive and leave? How fast do they work?</small></h2>
+		
 			<!-- Task rate config. For each goes here -->
 			<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 	            
 	            <!-- Rate input -->
 	            <div class="form-group col-md-3 col-sm-3">
 	            	<!-- TODO index added to vars -->
-		            <label for="arrivalRate" class="control-label">Arrival Rate</label>
-		            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
+		            <label for="totalWorkers" class="control-label">Total Workers</label>
+		            <input type="number" class="form-control" id="totalWorkers" name="totalWorkers" min="0" required>
 
 		            <!-- validation message -->
 		            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
@@ -113,9 +199,12 @@
 	        	</div>
 
 	        	<div class="form-group col-md-3 col-sm-3">
-	        		<!-- TODO index added to vars -->
-	                <label for="lowTaskTime" class="control-label">Low Task Time</label>
-	                <input type="number" class="form-control" id="lowTaskTime" name="highTaskTime" min="0" required>
+	        		<label for="experienceModifier" class="control-label">Task Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	                <select class="form-control" id="experienceModifier" style="min-width:175px;" experienceModifier>
+						<option value="-1">Senior (-1)</option>
+						<option value="0" selected>Standard (0)</option>
+						<option value="1">Junior (+1)</option>
+					</select>
 	        		
 	        		<!-- validation message -->
 	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
@@ -125,9 +214,8 @@
 				</div>
 
 				<div class="form-group col-md-3 col-sm-3">
-	        		<!-- TODO index added to vars -->
-	                <label for="highTaskTime" class="control-label">High Task Time</label>
-	                <input type="number" class="form-control" id="highTaskTime" name="lowTaskTime" min="0" required>
+	                <label for="workerArrivalPeriod" class="control-label">Arrival Period</label>
+	                <input type="number" class="form-control" id="workerArrivalPeriod" name="workerArrivalPeriod" min="0" required>
 	        		
 	        		<!-- validation message -->
 	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
@@ -137,8 +225,9 @@
 				</div>
 
 				<div class="form-group col-md-3 col-sm-3">
-	                <label for="taskProportion" class="control-label">Proportion /100</label>
-	                <input type="number" class="form-control" id="taskProportion" name="taskProportion" min="1" max="100" style="width: 100%;" required>
+	                <label for="workerStopPeriod" class="control-label">Stop Period</label>
+	                <input type="number" class="form-control" id="workerStopPeriod" name="workerStopPeriod" min="0" required>
+	        		
 	        		<!-- validation message -->
 	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
 						<div ng-message="min">Greater than 0 please</div>
@@ -148,74 +237,18 @@
 
 			</div>
 
-			<!-- Button to add more task configurations -->
+			<!-- Button to add more worker configurations -->
 			<div class="col-md-12 text-center">
 				<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 			</div>
-
+			
 		</div>
 
-		<div class="row text-center">
-			<h2 style="border-bottom: 1px solid #ccc;">Workers <small>How many workers? When do they arrive and leave? How fast do they work?</small></h2>
-		</div>
-
-		<!-- Task rate config. For each goes here -->
-		<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-            
-            <!-- Rate input -->
-            <div class="form-group col-md-3 col-sm-3">
-            	<!-- TODO index added to vars -->
-	            <label for="totalWorkers" class="control-label">Total Workers</label>
-	            <input type="number" class="form-control" id="totalWorkers" name="totalWorkers" min="0" required>
-
-	            <!-- validation message -->
-	            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
-        	</div>
-
-        	<div class="form-group col-md-3 col-sm-3">
-        		<label for="experienceModifier" class="control-label">Task Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <select class="form-control" id="experienceModifier" style="min-width:175px;" experienceModifier>
-					<option value="-1">Senior (-1)</option>
-					<option value="0" selected>Standard (0)</option>
-					<option value="1">Junior (+1)</option>
-				</select>
-        		
-        		<!-- validation message -->
-        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
-			</div>
-
-			<div class="form-group col-md-3 col-sm-3">
-                <label for="workerArrivalPeriod" class="control-label">Arrival Period</label>
-                <input type="number" class="form-control" id="workerArrivalPeriod" name="workerArrivalPeriod" min="0" required>
-        		
-        		<!-- validation message -->
-        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
-			</div>
-
-			<div class="form-group col-md-3 col-sm-3">
-                <label for="workerStopPeriod" class="control-label">Stop Period</label>
-                <input type="number" class="form-control" id="workerStopPeriod" name="workerStopPeriod" min="0" required>
-        		
-        		<!-- validation message -->
-        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-					<div ng-message="min">Greater than 0 please</div>
-					<div ng-message="required">Cannot be empty</div>
-				</div -->
-			</div>
-		</div>
-
-		<!-- Button to add more worker configurations -->
-		<div class="col-md-12 text-center">
-			<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+		<div class="row" style="margin-top: 20px;">
+			<p style="text-align: center;">
+				<button class="btn btn-lg">Home</button>
+				<button type="button" class="btn btn-default btn-lg">Execute</button>
+			</p>
 		</div>
 
 	</form>
