@@ -1,0 +1,19 @@
+.controll-pills {
+	background-color: #777 !important; 
+	color: #FFFFFF !important;
+	border-radius: 0px !important;
+}
+
+.controll-pills-active {
+	background-color: #000000 !important; 
+	color: #FFFFFF !important;
+	border-radius: 0px !important;
+}
+
+.controll-pills:hover {
+	background-color: #000000 !important;
+}
+
+.controll-pills:focus {
+	background-color: #000000 !important;
+}
