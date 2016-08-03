@@ -22,10 +22,10 @@
 			
 				<div class="form-group col-md-6 col-sm-6">
         			<label for="totalPeriods" class="control-label">Total&nbsp;</label>
-            		<input type="number" class="form-control" name="simLength" id="totalPeriods" ng-model="advancedCtrl.totalPeriods" min="0" required>
+            		<input type="number" class="form-control" name="totalPeriods" id="totalPeriods" ng-model="advancedCtrl.totalPeriods" min="0" required>
 
             		<!-- validation message -->
-            		<div ng-messages="quickStartForm.simLength.$error" style="color:red" role="alert">
+            		<div ng-messages="advancedForm.totalPeriods.$error" style="color:red" role="alert">
 						<div ng-message="min">Greater than 0 please</div>
 						<div ng-message="required">Cannot be empty</div>
 					</div>
@@ -45,50 +45,54 @@
 
 		<!-- linear config row -->
 		<div ng-show="advancedCtrl.isLinear">
+
 		    <div class="row">
 		    	<!-- lead label-->
 				<h2 class="text-center" style="margin-top: 0px; border-bottom: 1px solid #ccc;">Linear Task Rate <small>Tasks are added to the queue at a constant rate, with a constant work time to complete, starting at a specified time. Add multiple for periods of high/low volume.</small></h2>
 			
 
 				<!-- Task rate config. For each goes here -->
-				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-		            
-		            <!-- Rate input -->
-		            <div class="form-group col-md-4 col-sm-4">
-		            	<!-- TODO index added to vars -->
-			            <label for="arrivalRate" class="control-label">Arrival Rate</label>
-			            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required>
+				<div ng-repeat="linearConfig in advancedCtrl.linearTaskConfigs track by $index">
+					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+			            
+			            <!-- Rate input -->
+			            <div class="form-group col-md-4 col-sm-4">
+			            	
+			            
+				            <label for="{{'linearArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
+				            <input type="number" class="form-control" id="{{'linearArrivalRate' + $index}}" name="{{'linearArrivalRate' + $index}}" min="0" ng-model="linearConfig.arrivalRate" ng-required="advancedCtrl.isLinear">
 
-			            <!-- validation message -->
-			            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
-		        	</div>
+				            <!-- validation message -->
+				            <div ng-messages="advancedForm['linearArrivalRate' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+			        	</div>
 
-		        	<div class="form-group col-md-4 col-sm-4">
-		        		<!-- TODO index added to vars -->
-		                <label for="taskTime" class="control-label">Task Length</label>
-		                <input type="number" class="form-control" id="taskTime" name="taskTime" min="0" required>
-		        		
-		        		<!-- validation message -->
-		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
+			        	<div class="form-group col-md-4 col-sm-4">
+			        	
+			                <label for="{{'linearTaskLength' + $index}}" class="control-label">Task Length</label>
+			                <input type="number" class="form-control" id="{{'linearTaskLength' + $index}}" name="{{'linearTaskLength' + $index}}" min="0" ng-model="linearConfig.taskLength" ng-required="advancedCtrl.isLinear">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['linearTaskLength' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-4 col-sm-4">
+			                <label for="{{'linearStartPeriod' + $index}}" class="control-label">Start Period</label>
+			                <input type="number" class="form-control" id="{{'linearStartPeriod' + $index}}" name="{{'linearStartPeriod' + $index}}" ng-model="linearConfig.startPeriod" min="0" ng-required="advancedCtrl.isLinear">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['linearStartPeriod' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
 					</div>
-
-					<div class="form-group col-md-4 col-sm-4">
-		                <label for="startPeriod" class="control-label">Start Period</label>
-		                <input type="number" class="form-control" id="startPeriod" name="startPeriod" min="0" required>
-		        		
-		        		<!-- validation message -->
-		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
-					</div>
-
 				</div>
 
 				<!-- Button to add more task configurations -->
@@ -101,71 +105,75 @@
 		</div>
 
 		<div ng-show="advancedCtrl.isProbability">
+
 			<div class="row">
 				<h2 class="text-center" style="margin-top: 0px; border-bottom: 1px solid #ccc;">Random Task Rate <small>Tasks are added to the queue at a constant rate, but with a random work time (between provided bounds). For multiple ranges, specify how many out of 100 for each.</small></h2>
-			
+				
+				<!-- wrapping loop declaration -->
+				<div ng-repeat="probabilityConfig in advancedCtrl.probabilityTaskConfigs track by $index">
+					
+					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+			            
+			            <!-- Rate input -->
+			            <div class="form-group col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2">
+			            
+				            <label for="{{'probabilityArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
+				            <input type="number" class="form-control" id="{{'probabilityArrivalRate' + $index}}" name="{{'probabilityArrivalRate' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.arrivalRate" style="width: 100%;">
 
-				<!-- Task rate config. For each goes here -->
-				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-		            
-		            <!-- Rate input -->
-		            <div class="form-group col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2">
-		            	<!-- TODO index added to vars -->
-			            <label for="arrivalRate" class="control-label">Arrival Rate</label>
-			            <input type="number" class="form-control" id="arrivalRate" name="totalWorkers" min="0" required style="width: 100%;">
+				            <!-- validation message -->
+				            <div ng-messages="advancedForm['probabilityArrivalRate' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+			        	</div>
 
-			            <!-- validation message -->
-			            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
-		        	</div>
+			        	<div class="form-group col-md-2 col-sm-2">
+			        	
+			                <label for="{{'probabilityLowBound' + $index}}" class="control-label">Low Bound</label>
+			                <input type="number" class="form-control" id="{{'probabilityLowBound' + $index}}"  name="{{'probabilityLowBound' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.lowBound" style="width: 100%;">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['probabilityLowBound' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
 
-		        	<div class="form-group col-md-2 col-sm-2">
-		        		<!-- TODO index added to vars -->
-		                <label for="lowTaskTime" class="control-label">Low Bound</label>
-		                <input type="number" class="form-control" id="lowTaskTime" name="highTaskTime" min="0" required style="width: 100%;">
-		        		
-		        		<!-- validation message -->
-		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
+						<div class="form-group col-md-2 col-sm-2">
+			        	
+			                <label for="{{'probabilityHighBound' + $index}}" class="control-label">High Bound</label>
+			                <input type="number" class="form-control" id="{{'probabilityHighBound' + $index}}" name="{{'probabilityHighBound' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.highBound" style="width: 100%;">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['probabilityHighBound' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-2 col-sm-2">
+			                <label for="{{'probabilityTaskProportion' + $index}}" class="control-label">X/100</label>
+			                <input type="number" class="form-control" id="{{'probabilityTaskProportion' + $index}}" name="{{'probabilityTaskProportion' + $index}}" min="1" max="100" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.taskProportion" style="width: 100%;">
+
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['probabilityTaskProportion' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-2 col-sm-2">
+			                <label for="{{'probabilityStartPeriod' + $index}}" class="control-label">Start Period</label>
+			                <input type="number" class="form-control" id="{{'probabilityStartPeriod' + $index}}" name="{{'probabilityStartPeriod' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.startPeriod" style="width: 100%;">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['probabilityStartPeriod' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
 					</div>
-
-					<div class="form-group col-md-2 col-sm-2">
-		        		<!-- TODO index added to vars -->
-		                <label for="highTaskTime" class="control-label">High Bound</label>
-		                <input type="number" class="form-control" id="highTaskTime" name="lowTaskTime" min="0" required style="width: 100%;">
-		        		
-		        		<!-- validation message -->
-		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
-					</div>
-
-					<div class="form-group col-md-2 col-sm-2">
-		                <label for="taskProportion" class="control-label">X/100</label>
-		                <input type="number" class="form-control" id="taskProportion" name="taskProportion" min="1" max="100" required style="width: 100%;">
-		        		<!-- validation message -->
-		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
-					</div>
-
-					<div class="form-group col-md-2 col-sm-2">
-		                <label for="probStartPeriod" class="control-label">Start Period</label>
-		                <input type="number" class="form-control" id="probStartPeriod" name="probStartPeriod" min="0" required style="width: 100%;">
-		        		
-		        		<!-- validation message -->
-		        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-							<div ng-message="min">Greater than 0 please</div>
-							<div ng-message="required">Cannot be empty</div>
-						</div -->
-					</div>
-
 				</div>
 			
 				<!-- Button to add more task configurations -->
@@ -187,7 +195,7 @@
 	            
 	            <!-- Rate input -->
 	            <div class="form-group col-md-3 col-sm-3">
-	            	<!-- TODO index added to vars -->
+	            
 		            <label for="totalWorkers" class="control-label">Total Workers</label>
 		            <input type="number" class="form-control" id="totalWorkers" name="totalWorkers" min="0" required>
 
