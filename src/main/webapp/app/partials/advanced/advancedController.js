@@ -2,27 +2,28 @@
 
 module.exports = function ($http, $location, resultsService) {
 
-	const self = this;
-	self.periodUnits = 'minutes';
-	self.totalPeriods = 0;
-	self.isProbability = false;
-	self.isLinear = true; // default
+	this.periodUnits = 'minutes';
+	this.totalPeriods = 0;
+	this.isProbability = false;
+	this.showProbabilityRm = false;
+	this.isLinear = true; // default
+	this.showLinearRm = false;
 
 	// linear configuration
-	self.linearTaskConfigs = [];
+	this.linearTaskConfigs = [];
 
 	// initialize with one value
-	self.linearTaskConfigs.push({
+	this.linearTaskConfigs.push({
 		arrivalRate: 0,
 		taskLength: 0,
 		startPeriod: 0
 	});
 
 	// probability configuration
-	self.probabilityTaskConfigs = [];
+	this.probabilityTaskConfigs = [];
 
 	// initialize with one value
-	self.probabilityTaskConfigs.push({
+	this.probabilityTaskConfigs.push({
 		arrivalRate: 0,
 		lowBound: 0,
 		highBound: 0,
@@ -30,14 +31,61 @@ module.exports = function ($http, $location, resultsService) {
 		startPeriod: 0
 	});
 
-	self.showLinearConfig = function () {
-		self.isProbability = false;
-		self.isLinear = true;
+	this.showLinearConfig = () => {
+		isProbability = false;
+		isLinear = true;
 	};
 
-	self.showProbabilityConfig = function () {
-		self.isProbability = true;
-		self.isLinear = false;
+	this.addLinearConfig = () => {
+		// TODO
+		if (linearTaskConfigs.length <= 1) {
+			showLinearRm = false;
+		} else {
+			showLinearRm = true;
+		}
+	};
+
+	this.removeLinearConfig = () => {
+
+		// TODO
+		if (linearTaskConfigs.length <= 1) {
+
+			// something went wrong either way.
+			showLinearRm = false;
+		} else {
+
+			showLinearRm = true;
+		}
+	};
+
+	this.showProbabilityConfig = () => {
+		isProbability = true;
+		isLinear = false;
+	};
+
+	this.addProbabilityConfig = () => {
+
+		// TODO
+		if (probabilityTaskConfigs.length <= 1) {
+
+			// something went wrong either way
+			showProbabilityRm = false;
+		} else {
+			showProbabilityRm = true;
+		}
+	};
+
+	this.removeProbabilityConfig = () => {
+
+		// TODO
+		if (probabilityTaskConfigs.length <= 1) {
+
+			// something went wrong either way.
+			showProbabilityRm = false;
+		} else {
+
+			showProbabilityRm = true;
+		}
 	};
 
 };
