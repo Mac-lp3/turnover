@@ -95,9 +95,16 @@
 					</div>
 				</div>
 
-				<!-- Button to add more task configurations -->
-				<div class="col-md-12 text-center">
-					<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<!-- Add/Remove buttons -->
+				<div class="row">
+					<p class="text-center">
+
+						<!-- Button to add more task configurations -->
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.addLinearConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+
+						<!-- Button to remove more task configurations -->
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeLinearConfig()" ng-show="advancedCtrl.showLinearRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
+					</p>
 				</div>
 
 			</div>
@@ -176,9 +183,16 @@
 					</div>
 				</div>
 			
-				<!-- Button to add more task configurations -->
-				<div class="col-md-12 text-center">
-					<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<!-- Add/Remove buttons -->
+				<div class="row">
+					<p class="text-center">
+
+						<!-- Button to add more task configurations -->
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.addProbabilityConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+
+						<!-- Button to remove more task configurations -->
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeProbabilityConfig()" ng-show="advancedCtrl.showProbabilityRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
+					</p>
 				</div>
 
 			</div>

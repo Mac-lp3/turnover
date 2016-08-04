@@ -32,60 +32,86 @@ module.exports = function ($http, $location, resultsService) {
 	});
 
 	this.showLinearConfig = () => {
-		isProbability = false;
-		isLinear = true;
+		this.isProbability = false;
+		this.isLinear = true;
 	};
 
 	this.addLinearConfig = () => {
-		// TODO
-		if (linearTaskConfigs.length <= 1) {
-			showLinearRm = false;
+		
+		this.linearTaskConfigs.push({
+			arrivalRate: 0,
+			taskLength: 0,
+			startPeriod: 0
+		});
+
+		if (this.linearTaskConfigs.length <= 1) {
+
+			this.showLinearRm = false;
+
 		} else {
-			showLinearRm = true;
+
+			this.showLinearRm = true;
 		}
 	};
 
 	this.removeLinearConfig = () => {
 
+		this.linearTaskConfigs.pop();
+
 		// TODO
-		if (linearTaskConfigs.length <= 1) {
+		if (this.linearTaskConfigs.length <= 1) {
 
 			// something went wrong either way.
-			showLinearRm = false;
+			this.showLinearRm = false;
+
 		} else {
 
-			showLinearRm = true;
+			this.showLinearRm = true;
 		}
+
 	};
 
 	this.showProbabilityConfig = () => {
-		isProbability = true;
-		isLinear = false;
+
+		this.isProbability = true;
+		this.isLinear = false;
+
 	};
 
 	this.addProbabilityConfig = () => {
 
-		// TODO
-		if (probabilityTaskConfigs.length <= 1) {
+		this.probabilityTaskConfigs.push({
+			arrivalRate: 0,
+			lowBound: 0,
+			highBound: 0,
+			taskProportion: 100,
+			startPeriod: 0
+		});
+
+		if (this.probabilityTaskConfigs.length <= 1) {
 
 			// something went wrong either way
-			showProbabilityRm = false;
+			this.showProbabilityRm = false;
 		} else {
-			showProbabilityRm = true;
+			this.showProbabilityRm = true;
 		}
+
 	};
 
 	this.removeProbabilityConfig = () => {
 
-		// TODO
-		if (probabilityTaskConfigs.length <= 1) {
+		this.probabilityTaskConfigs.pop();
+
+		if (this.probabilityTaskConfigs.length <= 1) {
 
 			// something went wrong either way.
-			showProbabilityRm = false;
+			this.showProbabilityRm = false;
+
 		} else {
 
-			showProbabilityRm = true;
+			this.showProbabilityRm = true;
 		}
+
 	};
 
 };
