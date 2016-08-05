@@ -18,12 +18,24 @@ module.exports = function ($http, $location, resultsService) {
 			method: 'POST',
 			url: 'api/simulation?type=simple',
 			data: {
-				quickStartUnits: self.quickStartUnits,
-				quickStartPeriods: self.quickStartPeriods,
-				quickStartWorkers: self.quickStartWorkers,
-				quickStartRate: self.quickStartRate,
-				quickStartTaskTime: self.quickStartTaskTime,
-				quickStartRestTime: self.quickStartRestTime
+				clockUnits: self.quickStartUnits,
+				totalPeriods: self.quickStartPeriods,
+				workerConfigurations: [{
+					total: self.quickStartWorkers,
+					additionalTime: 0,
+					restTime: self.quickStartRestTime,
+					arrivalPeriod: 0,
+					stopPeriod: 0
+				}],
+				taskConfigurations: [{
+					rate: self.quickStartRate,
+					length: self.quickStartTaskTime,
+					startPeriod: 0,
+					endPeriod: 0,
+					lowBound: 0,
+					highBound: 0,
+					proportion: 100
+				}]
 			}
 
 		}).then(function success(response){
