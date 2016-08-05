@@ -1,10 +1,10 @@
 package org.mac.sim.simulation;
 
-import org.mac.sim.domain.SimulationForm;
+import org.mac.sim.domain.SimulationConfigrations;
 
 public abstract class SimulationBuilder {
 	
-	protected SimulationBuilder(SimulationForm simulationForm) {
+	protected SimulationBuilder(SimulationConfigrations simulationConfig) {
 		
 	}
 	

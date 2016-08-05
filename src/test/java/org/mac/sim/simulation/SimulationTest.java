@@ -1,7 +1,8 @@
 package org.mac.sim.simulation;
 
 import org.junit.Test;
-import org.mac.sim.domain.SimulationForm;
+import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.WorkerTask;
@@ -32,12 +33,14 @@ public class SimulationTest {
 	@Test
 	public void simpleQueueSimulationTest() throws TurnoverException {
 		
-		SimulationForm simpleSimulationForm = new SimulationForm();
+		SimulationConfigrations simpleSimulationConfiguration = new SimulationConfigrations();
 		
-		simpleSimulationForm.setQuickStartRate(8);
-		simpleSimulationForm.setQuickStartPeriods(100);
+		simpleSimulationConfiguration.setTotalPeriods(100);
+		
+		TaskConfiguration taskConfig = new TaskConfiguration();
+		taskConfig.setRate(8);
 
-		SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simpleSimulationForm);
+		SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simpleSimulationConfiguration);
 		qsb.addWorkers(5, 10, 5);
 		qsb.addWorkers(3, 7, 3);
 		qsb.addWorkers(3, 5, 1);

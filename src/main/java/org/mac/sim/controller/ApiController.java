@@ -1,6 +1,6 @@
 package org.mac.sim.controller;
 
-import org.mac.sim.domain.SimulationForm;
+import org.mac.sim.domain.SimulationConfigrations;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.simulation.SimpleQueueSimulationBuilder;
 import org.mac.sim.simulation.Simulation;
@@ -16,17 +16,19 @@ public class ApiController {
 
 	@RequestMapping(path = "/simulation", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
 	public Simulation postSimulationForm(@RequestParam(value = "type", required = false) String type,
-			@RequestBody SimulationForm simulationForm) {
+			@RequestBody SimulationConfigrations simulationConfig) {
 
 		Simulation sim = null;
 
 		// TODO make this a const
 		if ("simple".equalsIgnoreCase(type)) {
-
-			SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simulationForm);
-
-			qsb.addWorkers(simulationForm.getQuickStartWorkers(), simulationForm.getQuickStartTaskTime(),
-					simulationForm.getQuickStartRestTime());
+			
+			// Simple simulations only rely on a single task and worker configuration
+			SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simulationConfig);
+			
+			qsb.addWorkers(simulationConfig.getWorkerConfigurations().get(0).getTotal(),
+					simulationConfig.getWorkerConfigurations().get(0).getAdditionalTime(),
+					simulationConfig.getWorkerConfigurations().get(0).getRestTime());
 
 			try {
 
