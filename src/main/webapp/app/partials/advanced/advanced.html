@@ -100,10 +100,10 @@
 					<p class="text-center">
 
 						<!-- Button to add more task configurations -->
-						<button type="button" class="btn btn-md" ng-click="advancedCtrl.addLinearConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.addTaskConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 
 						<!-- Button to remove more task configurations -->
-						<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeLinearConfig()" ng-show="advancedCtrl.showLinearRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeTaskConfig()" ng-show="advancedCtrl.showLinearRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
 					</p>
 				</div>
 
@@ -160,7 +160,7 @@
 
 						<div class="form-group col-md-2 col-sm-2">
 			                <label for="{{'probabilityTaskProportion' + $index}}" class="control-label">X/100</label>
-			                <input type="number" class="form-control" id="{{'probabilityTaskProportion' + $index}}" name="{{'probabilityTaskProportion' + $index}}" min="1" max="100" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.taskProportion" style="width: 100%;">
+			                <input type="number" class="form-control" id="{{'probabilityTaskProportion' + $index}}" name="{{'probabilityTaskProportion' + $index}}" min="1" max="100" total-One-Hundred ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.taskProportion" style="width: 100%;">
 
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['probabilityTaskProportion' + $index].$error" style="color:red" role="alert">
@@ -189,10 +189,10 @@
 					<p class="text-center">
 
 						<!-- Button to add more task configurations -->
-						<button type="button" class="btn btn-md" ng-click="advancedCtrl.addProbabilityConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.addTaskConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 
 						<!-- Button to remove more task configurations -->
-						<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeProbabilityConfig()" ng-show="advancedCtrl.showProbabilityRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
+						<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeTaskConfig()" ng-show="advancedCtrl.showProbabilityRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
 					</p>
 				</div>
 
@@ -205,64 +205,76 @@
 			<!-- workers lead label -->
 			<h2 class="text-center" style="border-bottom: 1px solid #ccc;">Workers <small>How many workers? When do they arrive and leave? How fast do they work?</small></h2>
 		
-			<!-- Task rate config. For each goes here -->
-			<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
-	            
-	            <!-- Rate input -->
-	            <div class="form-group col-md-3 col-sm-3">
-	            
-		            <label for="totalWorkers" class="control-label">Total Workers</label>
-		            <input type="number" class="form-control" id="totalWorkers" name="totalWorkers" min="0" required>
+			<div ng-repeat="workerConfig in advancedCtrl.workerConfigs track by $index">
+				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+		            
+		            <!-- Rate input -->
+		            <div class="form-group col-md-3 col-sm-3">
+		            
+			            <label for="{{'total' + $index}}" class="control-label">Total Workers</label>
+			            
+			            <input type="number" class="form-control" id="{{'total' + $index}}" name="{{'total' + $index}}" ng-model="workerConfig.total" min="0" required>
 
-		            <!-- validation message -->
-		            <!-- div ng-messages="quickStartForm.totalWorkers.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
-	        	</div>
+			            <!-- validation message -->
+			            <div ng-messages="advancedForm['total' + $index].$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div>
+		        	</div>
 
-	        	<div class="form-group col-md-3 col-sm-3">
-	        		<label for="experienceModifier" class="control-label">Task Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-	                <select class="form-control" id="experienceModifier" style="min-width:175px;" experienceModifier>
-						<option value="-1">Senior (-1)</option>
-						<option value="0" selected>Standard (0)</option>
-						<option value="1">Junior (+1)</option>
-					</select>
-	        		
-	        		<!-- validation message -->
-	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
+		        	<div class="form-group col-md-3 col-sm-3">
+
+		        		<label for="{{'additionalTime' + $index}}" class="control-label">Additional Time</label>
+		                
+		                <select class="form-control" id="{{'additionalTime' + $index}}" ng-model="workerConfig.additionalTime" style="min-width:175px;">
+							<option value="-1">Senior (-1)</option>
+							<option value="0" selected>Standard (0)</option>
+							<option value="1">Junior (+1)</option>
+						</select>
+		        		
+		        		<!-- validation message -->
+		        		<div ng-messages="advancedForm['additionalTime' + $index].$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div>
+					</div>
+
+					<div class="form-group col-md-3 col-sm-3">
+		                
+		                <label for="{{'arrivalPeriod' + $index}}" class="control-label">Arrival Period</label>
+		                
+		                <input type="number" class="form-control" id="{{'arrivalPeriod' + $index}}" name="{{'arrivalPeriod' + $index}}" ng-model="workerConfig.arrivalPeriod" min="0" required>
+		        		
+		        		<!-- validation message -->
+		        		<div ng-messages="advancedForm['arrivalPeriod' + $index].$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div>
+					</div>
+
+					<div class="form-group col-md-3 col-sm-3">
+		                
+		                <label for="{{'stopPeriod' + $index}}" class="control-label">Stop Period</label>
+		                
+		                <input type="number" class="form-control" id="{{'stopPeriod' + $index}}" name="{{'stopPeriod' + $index}}" ng-model="workerConfig.stopPeriod" min="0" required>
+		        		
+		        		<!-- validation message -->
+		        		<div ng-messages="advancedForm['stopPeriod' + $index].$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div>
+					</div>
+
 				</div>
-
-				<div class="form-group col-md-3 col-sm-3">
-	                <label for="workerArrivalPeriod" class="control-label">Arrival Period</label>
-	                <input type="number" class="form-control" id="workerArrivalPeriod" name="workerArrivalPeriod" min="0" required>
-	        		
-	        		<!-- validation message -->
-	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
-				</div>
-
-				<div class="form-group col-md-3 col-sm-3">
-	                <label for="workerStopPeriod" class="control-label">Stop Period</label>
-	                <input type="number" class="form-control" id="workerStopPeriod" name="workerStopPeriod" min="0" required>
-	        		
-	        		<!-- validation message -->
-	        		<!-- div ng-messages="quickStartForm.arrivalRate.$error" style="color:red" role="alert">
-						<div ng-message="min">Greater than 0 please</div>
-						<div ng-message="required">Cannot be empty</div>
-					</div -->
-				</div>
-
 			</div>
 
 			<!-- Button to add more worker configurations -->
 			<div class="col-md-12 text-center">
-				<button type="button" class="btn btn-md"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				
+				<button type="button" class="btn btn-md" ng-click="advancedCtrl.addWorkerConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+
+				<!-- Button to remove more task configurations -->
+				<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeWorkerConfig()" ng-show="advancedCtrl.showWorkerRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
 			</div>
 			
 		</div>
