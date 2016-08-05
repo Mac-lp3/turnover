@@ -9,39 +9,9 @@ module.exports = function ($http, $location, resultsService) {
 	this.isLinear = true; // default
 	this.showLinearRm = false;
 	this.showWorkerRm = false;
-
-	// Worker configurations
 	this.workerConfigs = [];
-
-	// init with one value
-	this.workerConfigs.push({
-		total: 0,
-		additionalTime: '0',
-		arrivalPeriod: 0,
-		stopPeriod: 0
-	});
-
-	// linear configuration
 	this.linearTaskConfigs = [];
-
-	// initialize with one value
-	this.linearTaskConfigs.push({
-		arrivalRate: 0,
-		taskLength: 0,
-		startPeriod: 0
-	});
-
-	// probability configuration
 	this.probabilityTaskConfigs = [];
-
-	// initialize with one value
-	this.probabilityTaskConfigs.push({
-		arrivalRate: 0,
-		lowBound: 0,
-		highBound: 0,
-		taskProportion: 100,
-		startPeriod: 0
-	});
 
 	this.addTaskConfig = () => {
 
@@ -50,7 +20,8 @@ module.exports = function ($http, $location, resultsService) {
 			this.linearTaskConfigs.push({
 				arrivalRate: 0,
 				taskLength: 0,
-				startPeriod: 0
+				startPeriod: 0,
+				endPeriod: 0
 			});
 
 			if (this.linearTaskConfigs.length <= 1) {
@@ -68,8 +39,9 @@ module.exports = function ($http, $location, resultsService) {
 				arrivalRate: 0,
 				lowBound: 0,
 				highBound: 0,
-				taskProportion: 100,
-				startPeriod: 0
+				proportion: 100,
+				startPeriod: 0,
+				endPeriod: 0
 			});
 
 			if (this.probabilityTaskConfigs.length <= 1) {
@@ -135,7 +107,8 @@ module.exports = function ($http, $location, resultsService) {
 			total: 0,
 			additionalTime: '0',
 			arrivalPeriod: 0,
-			stopPeriod: 0
+			stopPeriod: 0,
+			restTime: 0
 		});
 
 		if (this.workerConfigs.length <= 1) {
@@ -173,8 +146,8 @@ module.exports = function ($http, $location, resultsService) {
 	// 	let total= 0;	
 	// 	for (let i = 0; i < this.probabilityTaskConfigs.length; ++i) {
 
-	// 		total =+ this.probabilityTaskConfigs[i].taskProportion ? 
-	// 			this.probabilityTaskConfigs[i].taskProportion : 0;
+	// 		total =+ this.probabilityTaskConfigs[i].proportion ? 
+	// 			this.probabilityTaskConfigs[i].proportion : 0;
 	// 	}
 
 	// 	if (total === 100) {
@@ -208,5 +181,11 @@ module.exports = function ($http, $location, resultsService) {
 
 	};
 
+	// initialize
+	this.addWorkerConfig();
+	this.addTaskConfig();
+	this.showProbabilityConfig();
+	this.addTaskConfig();
+	this.showLinearConfig();
 
 };

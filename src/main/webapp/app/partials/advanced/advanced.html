@@ -56,7 +56,7 @@
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 			            
 			            <!-- Rate input -->
-			            <div class="form-group col-md-4 col-sm-4">
+			            <div class="form-group col-md-3 col-sm-3">
 			            	
 			            
 				            <label for="{{'linearArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
@@ -69,7 +69,7 @@
 							</div>
 			        	</div>
 
-			        	<div class="form-group col-md-4 col-sm-4">
+			        	<div class="form-group col-md-3 col-sm-3">
 			        	
 			                <label for="{{'linearTaskLength' + $index}}" class="control-label">Task Length</label>
 			                <input type="number" class="form-control" id="{{'linearTaskLength' + $index}}" name="{{'linearTaskLength' + $index}}" min="0" ng-model="linearConfig.taskLength" ng-required="advancedCtrl.isLinear">
@@ -81,12 +81,23 @@
 							</div>
 						</div>
 
-						<div class="form-group col-md-4 col-sm-4">
+						<div class="form-group col-md-3 col-sm-3">
 			                <label for="{{'linearStartPeriod' + $index}}" class="control-label">Start Period</label>
 			                <input type="number" class="form-control" id="{{'linearStartPeriod' + $index}}" name="{{'linearStartPeriod' + $index}}" ng-model="linearConfig.startPeriod" min="0" ng-required="advancedCtrl.isLinear">
 			        		
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['linearStartPeriod' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-3 col-sm-3">
+			                <label for="{{'linearEndPeriod' + $index}}" class="control-label">End Period</label>
+			                <input type="number" class="form-control" id="{{'linearEndPeriod' + $index}}" name="{{'linearEndPeriod' + $index}}" ng-model="linearConfig.endPeriod" min="0" ng-required="advancedCtrl.isLinear">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['linearEndPeriod' + $index].$error" style="color:red" role="alert">
 								<div ng-message="min">Greater than 0 please</div>
 								<div ng-message="required">Cannot be empty</div>
 							</div>
@@ -122,7 +133,7 @@
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 			            
 			            <!-- Rate input -->
-			            <div class="form-group col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2">
+			            <div class="form-group col-md-2 col-sm-2">
 			            
 				            <label for="{{'probabilityArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
 				            <input type="number" class="form-control" id="{{'probabilityArrivalRate' + $index}}" name="{{'probabilityArrivalRate' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.arrivalRate" style="width: 100%;">
@@ -159,11 +170,11 @@
 						</div>
 
 						<div class="form-group col-md-2 col-sm-2">
-			                <label for="{{'probabilityTaskProportion' + $index}}" class="control-label">X/100</label>
-			                <input type="number" class="form-control" id="{{'probabilityTaskProportion' + $index}}" name="{{'probabilityTaskProportion' + $index}}" min="1" max="100" total-One-Hundred ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.taskProportion" style="width: 100%;">
+			                <label for="{{'taskProportion' + $index}}" class="control-label">X/100</label>
+			                <input type="number" class="form-control" id="{{'taskProportion' + $index}}" name="{{'taskProportion' + $index}}" min="1" max="100" total-One-Hundred ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.proportion" style="width: 100%;">
 
 			        		<!-- validation message -->
-			        		<div ng-messages="advancedForm['probabilityTaskProportion' + $index].$error" style="color:red" role="alert">
+			        		<div ng-messages="advancedForm['taskProportion' + $index].$error" style="color:red" role="alert">
 								<div ng-message="min">Greater than 0 please</div>
 								<div ng-message="required">Cannot be empty</div>
 								<div ng-message="totalOneHundred">Sum of tasks must = 100</div>
@@ -176,6 +187,17 @@
 			        		
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['probabilityStartPeriod' + $index].$error" style="color:red" role="alert">
+								<div ng-message="min">Greater than 0 please</div>
+								<div ng-message="required">Cannot be empty</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-2 col-sm-2">
+			                <label for="{{'probabilityEndPeriod' + $index}}" class="control-label">End Period</label>
+			                <input type="number" class="form-control" id="{{'probabilityEndPeriod' + $index}}" name="{{'probabilityEndPeriod' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.endPeriod" style="width: 100%;">
+			        		
+			        		<!-- validation message -->
+			        		<div ng-messages="advancedForm['probabilityEndPeriod' + $index].$error" style="color:red" role="alert">
 								<div ng-message="min">Greater than 0 please</div>
 								<div ng-message="required">Cannot be empty</div>
 							</div>
@@ -209,11 +231,11 @@
 				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 		            
 		            <!-- Rate input -->
-		            <div class="form-group col-md-3 col-sm-3">
+		            <div class="form-group col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2">
 		            
 			            <label for="{{'total' + $index}}" class="control-label">Total Workers</label>
 			            
-			            <input type="number" class="form-control" id="{{'total' + $index}}" name="{{'total' + $index}}" ng-model="workerConfig.total" min="0" required>
+			            <input type="number" class="form-control" id="{{'total' + $index}}" name="{{'total' + $index}}" ng-model="workerConfig.total" min="0" required style="width: 100%;">
 
 			            <!-- validation message -->
 			            <div ng-messages="advancedForm['total' + $index].$error" style="color:red" role="alert">
@@ -222,13 +244,13 @@
 						</div>
 		        	</div>
 
-		        	<div class="form-group col-md-3 col-sm-3">
+		        	<div class="form-group col-md-2 col-sm-2">
 
-		        		<label for="{{'additionalTime' + $index}}" class="control-label">Additional Time</label>
+		        		<label for="{{'additionalTime' + $index}}" class="control-label">Added Time</label>
 		                
-		                <select class="form-control" id="{{'additionalTime' + $index}}" ng-model="workerConfig.additionalTime" style="min-width:175px;">
+		                <select class="form-control" id="{{'additionalTime' + $index}}" ng-model="workerConfig.additionalTime" style="width: 100%;">
 							<option value="-1">Senior (-1)</option>
-							<option value="0" selected>Standard (0)</option>
+							<option value="0" selected>Normal (0)</option>
 							<option value="1">Junior (+1)</option>
 						</select>
 		        		
@@ -239,11 +261,24 @@
 						</div>
 					</div>
 
-					<div class="form-group col-md-3 col-sm-3">
+					<div class="form-group col-md-2 col-sm-2">
+		                
+		                <label for="{{'restTime' + $index}}" class="control-label">Rest Time</label>
+		                
+		                <input type="number" class="form-control" id="{{'restTime' + $index}}" name="{{'restTime' + $index}}" ng-model="workerConfig.restTime" min="0" required style="width: 100%;">
+		        		
+		        		<!-- validation message -->
+		        		<div ng-messages="advancedForm['restTime' + $index].$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div>
+					</div>
+
+					<div class="form-group col-md-2 col-sm-2">
 		                
 		                <label for="{{'arrivalPeriod' + $index}}" class="control-label">Arrival Period</label>
 		                
-		                <input type="number" class="form-control" id="{{'arrivalPeriod' + $index}}" name="{{'arrivalPeriod' + $index}}" ng-model="workerConfig.arrivalPeriod" min="0" required>
+		                <input type="number" class="form-control" id="{{'arrivalPeriod' + $index}}" name="{{'arrivalPeriod' + $index}}" ng-model="workerConfig.arrivalPeriod" min="0" required style="width: 100%;">
 		        		
 		        		<!-- validation message -->
 		        		<div ng-messages="advancedForm['arrivalPeriod' + $index].$error" style="color:red" role="alert">
@@ -252,11 +287,11 @@
 						</div>
 					</div>
 
-					<div class="form-group col-md-3 col-sm-3">
+					<div class="form-group col-md-2 col-sm-2">
 		                
 		                <label for="{{'stopPeriod' + $index}}" class="control-label">Stop Period</label>
 		                
-		                <input type="number" class="form-control" id="{{'stopPeriod' + $index}}" name="{{'stopPeriod' + $index}}" ng-model="workerConfig.stopPeriod" min="0" required>
+		                <input type="number" class="form-control" id="{{'stopPeriod' + $index}}" name="{{'stopPeriod' + $index}}" ng-model="workerConfig.stopPeriod" min="0" required style="width: 100%;">
 		        		
 		        		<!-- validation message -->
 		        		<div ng-messages="advancedForm['stopPeriod' + $index].$error" style="color:red" role="alert">
