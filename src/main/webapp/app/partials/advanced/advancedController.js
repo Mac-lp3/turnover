@@ -160,24 +160,39 @@ module.exports = function ($http, $location, resultsService) {
 
 	this.postForm = () => {
 
+		let taskConfigsToPost = [];
+		let url = 'api/simulation?type=';
+
 		if (this.isLinear) {
 
-			$http({
-				method: 'POST',
-				url: 'api/simulation?type=linear',
-				data: {
-					taskConfigs: this.linearTaskConfigs,
-					workerConfigs: this.workerConfigs
-				}
-			}).then(function success(response) {
-
-			});
+			taskConfigsToPost = this.linearTaskConfigs;
+			url = url + 'linear';
 
 		} else if (this.isProbability) {
 
+			taskConfigsToPost = this.probabilityTaskConfigs;
+			url = url + 'probability';
+
 		} else {
 			// should never get here
-		}
+		}	
+
+		$http({
+
+			method: 'POST',
+			url: url,
+			data: {
+				clockUnits: this.periodUnits,
+				totalPeriods: this.totalPeriods,
+				workerConfigurations: this.workerConfigs,
+				taskConfigurations: taskConfigsToPost
+			}
+
+		}).then(function success(response){
+
+			resultsService.setSimulationResults(response.data);
+			
+		});
 
 	};
 
