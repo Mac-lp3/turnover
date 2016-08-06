@@ -138,25 +138,24 @@ module.exports = function ($http, $location, resultsService) {
 		}
 	};
 
-	// May need this later
-	// this.validateProportions = () => {
+	this.validateProportions = () => {
 
-	// 	let isValid = false;
+		let isValid = false;
 	
-	// 	let total= 0;	
-	// 	for (let i = 0; i < this.probabilityTaskConfigs.length; ++i) {
+		let total= 0;	
+		for (let i = 0; i < this.probabilityTaskConfigs.length; ++i) {
 
-	// 		total =+ this.probabilityTaskConfigs[i].proportion ? 
-	// 			this.probabilityTaskConfigs[i].proportion : 0;
-	// 	}
+			total =+ this.probabilityTaskConfigs[i].proportion ? 
+				this.probabilityTaskConfigs[i].proportion : 0;
+		}
 
-	// 	if (total === 100) {
-	// 		isValid = true;
-	// 	}
+		if (total === 100) {
+			isValid = true;
+		}
 
-	// 	return isValid;
+		return isValid;
 
-	// };
+	};
 
 	this.postForm = () => {
 
@@ -191,7 +190,7 @@ module.exports = function ($http, $location, resultsService) {
 		}).then(function success(response){
 
 			resultsService.setSimulationResults(response.data);
-			
+
 		});
 
 	};
