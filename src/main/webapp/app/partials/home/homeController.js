@@ -2,46 +2,51 @@
 
 module.exports = function ($http, $location, resultsService) {
 
-	const self = this;
+    this.quickStartUnits = 'minutes';
+    this.quickStartPeriods = 0;
+    this.quickStartWorkers = 0;
+    this.quickStartRate = 0;
+    this.quickStartTaskTime = 0;
+    this.quickStartRestTime = 0;
 
-	self.quickStartUnits = 'minutes';
-	self.quickStartPeriods = 0;
-	self.quickStartWorkers = 0;
-	self.quickStartRate = 0;
-	self.quickStartTaskTime = 0;
-	self.quickStartRestTime = 0;
+    this.quickStart = () => {
+        
+        $http({
 
-	self.quickStart = function () {
-		
-		$http({
+            method: 'POST',
+            url: 'api/simulation?type=simple',
+            data: {
+                clockUnits: this.quickStartUnits,
+                totalPeriods: this.quickStartPeriods,
+                workerConfigurations: [{
+                    total: this.quickStartWorkers,
+                    additionalTime: 0,
+                    restTime: this.quickStartRestTime,
+                    arrivalPeriod: 0,
+                    stopPeriod: 0
+                }],
+                taskConfigurations: [{
+                    rate: this.quickStartRate,
+                    length: this.quickStartTaskTime,
+                    startPeriod: 0,
+                    endPeriod: 0,
+                    lowBound: 0,
+                    highBound: 0,
+                    proportion: 100
+                }]
+            }
 
-			method: 'POST',
-			url: 'api/simulation?type=simple',
-			data: {
-				clockUnits: self.quickStartUnits,
-				totalPeriods: self.quickStartPeriods,
-				workerConfigurations: [{
-					total: self.quickStartWorkers,
-					additionalTime: 0,
-					restTime: self.quickStartRestTime,
-					arrivalPeriod: 0,
-					stopPeriod: 0
-				}],
-				taskConfigurations: [{
-					rate: self.quickStartRate,
-					length: self.quickStartTaskTime,
-					startPeriod: 0,
-					endPeriod: 0,
-					lowBound: 0,
-					highBound: 0,
-					proportion: 100
-				}]
-			}
+        }).then((response) => {
 
-		}).then(function success(response){
+            resultsService.setSimulationResults(response.data);
+        });
+    
+    };
 
-			resultsService.setSimulationResults(response.data);
-		});
-	};
+    this.advancedConfig = () => {
+
+        $location.path('/advanced');
+
+    };
 
 };
