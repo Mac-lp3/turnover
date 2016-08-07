@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($scope, $http, $location, resultsService) {
+module.exports = function ($http, $location, resultsService) {
 
 	this.periodUnits = 'minutes';
 	this.totalPeriods = 0;
@@ -201,8 +201,6 @@ module.exports = function ($scope, $http, $location, resultsService) {
 		});
 
 	};
-
-	$scope.watch
 
 	// initialize
 	this.addWorkerConfig();
