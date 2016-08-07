@@ -126,26 +126,28 @@
 
 			<div class="row">
 				<h2 class="text-center" style="margin-top: 0px; border-bottom: 1px solid #ccc;">Random Task Rate <small>Tasks are added to the queue at a constant rate, but with a random work time (between provided bounds). For multiple ranges, specify how many out of 100 for each.</small></h2>
+
+				<!-- Rate input -->
+				<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
+		            <div class="form-group col-md-offset-4 col-sm-offset-4 col-md-4 col-sm-4">
+		            
+			            <label for="probabilityArrivalRate" class="control-label">Arrival Rate Per Period</label>
+			            <input type="number" class="form-control" id="probabilityArrivalRate" name="probabilityArrivalRate" min="0" ng-required="advancedCtrl.isProbability" ng-model="advancedCtrl.probabilityArrivalRate" style="width: 100%;">
+
+			            <!-- validation message -->
+			            <div ng-messages="advancedForm['probabilityArrivalRate'].$error" style="color:red" role="alert">
+							<div ng-message="min">Greater than 0 please</div>
+							<div ng-message="required">Cannot be empty</div>
+						</div>
+		        	</div>
+		        </div>
 				
 				<!-- wrapping loop declaration -->
 				<div ng-repeat="probabilityConfig in advancedCtrl.probabilityTaskConfigs track by $index">
 					
 					<div class="form-inline col-sm-12" style="margin-bottom: 10px;">
 			            
-			            <!-- Rate input -->
-			            <div class="form-group col-md-2 col-sm-2">
-			            
-				            <label for="{{'probabilityArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
-				            <input type="number" class="form-control" id="{{'probabilityArrivalRate' + $index}}" name="{{'probabilityArrivalRate' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.arrivalRate" style="width: 100%;">
-
-				            <!-- validation message -->
-				            <div ng-messages="advancedForm['probabilityArrivalRate' + $index].$error" style="color:red" role="alert">
-								<div ng-message="min">Greater than 0 please</div>
-								<div ng-message="required">Cannot be empty</div>
-							</div>
-			        	</div>
-
-			        	<div class="form-group col-md-2 col-sm-2">
+			        	<div class="form-group col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2">
 			        	
 			                <label for="{{'probabilityLowBound' + $index}}" class="control-label">Low Bound</label>
 			                <input type="number" class="form-control" id="{{'probabilityLowBound' + $index}}"  name="{{'probabilityLowBound' + $index}}" min="0" ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.lowBound" style="width: 100%;">
@@ -171,13 +173,14 @@
 
 						<div class="form-group col-md-2 col-sm-2">
 			                <label for="{{'taskProportion' + $index}}" class="control-label">X/100</label>
-			                <input type="number" class="form-control" id="{{'taskProportion' + $index}}" name="{{'taskProportion' + $index}}" min="1" max="100" total-One-Hundred ng-required="advancedCtrl.isProbability" ng-model="probabilityConfig.proportion" style="width: 100%;">
+			                <input type="number" class="form-control" id="{{'taskProportion' + $index}}" name="{{'taskProportion' + $index}}" min="1" max="100" total-One-Hundred ng-required="advancedCtrl.isProbability" ng-change="advancedCtrl.validateProportions()" ng-model="probabilityConfig.proportion" style="width: 100%;">
 
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['taskProportion' + $index].$error" style="color:red" role="alert">
 								<div ng-message="min">Greater than 0 please</div>
 								<div ng-message="required">Cannot be empty</div>
 								<div ng-message="totalOneHundred">Sum of tasks must = 100</div>
+								<div ng-hide="advancedCtrl.validateProportions()" style="color:red" role="alert">Must total 100</div>
 							</div>
 						</div>
 

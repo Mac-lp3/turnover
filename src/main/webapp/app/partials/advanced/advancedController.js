@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($http, $location, resultsService) {
+module.exports = function ($scope, $http, $location, resultsService) {
 
 	this.periodUnits = 'minutes';
 	this.totalPeriods = 0;
@@ -11,6 +11,7 @@ module.exports = function ($http, $location, resultsService) {
 	this.showWorkerRm = false;
 	this.workerConfigs = [];
 	this.linearTaskConfigs = [];
+	this.probabilityArrivalRate = 0;
 	this.probabilityTaskConfigs = [];
 
 	this.addTaskConfig = () => {
@@ -35,11 +36,14 @@ module.exports = function ($http, $location, resultsService) {
 
 		} else {
 
+			// If this is the only task config, set proportion to 100. 0 otherwise
+			let tempProportion = this.probabilityTaskConfigs.length > 0 ? 0 : 100;
+
 			this.probabilityTaskConfigs.push({
-				arrivalRate: 0,
+				arrivalRate: this.probabilityArrivalRate,
 				lowBound: 0,
 				highBound: 0,
-				proportion: 100,
+				proportion: tempProportion,
 				startPeriod: 0,
 				endPeriod: 0
 			});
@@ -51,6 +55,8 @@ module.exports = function ($http, $location, resultsService) {
 			} else {
 				this.showProbabilityRm = true;
 			}
+
+			this.validateProportions();
 
 		}
 	};
@@ -84,6 +90,8 @@ module.exports = function ($http, $location, resultsService) {
 
 				this.showProbabilityRm = true;
 			}
+
+			this.validateProportions();
 
 		}
 
@@ -142,12 +150,11 @@ module.exports = function ($http, $location, resultsService) {
 
 		let isValid = false;
 	
-		let total= 0;	
-		for (let i = 0; i < this.probabilityTaskConfigs.length; ++i) {
+		let total = 0;	
 
-			total =+ this.probabilityTaskConfigs[i].proportion ? 
-				this.probabilityTaskConfigs[i].proportion : 0;
-		}
+		this.probabilityTaskConfigs.map((config) => {
+			total += config.proportion ? config.proportion : 0; 
+		});
 
 		if (total === 100) {
 			isValid = true;
@@ -194,6 +201,8 @@ module.exports = function ($http, $location, resultsService) {
 		});
 
 	};
+
+	$scope.watch
 
 	// initialize
 	this.addWorkerConfig();
