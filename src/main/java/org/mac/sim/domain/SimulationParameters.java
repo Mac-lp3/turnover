@@ -1,4 +1,4 @@
-package org.mac.sim.global;
+package org.mac.sim.domain;
 
 public interface SimulationParameters {
 
