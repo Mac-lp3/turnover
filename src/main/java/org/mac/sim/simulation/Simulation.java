@@ -2,9 +2,9 @@ package org.mac.sim.simulation;
 
 import java.util.List;
 
+import org.mac.sim.domain.SimulationParameters;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.exception.TurnoverException;
-import org.mac.sim.global.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
 /**

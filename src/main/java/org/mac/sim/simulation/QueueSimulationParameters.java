@@ -1,7 +1,7 @@
 package org.mac.sim.simulation;
 
 import org.mac.sim.clock.ClockManager;
-import org.mac.sim.global.SimulationParameters;
+import org.mac.sim.domain.SimulationParameters;
 import org.mac.sim.thread.TaskQueueManager;
 
 class QueueSimulationParameters implements SimulationParameters {

@@ -1,6 +1,6 @@
 package org.mac.sim.simulation;
 
-import org.mac.sim.global.SimulationParameters;
+import org.mac.sim.domain.SimulationParameters;
 
 class SimpleQueueSimulationParameters implements SimulationParameters {
 

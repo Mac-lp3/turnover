@@ -1,7 +1,7 @@
 package org.mac.sim.simulation;
 
 import org.mac.sim.domain.Department;
-import org.mac.sim.global.SimulationParameters;
+import org.mac.sim.domain.SimulationParameters;
 
 class YearlyTurnoverSimulationParameters implements SimulationParameters {
 

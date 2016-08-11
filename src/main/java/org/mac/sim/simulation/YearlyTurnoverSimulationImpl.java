@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.mac.sim.domain.Department;
 import org.mac.sim.domain.Employee;
-import org.mac.sim.global.SimulationParameters;
+import org.mac.sim.domain.SimulationParameters;
 import org.mac.sim.thread.WorkerTask;
 
 /**
