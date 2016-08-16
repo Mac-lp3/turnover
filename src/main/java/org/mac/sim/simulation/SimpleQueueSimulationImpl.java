@@ -1,10 +1,12 @@
 package org.mac.sim.simulation;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import org.mac.sim.domain.SimulationParameters;
+import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.WorkerTask;
@@ -21,11 +23,14 @@ class SimpleQueueSimulationImpl extends Simulation {
 	// Used for task length generation
 	private Random random;
 	private int defaultTaskLength = 0;
+	private List<WorkerTask> tasks;
+	private int tasksPerPeriod = 0;
 
 	public SimpleQueueSimulationImpl(final List<Worker> workers, final SimpleQueueSimulationParameters params)
 			throws TurnoverException {
 
 		super(workers, params);
+		this.tasks = new ArrayList<WorkerTask>();
 		this.defaultTaskLength = params.getDefaultTaskLength();
 	}
 
@@ -34,21 +39,14 @@ class SimpleQueueSimulationImpl extends Simulation {
 		// Retrieve input details
 		SimpleQueueSimulationParameters inputParams = (SimpleQueueSimulationParameters) params;
 		int periodsToRun = inputParams.getPeriodsToRun();
-		int tasksPerPeriod = inputParams.getTasksPerPeriod();
-
-		ArrayList<WorkerTask> tasks = new ArrayList<WorkerTask>();
+		tasksPerPeriod = inputParams.getTasksPerPeriod();
 		completedTasks = new ArrayList<WorkerTask>();
 
 		WorkerTask tempCompletedTask = null;
-		WorkerTask tempNewTask = null;
 		for (int i = 0; i < periodsToRun; i++) {
 
 			// Add required tasks per period
-			for (int j = 0; j < tasksPerPeriod; j++) {
-				tempNewTask = new WorkerTask(getTaskLength());
-				tempNewTask.setArrivalPeriod(i);
-				tasks.add(tempNewTask);
-			}
+			addTasks(i);
 
 			// Allow each worker to act (or wait)
 			for (Worker worker : workers) {
@@ -67,6 +65,18 @@ class SimpleQueueSimulationImpl extends Simulation {
 			}
 		}
 
+	}
+	
+	private void addTasks(final int currentPeriod){
+		
+		// Add required tasks per period
+		WorkerTask tempNewTask;
+		for (int j = 0; j < tasksPerPeriod; j++) {
+			tempNewTask = new WorkerTask(getTaskLength());
+			tempNewTask.setArrivalPeriod(currentPeriod);
+			this.tasks.add(tempNewTask);
+		}
+		
 	}
 
 	public List<WorkerTask> getCompletedTasks() {
