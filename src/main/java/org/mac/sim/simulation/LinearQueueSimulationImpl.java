@@ -49,9 +49,15 @@ public class LinearQueueSimulationImpl extends Simulation {
 		
 		for (int currentPeriod = 0; currentPeriod < totalPeriods; currentPeriod++) {
 			
+			addTasks(currentPeriod);
 			
-			
+			// Update remaining tasks
+			for (WorkerTask task : this.tasks) {
+				task.incrementPeriodsInQueue();
+			}
 		}
+		
+		
 		
 		
 		
@@ -118,6 +124,8 @@ public class LinearQueueSimulationImpl extends Simulation {
 	private void addNewWorkers(final int currentPeriod) {
 
 		int tempTotalToAdd = 0;
+		SimpleWorker tempWorker;
+		int tempHashCode = 0;
 
 		// For each worker configuration...
 		WorkerConfiguration conf;
@@ -126,18 +134,32 @@ public class LinearQueueSimulationImpl extends Simulation {
 			conf = iterator.next();
 
 			// check if the workers "arrive" this period...
-			if (conf.getArrivalPeriod() >= currentPeriod) {
-
-				// and add the specified amount if so
-				tempTotalToAdd = conf.getTotal();
-				for (int i = 0; i < tempTotalToAdd; i++) {
-					workers.add(new SimpleWorker(conf.getAdditionalTime(), conf.getRestTime()));
+			if (conf.getArrivalPeriod() == currentPeriod) {
+				
+				// ...and check that they do not leave...
+				if (conf.getStopPeriod() <= currentPeriod) {
+					
+					// stop workers tied to this config...
+					tempHashCode = conf.hashCode();
+					for (Worker worker : this.workers) {
+						if ( ((SimpleWorker) worker).getWorkerConfigHash() == tempHashCode){
+							((SimpleWorker) worker).setActive(false);
+						}
+					}
+					
+					// and remove the configuration.
+					iterator.remove();
 				}
 
-				// and remove the config from the list
-				iterator.remove();
+				// ... and add the specified amount if so
+				tempTotalToAdd = conf.getTotal();
+				for (int i = 0; i < tempTotalToAdd; i++) {
+					tempWorker = new SimpleWorker(conf.getAdditionalTime(), conf.getRestTime());
+					tempWorker.setWorkerConfigHash(conf.hashCode());
+					workers.add(tempWorker);
+				}
+	
 			}
-
 		}
 	}
 
