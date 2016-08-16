@@ -10,6 +10,8 @@ public class SimpleWorker implements Worker {
 	private int bufferPeriods = 0;
 	private int nextActionablePeriod = 0;
 	private int tasksCompleted = 0;
+	private int workerConfigHash = 0; // used to track stoppage time
+	private boolean isActive = true;
 
 	public SimpleWorker() {
 
@@ -25,15 +27,17 @@ public class SimpleWorker implements Worker {
 		int tempTaskLength = 0;
 		WorkerTask tempTask = null;
 
-		if (currentPeriod >= nextActionablePeriod && !taskQueue.isEmpty()) {
+		if (isActive) {
+			if (currentPeriod >= nextActionablePeriod && !taskQueue.isEmpty()) {
 
-			tempTask = ((List<WorkerTask>) taskQueue).remove(0);
+				tempTask = ((List<WorkerTask>) taskQueue).remove(0);
 
-			tempTaskLength = Integer.valueOf(Long.toString(tempTask.getServiceTimeRequired()));
+				tempTaskLength = Integer.valueOf(Long.toString(tempTask.getServiceTimeRequired()));
 
-			nextActionablePeriod = currentPeriod + tempTaskLength + bufferPeriods + periodsToCompleteTask;
+				nextActionablePeriod = currentPeriod + tempTaskLength + bufferPeriods + periodsToCompleteTask;
 
-			tasksCompleted++;
+				tasksCompleted++;
+			}
 		}
 
 		return tempTask;
@@ -58,5 +62,21 @@ public class SimpleWorker implements Worker {
 
 	public void setBufferPeriods(int bufferPeriods) {
 		this.bufferPeriods = bufferPeriods;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public int getWorkerConfigHash() {
+		return workerConfigHash;
+	}
+
+	public void setWorkerConfigHash(int workerConfigHash) {
+		this.workerConfigHash = workerConfigHash;
 	}
 }
