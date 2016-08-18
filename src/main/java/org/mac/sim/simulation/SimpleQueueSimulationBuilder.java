@@ -36,7 +36,10 @@ public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 		// Simple only uses one configuration
 		this.tasksPerPeriod = simulationConfig.getTaskConfigurations().get(0).getRate();
 		this.periodsToRun = simulationConfig.getTotalPeriods();
-		this.defaultTaskLength = simulationConfig.getTaskConfigurations().get(0).getLength();
+
+		if (simulationConfig.getTaskConfigurations() != null) {
+			this.defaultTaskLength = simulationConfig.getTaskConfigurations().get(0).getLength();
+		}
 	}
 
 	/**
