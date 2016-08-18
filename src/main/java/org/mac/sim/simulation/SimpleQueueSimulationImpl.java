@@ -67,7 +67,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 
 	}
 	
-	private void addTasks(final int currentPeriod){
+	protected void addTasks(final int currentPeriod){
 		
 		// Add required tasks per period
 		WorkerTask tempNewTask;
@@ -78,9 +78,13 @@ class SimpleQueueSimulationImpl extends Simulation {
 		}
 		
 	}
+	
+	protected void addWorkers(final int currentPeriod){
+		// not used in this simulation
+	}
 
 	public List<WorkerTask> getCompletedTasks() {
-		// TODO Auto-generated method stub
+
 		return completedTasks;
 	}
 

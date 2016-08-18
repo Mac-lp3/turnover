@@ -72,4 +72,16 @@ class QueueSimulationImpl extends Simulation {
 		return 0;
 	}
 
+	@Override
+	protected void addWorkers(int currentPeriod) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void addTasks(int currentPeriod) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
