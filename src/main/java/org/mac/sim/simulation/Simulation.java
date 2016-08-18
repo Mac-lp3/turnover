@@ -33,8 +33,13 @@ public abstract class Simulation {
 			throws TurnoverException {
 
 		this.workers = workers;
+		if (this.workers == null) {
+			this.workers = new ArrayList<Worker>();
+		}
+
 		this.tasks = new ArrayList<WorkerTask>();
 		this.simulationParameters = simulationParameters;
+		this.completedTasks = new ArrayList<WorkerTask>();
 		execute(simulationParameters);
 
 	}
@@ -55,9 +60,9 @@ public abstract class Simulation {
 	 * @return
 	 */
 	protected abstract int getTaskLength();
-	
+
 	protected abstract void addWorkers(final int currentPeriod);
-	
+
 	protected abstract void addTasks(final int currentPeriod);
 
 	public List<WorkerTask> getCompletedTasks() {
