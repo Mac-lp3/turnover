@@ -1,6 +1,5 @@
 package org.mac.sim.simulation;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,38 +15,22 @@ public class LinearQueueSimulationImpl extends Simulation {
 
 	private List<WorkerConfiguration> workerConfigurations;
 	private List<TaskConfiguration> taskConfigurations;
-	private List<Worker> workers;
-	ArrayList<WorkerTask> tasks;
-	ArrayList<WorkerTask> completedTasks;
 	private int totalPeriods = 0;
 
 	protected LinearQueueSimulationImpl(List<Worker> workers, SimulationParameters simulationParameters)
 			throws TurnoverException {
 
 		super(workers, simulationParameters);
-		LinearQueueSimulationParameters params = (LinearQueueSimulationParameters) simulationParameters;
 
-		this.workers = new ArrayList<Worker>();
-		this.tasks = new ArrayList<WorkerTask>();
-		this.taskConfigurations = params.getTaskConfigurations();
-		this.workerConfigurations = params.getWorkerConfigurations();
-		this.totalPeriods = params.getTotalPeriods();
 	}
 
 	@Override
 	protected void execute(SimulationParameters params) throws TurnoverException {
 
-		// for each period...
-		// -- how many tasks to add?
-		// -- -- get length of each new task
-		// -- any workers to leave?
-		// -- -- remove the workers
-		// -- how many workers to add workers?
-		// -- -- add each with given values
-		// -- for each worker...
-		// -- -- serve a task
-		// -- -- iterate stats
-		
+		this.taskConfigurations = ((LinearQueueSimulationParameters) simulationParameters).getTaskConfigurations();
+		this.workerConfigurations = ((LinearQueueSimulationParameters) simulationParameters).getWorkerConfigurations();
+		this.totalPeriods = ((LinearQueueSimulationParameters) simulationParameters).getTotalPeriods();
+
 		WorkerTask tempCompletedTask = null;
 		for (int currentPeriod = 0; currentPeriod < totalPeriods; currentPeriod++) {
 
@@ -57,7 +40,7 @@ public class LinearQueueSimulationImpl extends Simulation {
 
 			// Allow each worker to act (or wait)
 			for (Worker worker : workers) {
-				
+
 				// If a task was completed, add it to the completed list
 				tempCompletedTask = worker.action(currentPeriod, tasks);
 				if (tempCompletedTask != null) {
@@ -67,7 +50,7 @@ public class LinearQueueSimulationImpl extends Simulation {
 			}
 
 			// Update remaining tasks
-			for (WorkerTask task : this.tasks) {
+			for (WorkerTask task : tasks) {
 				task.incrementPeriodsInQueue();
 			}
 		}
