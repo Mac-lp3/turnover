@@ -1,5 +1,6 @@
 package org.mac.sim.simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mac.sim.domain.SimulationParameters;
@@ -18,7 +19,9 @@ import org.mac.sim.thread.WorkerTask;
 public abstract class Simulation {
 
 	protected List<WorkerTask> completedTasks;
+	protected List<WorkerTask> tasks;
 	protected List<Worker> workers;
+	protected SimulationParameters simulationParameters;
 
 	/**
 	 * Constructor enforces that the simulation logic is executed before the
@@ -30,6 +33,8 @@ public abstract class Simulation {
 			throws TurnoverException {
 
 		this.workers = workers;
+		this.tasks = new ArrayList<WorkerTask>();
+		this.simulationParameters = simulationParameters;
 		execute(simulationParameters);
 
 	}

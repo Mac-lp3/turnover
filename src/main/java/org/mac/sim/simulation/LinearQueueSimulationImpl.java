@@ -18,6 +18,7 @@ public class LinearQueueSimulationImpl extends Simulation {
 	private List<TaskConfiguration> taskConfigurations;
 	private List<Worker> workers;
 	ArrayList<WorkerTask> tasks;
+	ArrayList<WorkerTask> completedTasks;
 	private int totalPeriods = 0;
 
 	protected LinearQueueSimulationImpl(List<Worker> workers, SimulationParameters simulationParameters)
@@ -25,12 +26,12 @@ public class LinearQueueSimulationImpl extends Simulation {
 
 		super(workers, simulationParameters);
 		LinearQueueSimulationParameters params = (LinearQueueSimulationParameters) simulationParameters;
-		
+
 		this.workers = new ArrayList<Worker>();
 		this.tasks = new ArrayList<WorkerTask>();
 		this.taskConfigurations = params.getTaskConfigurations();
 		this.workerConfigurations = params.getWorkerConfigurations();
-		this. totalPeriods = params.getTotalPeriods();
+		this.totalPeriods = params.getTotalPeriods();
 	}
 
 	@Override
@@ -47,70 +48,78 @@ public class LinearQueueSimulationImpl extends Simulation {
 		// -- -- serve a task
 		// -- -- iterate stats
 		
+		WorkerTask tempCompletedTask = null;
 		for (int currentPeriod = 0; currentPeriod < totalPeriods; currentPeriod++) {
-			
+
 			addTasks(currentPeriod);
-			
+
+			addWorkers(currentPeriod);
+
+			// Allow each worker to act (or wait)
+			for (Worker worker : workers) {
+				
+				// If a task was completed, add it to the completed list
+				tempCompletedTask = worker.action(currentPeriod, tasks);
+				if (tempCompletedTask != null) {
+					tempCompletedTask.setPeriodServiced(currentPeriod);
+					completedTasks.add(tempCompletedTask);
+				}
+			}
+
 			// Update remaining tasks
 			for (WorkerTask task : this.tasks) {
 				task.incrementPeriodsInQueue();
 			}
 		}
-		
-		
-		
-		
-		
+
 	}
 
 	@Override
 	protected int getTaskLength() {
 
-		// multiple configurations?
-		// -- which applies for this period?
-		// -- -- return this task length
+		// not used in this simulation
 
 		return 0;
 	}
-	
-	private void addTasks(final int currentPeriod){
-		
+
+	protected void addTasks(final int currentPeriod) {
+
 		WorkerTask tempWorkerTask;
 		int tempTotalToAdd = 0;
 		int tempTaskLength = 0;
-		
+
 		// For each task config...
 		TaskConfiguration config;
 		for (Iterator<TaskConfiguration> iterator = taskConfigurations.iterator(); iterator.hasNext();) {
-				
+
 			config = iterator.next();
-			
+
 			// Check if these tasks begin arriving at this time...
 			if (config.getStartPeriod() <= currentPeriod) {
-				
+
 				// and make sure that they have not stopped arriving...
 				if (config.getEndPeriod() <= currentPeriod) {
-					
+
 					// ...then remove this configuration from the list.
 					iterator.remove();
-					
+
 				} else {
-					
+
 					// ...then add the specified number of tasks.
 					tempTaskLength = config.getLength();
 					tempTotalToAdd = config.getRate();
-					
+
 					for (int j = 0; j < tempTotalToAdd; j++) {
 						tempWorkerTask = new WorkerTask(tempTaskLength);
 						tempWorkerTask.setArrivalPeriod(currentPeriod);
 						this.tasks.add(tempWorkerTask);
 					}
-					
+
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 	/**
@@ -121,7 +130,7 @@ public class LinearQueueSimulationImpl extends Simulation {
 	 * @param currentPeriod
 	 * @return
 	 */
-	private void addNewWorkers(final int currentPeriod) {
+	protected void addWorkers(final int currentPeriod) {
 
 		int tempTotalToAdd = 0;
 		SimpleWorker tempWorker;
@@ -135,18 +144,18 @@ public class LinearQueueSimulationImpl extends Simulation {
 
 			// check if the workers "arrive" this period...
 			if (conf.getArrivalPeriod() == currentPeriod) {
-				
+
 				// ...and check that they do not leave...
 				if (conf.getStopPeriod() <= currentPeriod) {
-					
+
 					// stop workers tied to this config...
 					tempHashCode = conf.hashCode();
 					for (Worker worker : this.workers) {
-						if ( ((SimpleWorker) worker).getWorkerConfigHash() == tempHashCode){
+						if (((SimpleWorker) worker).getWorkerConfigHash() == tempHashCode) {
 							((SimpleWorker) worker).setActive(false);
 						}
 					}
-					
+
 					// and remove the configuration.
 					iterator.remove();
 				}
@@ -158,7 +167,7 @@ public class LinearQueueSimulationImpl extends Simulation {
 					tempWorker.setWorkerConfigHash(conf.hashCode());
 					workers.add(tempWorker);
 				}
-	
+
 			}
 		}
 	}
