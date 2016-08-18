@@ -1,9 +1,13 @@
 package org.mac.sim.simulation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.mac.sim.domain.SimulationConfigrations;
 import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.domain.WorkerConfiguration;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.WorkerTask;
 
@@ -35,10 +39,22 @@ public class SimulationTest {
 		
 		SimulationConfigrations simpleSimulationConfiguration = new SimulationConfigrations();
 		
+		// set clock details
 		simpleSimulationConfiguration.setTotalPeriods(100);
+		simpleSimulationConfiguration.setClockUnits("Minutes");
 		
+		// set task config
 		TaskConfiguration taskConfig = new TaskConfiguration();
 		taskConfig.setRate(8);
+		taskConfig.setStartPeriod(0);
+		
+		List<TaskConfiguration> taskConfigList = new ArrayList<TaskConfiguration>();
+		taskConfigList.add(taskConfig);
+		simpleSimulationConfiguration.setTaskConfigurations(taskConfigList);
+		
+		WorkerConfiguration workerConfig1 = new WorkerConfiguration();
+		WorkerConfiguration workerConfig2 = new WorkerConfiguration();
+		WorkerConfiguration workerConfig3 = new WorkerConfiguration();
 
 		SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simpleSimulationConfiguration);
 		qsb.addWorkers(5, 10, 5);
