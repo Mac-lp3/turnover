@@ -50,6 +50,10 @@ public abstract class Simulation {
 	 * @return
 	 */
 	protected abstract int getTaskLength();
+	
+	protected abstract void addWorkers(final int currentPeriod);
+	
+	protected abstract void addTasks(final int currentPeriod);
 
 	public List<WorkerTask> getCompletedTasks() {
 		return completedTasks;
