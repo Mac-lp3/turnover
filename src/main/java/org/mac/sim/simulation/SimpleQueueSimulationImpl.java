@@ -1,12 +1,14 @@
 package org.mac.sim.simulation;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.mac.sim.domain.SimulationParameters;
+import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.domain.WorkerConfiguration;
 import org.mac.sim.exception.TurnoverException;
+import org.mac.sim.thread.SimpleWorker;
 import org.mac.sim.thread.WorkerTask;
 
 /**
@@ -18,28 +20,33 @@ import org.mac.sim.thread.WorkerTask;
  */
 class SimpleQueueSimulationImpl extends Simulation {
 
+	private WorkerConfiguration workerConfiguration;
+	private TaskConfiguration taskConfiguration;
+
 	// Used for task length generation
 	private Random random;
-	private int defaultTaskLength = 0;
 	private int tasksPerPeriod = 0;
 
 	public SimpleQueueSimulationImpl(final List<Worker> workers, final SimpleQueueSimulationParameters params)
 			throws TurnoverException {
 
-		super(workers, params);
-		this.defaultTaskLength = params.getDefaultTaskLength();
+		super(null, params);
+
+		this.workerConfiguration = params.getWorkerConfiguration();
+		this.taskConfiguration = params.getTaskConfiguration();
+		this.tasksPerPeriod = this.taskConfiguration.getArrivalRate();
 	}
 
 	protected void execute(final SimulationParameters params) throws TurnoverException {
 
-		// Retrieve input details
-		SimpleQueueSimulationParameters inputParams = (SimpleQueueSimulationParameters) params;
-		int periodsToRun = inputParams.getTotalPeriods();
-		tasksPerPeriod = inputParams.getTasksPerPeriod();
-		completedTasks = new ArrayList<WorkerTask>();
+		// Add the workers
+		addWorkers(0);
+
+		// Get total periods to run
+		int totalPeriods = ((SimpleQueueSimulationParameters) params).getTotalPeriods();
 
 		WorkerTask tempCompletedTask = null;
-		for (int i = 0; i < periodsToRun; i++) {
+		for (int i = 0; i < totalPeriods; i++) {
 
 			// Add required tasks per period
 			addTasks(i);
@@ -75,8 +82,18 @@ class SimpleQueueSimulationImpl extends Simulation {
 
 	}
 
+	/**
+	 * Since only one set of workers is used through a simple simulation, this
+	 * is called at start
+	 * 
+	 * @param currentPeriod
+	 */
 	protected void addWorkers(final int currentPeriod) {
-		// not used in this simulation
+
+		for (int i = 0; i < workerConfiguration.getTotal(); i++) {
+			workers.add(new SimpleWorker(0, workerConfiguration.getRestTime()));
+		}
+
 	}
 
 	public List<WorkerTask> getCompletedTasks() {
@@ -89,7 +106,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 
 		random = new Random();
 
-		if (defaultTaskLength == 0) {
+		if (taskConfiguration.getTaskLength() == 0) {
 			return random.nextInt(10 - 1) + 1;
 		}
 

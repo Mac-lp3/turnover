@@ -26,7 +26,6 @@ public class SimulationMediatorImpl implements SimulationMediator {
 			SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(configurations);
 
 			qsb.addWorkers(configurations.getWorkerConfigurations().get(0).getTotal(),
-					configurations.getWorkerConfigurations().get(0).getAdditionalTime(),
 					configurations.getWorkerConfigurations().get(0).getRestTime());
 
 			try {

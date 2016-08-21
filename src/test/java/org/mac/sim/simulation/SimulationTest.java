@@ -53,9 +53,9 @@ public class SimulationTest {
 		simpleSimulationConfiguration.setTaskConfigurations(taskConfigList);
 
 		SimpleQueueSimulationBuilder qsb = new SimpleQueueSimulationBuilder(simpleSimulationConfiguration);
-		qsb.addWorkers(5, 10, 5);
-		qsb.addWorkers(3, 7, 3);
-		qsb.addWorkers(3, 5, 1);
+		qsb.addWorkers(5, 5);
+		qsb.addWorkers(3, 3);
+		qsb.addWorkers(3, 1);
 
 		Simulation sim = qsb.build();
 

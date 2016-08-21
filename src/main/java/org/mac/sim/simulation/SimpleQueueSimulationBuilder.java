@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.domain.WorkerConfiguration;
 import org.mac.sim.exception.TurnoverException;
-import org.mac.sim.thread.SimpleWorker;
 
 /**
  * The purpose of this class is to collect all of the simulation parameters and
@@ -19,9 +19,6 @@ import org.mac.sim.thread.SimpleWorker;
 public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 
 	private ArrayList<Worker> workers;
-	private int tasksPerPeriod;
-	private int periodsToRun;
-	private int defaultTaskLength;
 
 	/**
 	 * Constructor performs minimal initialization required for safety. The rest
@@ -33,13 +30,25 @@ public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 
 		super(simulationConfig);
 
-		// Simple only uses one configuration
-		this.tasksPerPeriod = simulationConfig.getTaskConfigurations().get(0).getArrivalRate();
-		this.periodsToRun = simulationConfig.getTotalPeriods();
+		this.simulationParams = new SimpleQueueSimulationParameters();
+		simulationParams.setPeriodUnits(simulationConfig.getClockUnits());
+		simulationParams.setTotalPeriods(simulationConfig.getTotalPeriods());
 
-		if (simulationConfig.getTaskConfigurations() != null) {
-			this.defaultTaskLength = simulationConfig.getTaskConfigurations().get(0).getTaskLength();
+		if (simulationConfig.getTaskConfigurations() != null && simulationConfig.getTaskConfigurations().size() > 0) {
+
+			// SimpleSim only uses one task configuration for rate and length
+			((SimpleQueueSimulationParameters) simulationParams)
+					.setTaskConfiguration(simulationConfig.getTaskConfigurations().get(0));
 		}
+
+		if (simulationConfig.getWorkerConfigurations() != null
+				&& simulationConfig.getWorkerConfigurations().size() > 0) {
+
+			// SimpleSim only uses one worker configuration
+			((SimpleQueueSimulationParameters) simulationParams)
+					.setWorkerConfiguration(simulationConfig.getWorkerConfigurations().get(0));
+		}
+
 	}
 
 	/**
@@ -51,13 +60,13 @@ public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 	 */
 	public void addWorkers(final int numberOfWorkers) {
 
-		if (workers == null) {
-			workers = new ArrayList<Worker>();
-		}
+		WorkerConfiguration wc = new WorkerConfiguration();
+		wc.setTotal(numberOfWorkers);
+		wc.setRestTime(0);
+		wc.setAdditionalTime(0);
+		wc.setArrivalPeriod(0);
 
-		for (int i = 0; i < numberOfWorkers; i++) {
-			workers.add(new SimpleWorker());
-		}
+		((SimpleQueueSimulationParameters) simulationParams).setWorkerConfiguration(wc);
 	}
 
 	/**
@@ -68,15 +77,15 @@ public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 	 * @param periodsToCompleteTask
 	 * @param bufferPeriods
 	 */
-	public void addWorkers(final int numberOfWorkers, final int periodsToCompleteTask, final int bufferPeriods) {
+	public void addWorkers(final int numberOfWorkers, final int restPeriods) {
 
-		if (workers == null) {
-			workers = new ArrayList<Worker>();
-		}
+		WorkerConfiguration wc = new WorkerConfiguration();
+		wc.setTotal(numberOfWorkers);
+		wc.setRestTime(restPeriods);
+		wc.setAdditionalTime(0);
+		wc.setArrivalPeriod(0);
 
-		for (int i = 0; i < numberOfWorkers; i++) {
-			workers.add(new SimpleWorker(periodsToCompleteTask, bufferPeriods));
-		}
+		((SimpleQueueSimulationParameters) simulationParams).setWorkerConfiguration(wc);
 	}
 
 	/**
@@ -87,16 +96,9 @@ public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 	public Simulation build() throws TurnoverException {
 
 		Simulation queueSimulation = new SimpleQueueSimulationImpl(workers,
-				new SimpleQueueSimulationParameters(periodsToRun, tasksPerPeriod, defaultTaskLength));
+				(SimpleQueueSimulationParameters) simulationParams);
 
 		return queueSimulation;
 	}
 
-	public int getDefaultTaskLength() {
-		return defaultTaskLength;
-	}
-
-	public void setDefaultTaskLength(int defaultTaskLength) {
-		this.defaultTaskLength = defaultTaskLength;
-	}
 }
