@@ -32,12 +32,13 @@ class SimpleQueueSimulationImpl extends Simulation {
 
 		super(null, params);
 
-		this.workerConfiguration = params.getWorkerConfiguration();
-		this.taskConfiguration = params.getTaskConfiguration();
-		this.tasksPerPeriod = this.taskConfiguration.getArrivalRate();
 	}
 
 	protected void execute(final SimulationParameters params) throws TurnoverException {
+
+		this.workerConfiguration = ((SimpleQueueSimulationParameters) params).getWorkerConfiguration();
+		this.taskConfiguration = ((SimpleQueueSimulationParameters) params).getTaskConfiguration();
+		this.tasksPerPeriod = this.taskConfiguration.getArrivalRate();
 
 		// Add the workers
 		addWorkers(0);
