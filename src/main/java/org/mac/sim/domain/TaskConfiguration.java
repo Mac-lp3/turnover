@@ -2,28 +2,28 @@ package org.mac.sim.domain;
 
 public class TaskConfiguration {
 
-	private int rate;
-	private int length;
+	private int arrivalRate;
+	private int taskLength;
 	private int startPeriod;
 	private int endPeriod;
 	private int lowBound;
 	private int highBound;
 	private int proportion;
 
-	public int getRate() {
-		return rate;
+	public int getArrivalRate() {
+		return arrivalRate;
 	}
 
-	public void setRate(int rate) {
-		this.rate = rate;
+	public void setArrivalRate(int arrivalRate) {
+		this.arrivalRate = arrivalRate;
 	}
 
-	public int getLength() {
-		return length;
+	public int getTaskLength() {
+		return taskLength;
 	}
 
-	public void setLength(int length) {
-		this.length = length;
+	public void setTaskLength(int taskLength) {
+		this.taskLength = taskLength;
 	}
 
 	public int getStartPeriod() {
