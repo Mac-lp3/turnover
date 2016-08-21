@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.domain.WorkerConfiguration;
@@ -37,7 +37,7 @@ public class SimulationTest {
 	@Test
 	public void simpleQueueSimulationTest() throws TurnoverException {
 
-		SimulationConfigrations simpleSimulationConfiguration = new SimulationConfigrations();
+		SimulationConfigurations simpleSimulationConfiguration = new SimulationConfigurations();
 
 		// set clock details
 		simpleSimulationConfiguration.setTotalPeriods(100);
@@ -45,7 +45,7 @@ public class SimulationTest {
 
 		// set task config
 		TaskConfiguration taskConfig = new TaskConfiguration();
-		taskConfig.setRate(8);
+		taskConfig.setArrivalRate(8);
 		taskConfig.setStartPeriod(0);
 
 		List<TaskConfiguration> taskConfigList = new ArrayList<TaskConfiguration>();
@@ -79,7 +79,7 @@ public class SimulationTest {
 		workerConfig1.setStopPeriod(33);
 		workerConfig1.setAdditionalTime(0);
 		workerConfig1.setTotal(4);
-		
+
 		LinearQueueSimulationBuilder builder = new LinearQueueSimulationBuilder(100, "Minutes");
 		builder.addWorkerConfig(workerConfig1);
 
@@ -101,25 +101,25 @@ public class SimulationTest {
 
 		TaskConfiguration taskConf1 = new TaskConfiguration();
 		taskConf1.setEndPeriod(25);
-		taskConf1.setLength(4);
-		taskConf1.setRate(4);
+		taskConf1.setTaskLength(4);
+		taskConf1.setArrivalRate(4);
 		taskConf1.setStartPeriod(0);
 		builder.addTaskConfig(taskConf1);
-		
+
 		TaskConfiguration taskConf2 = new TaskConfiguration();
 		taskConf2.setEndPeriod(66);
-		taskConf2.setLength(3);
-		taskConf2.setRate(5);
+		taskConf2.setTaskLength(3);
+		taskConf2.setArrivalRate(5);
 		taskConf2.setStartPeriod(25);
 		builder.addTaskConfig(taskConf2);
-		
+
 		TaskConfiguration taskConf3 = new TaskConfiguration();
 		taskConf3.setEndPeriod(100);
-		taskConf3.setLength(5);
-		taskConf3.setRate(5);
+		taskConf3.setTaskLength(5);
+		taskConf3.setArrivalRate(5);
 		taskConf3.setStartPeriod(66);
 		builder.addTaskConfig(taskConf3);
-		
+
 		Simulation results = builder.build();
 		results.getCompletedTasks();
 

@@ -9,6 +9,7 @@ import org.mac.sim.domain.WorkerConfiguration;
 public class LinearQueueSimulationParameters implements SimulationParameters {
 
 	private int totalPeriods;
+	private String periodUnits;
 	private List<TaskConfiguration> taskConfigurations;
 	private List<WorkerConfiguration> workerConfigurations;
 
@@ -34,6 +35,14 @@ public class LinearQueueSimulationParameters implements SimulationParameters {
 
 	public void setWorkerConfigurations(List<WorkerConfiguration> workerConfigurations) {
 		this.workerConfigurations = workerConfigurations;
+	}
+
+	public String getPeriodUnits() {
+		return periodUnits;
+	}
+
+	public void setPeriodUnits(String periodUnits) {
+		this.periodUnits = periodUnits;
 	}
 
 }

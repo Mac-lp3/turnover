@@ -89,8 +89,8 @@ public class LinearQueueSimulationImpl extends Simulation {
 				} else {
 
 					// ...then add the specified number of tasks.
-					tempTaskLength = config.getLength();
-					tempTotalToAdd = config.getRate();
+					tempTaskLength = config.getTaskLength();
+					tempTotalToAdd = config.getArrivalRate();
 
 					for (int j = 0; j < tempTotalToAdd; j++) {
 						tempWorkerTask = new WorkerTask(tempTaskLength);

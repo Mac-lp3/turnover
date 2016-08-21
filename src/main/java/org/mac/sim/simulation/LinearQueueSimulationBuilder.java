@@ -2,58 +2,67 @@ package org.mac.sim.simulation;
 
 import java.util.ArrayList;
 
-import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.WorkerConfiguration;
 import org.mac.sim.exception.TurnoverException;
 
 public class LinearQueueSimulationBuilder extends SimulationBuilder {
 
-	private LinearQueueSimulationParameters params;
-
 	public LinearQueueSimulationBuilder(int totalPeriods, String units) {
 
 		super(null);
-		this.params = new LinearQueueSimulationParameters();
-		params.setTotalPeriods(totalPeriods);
+		this.simulationParams = new LinearQueueSimulationParameters();
+		simulationParams.setTotalPeriods(totalPeriods);
+		simulationParams.setPeriodUnits(units);
 	}
 
-	public LinearQueueSimulationBuilder(SimulationConfigrations simulationConfig) {
+	public LinearQueueSimulationBuilder(SimulationConfigurations simulationConfig) {
 
 		super(simulationConfig);
 
-		this.params = new LinearQueueSimulationParameters();
+		this.simulationParams = new LinearQueueSimulationParameters();
 
 		if (simulationConfig != null) {
-			params.setTaskConfigurations(simulationConfig.getTaskConfigurations());
-			params.setWorkerConfigurations(simulationConfig.getWorkerConfigurations());
+			
+			((LinearQueueSimulationParameters) simulationParams)
+					.setTaskConfigurations(simulationConfig.getTaskConfigurations());
+			
+			((LinearQueueSimulationParameters) simulationParams)
+					.setWorkerConfigurations(simulationConfig.getWorkerConfigurations());
+			
+			((LinearQueueSimulationParameters) simulationParams).setTotalPeriods(simulationConfig.getTotalPeriods());
+			
+			((LinearQueueSimulationParameters) simulationParams).setPeriodUnits(simulationConfig.getClockUnits());
 		}
 
 	}
 
 	public Simulation build() throws TurnoverException {
 
-		Simulation queueSimulation = new LinearQueueSimulationImpl(null, params);
+		Simulation queueSimulation = new LinearQueueSimulationImpl(null, simulationParams);
 
 		return queueSimulation;
 	}
 
 	public void addWorkerConfig(WorkerConfiguration workerConfiguration) {
 
-		if (params.getWorkerConfigurations() == null) {
-			params.setWorkerConfigurations(new ArrayList<WorkerConfiguration>());
+		if (((LinearQueueSimulationParameters) simulationParams).getWorkerConfigurations() == null) {
+			((LinearQueueSimulationParameters) simulationParams)
+					.setWorkerConfigurations(new ArrayList<WorkerConfiguration>());
 		}
 
-		params.getWorkerConfigurations().add(workerConfiguration);
+		((LinearQueueSimulationParameters) simulationParams).getWorkerConfigurations().add(workerConfiguration);
 	}
 
 	public void addTaskConfig(TaskConfiguration taskConfiguration) {
 
-		if (params.getTaskConfigurations() == null) {
-			params.setTaskConfigurations(new ArrayList<TaskConfiguration>());
+		if (((LinearQueueSimulationParameters) simulationParams).getTaskConfigurations() == null) {
+			((LinearQueueSimulationParameters) simulationParams)
+					.setTaskConfigurations(new ArrayList<TaskConfiguration>());
 		}
 
-		params.getTaskConfigurations().add(taskConfiguration);
+		((LinearQueueSimulationParameters) simulationParams).getTaskConfigurations().add(taskConfiguration);
 	}
 
 }
