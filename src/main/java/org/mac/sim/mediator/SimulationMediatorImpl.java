@@ -1,7 +1,8 @@
 package org.mac.sim.mediator;
 
-import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.exception.TurnoverException;
+import org.mac.sim.simulation.LinearQueueSimulationBuilder;
 import org.mac.sim.simulation.SimpleQueueSimulationBuilder;
 import org.mac.sim.simulation.Simulation;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class SimulationMediatorImpl implements SimulationMediator {
 	private static final String PROBABILITY_TYPE_NAME = "probability";
 	private static final String LINEAR_TYPE_NAME = "linear";
 
-	public Simulation runSimulationByType(String type, SimulationConfigrations configurations)
+	public Simulation runSimulationByType(String type, SimulationConfigurations configurations)
 			throws TurnoverException {
 
 		Simulation sim = null;
@@ -41,6 +42,17 @@ public class SimulationMediatorImpl implements SimulationMediator {
 		} else if (PROBABILITY_TYPE_NAME.equalsIgnoreCase(type)) {
 
 		} else if (LINEAR_TYPE_NAME.equalsIgnoreCase(type)) {
+
+			LinearQueueSimulationBuilder lqsb = new LinearQueueSimulationBuilder(configurations);
+
+			try {
+
+				sim = lqsb.build();
+
+			} catch (TurnoverException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
