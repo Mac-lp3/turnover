@@ -1,6 +1,6 @@
 package org.mac.sim.controller;
 
-import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.mediator.SimulationMediator;
 import org.mac.sim.simulation.Simulation;
@@ -20,7 +20,7 @@ public class ApiController {
 
 	@RequestMapping(path = "/simulation", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
 	public Simulation postSimulationForm(@RequestParam(value = "type", required = false) String type,
-			@RequestBody SimulationConfigrations simulationConfig) {
+			@RequestBody SimulationConfigurations simulationConfig) {
 
 		Simulation sim = null;
 

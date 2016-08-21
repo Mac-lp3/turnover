@@ -1,12 +1,13 @@
 package org.mac.sim.simulation;
 
-import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.SimulationConfigurations;
+import org.mac.sim.domain.SimulationParameters;
 
 public abstract class SimulationBuilder {
 	
-	// TODO could probably put clock details here...
+	protected SimulationParameters simulationParams;
 	
-	protected SimulationBuilder(SimulationConfigrations simulationConfig) {
+	protected SimulationBuilder(SimulationConfigurations simulationConfig) {
 		
 	}
 	

@@ -2,7 +2,7 @@ package org.mac.sim.domain;
 
 import java.util.List;
 
-public class SimulationConfigrations {
+public class SimulationConfigurations {
 
 	private String clockUnits;
 	private int totalPeriods;

@@ -2,7 +2,7 @@ package org.mac.sim.simulation;
 
 import java.util.ArrayList;
 
-import org.mac.sim.domain.SimulationConfigrations;
+import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.domain.Worker;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.SimpleWorker;
@@ -29,16 +29,16 @@ public class SimpleQueueSimulationBuilder extends SimulationBuilder {
 	 * 
 	 * @param simulationConfig
 	 */
-	public SimpleQueueSimulationBuilder(SimulationConfigrations simulationConfig) {
+	public SimpleQueueSimulationBuilder(SimulationConfigurations simulationConfig) {
 
 		super(simulationConfig);
 
 		// Simple only uses one configuration
-		this.tasksPerPeriod = simulationConfig.getTaskConfigurations().get(0).getRate();
+		this.tasksPerPeriod = simulationConfig.getTaskConfigurations().get(0).getArrivalRate();
 		this.periodsToRun = simulationConfig.getTotalPeriods();
 
 		if (simulationConfig.getTaskConfigurations() != null) {
-			this.defaultTaskLength = simulationConfig.getTaskConfigurations().get(0).getLength();
+			this.defaultTaskLength = simulationConfig.getTaskConfigurations().get(0).getTaskLength();
 		}
 	}
 

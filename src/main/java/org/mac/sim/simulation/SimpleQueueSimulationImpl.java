@@ -34,7 +34,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 
 		// Retrieve input details
 		SimpleQueueSimulationParameters inputParams = (SimpleQueueSimulationParameters) params;
-		int periodsToRun = inputParams.getPeriodsToRun();
+		int periodsToRun = inputParams.getTotalPeriods();
 		tasksPerPeriod = inputParams.getTasksPerPeriod();
 		completedTasks = new ArrayList<WorkerTask>();
 

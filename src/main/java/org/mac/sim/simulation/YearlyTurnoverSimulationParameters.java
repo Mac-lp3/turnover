@@ -30,4 +30,14 @@ class YearlyTurnoverSimulationParameters implements SimulationParameters {
 		return yearsToSimulate;
 	}
 
+	public void setTotalPeriods(int totalPeriods) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setPeriodUnits(String units) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

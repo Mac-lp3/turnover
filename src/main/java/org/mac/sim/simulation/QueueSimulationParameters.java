@@ -8,6 +8,8 @@ class QueueSimulationParameters implements SimulationParameters {
 
 	private ClockManager clockManager;
 	private TaskQueueManager queueManager;
+	private int totalPeriods;
+	private String periodUnits;
 
 	/**
 	 * 
@@ -25,6 +27,22 @@ class QueueSimulationParameters implements SimulationParameters {
 
 	public TaskQueueManager getQueueManager() {
 		return queueManager;
+	}
+
+	public int getTotalPeriods() {
+		return totalPeriods;
+	}
+
+	public void setTotalPeriods(int totalPeriods) {
+		this.totalPeriods = totalPeriods;
+	}
+
+	public String getPeriodUnits() {
+		return periodUnits;
+	}
+
+	public void setPeriodUnits(String periodUnits) {
+		this.periodUnits = periodUnits;
 	}
 
 }
