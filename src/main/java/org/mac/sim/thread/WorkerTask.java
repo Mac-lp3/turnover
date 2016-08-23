@@ -7,6 +7,7 @@ public class WorkerTask {
 	private int serviceTimeRequired;
 	private int arrivalPeriod;
 	private int periodServiced;
+	private int servedById;
 
 	public WorkerTask(int serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
@@ -50,6 +51,14 @@ public class WorkerTask {
 
 	public void setPeriodServiced(int periodServiced) {
 		this.periodServiced = periodServiced;
+	}
+
+	public int getServedById() {
+		return servedById;
+	}
+
+	public void setServedById(int servedById) {
+		this.servedById = servedById;
 	}
 
 }
