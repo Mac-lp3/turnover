@@ -111,7 +111,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 			return random.nextInt(10 - 1) + 1;
 		}
 
-		return ((SimpleQueueSimulationParameters) simulationParameters).getDefaultTaskLength();
+		return taskConfiguration.getTaskLength();
 	}
 
 }
