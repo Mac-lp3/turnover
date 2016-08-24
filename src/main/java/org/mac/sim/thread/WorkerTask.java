@@ -8,6 +8,7 @@ public class WorkerTask {
 	private int arrivalPeriod;
 	private int periodServiced;
 	private int servedById;
+	private int configHashCode;
 
 	public WorkerTask(int serviceTimeRequired) {
 		this.serviceTimeRequired = serviceTimeRequired;
@@ -59,6 +60,14 @@ public class WorkerTask {
 
 	public void setServedById(int servedById) {
 		this.servedById = servedById;
+	}
+
+	public int getConfigHashCode() {
+		return configHashCode;
+	}
+
+	public void setConfigHashCode(int configHashCode) {
+		this.configHashCode = configHashCode;
 	}
 
 }
