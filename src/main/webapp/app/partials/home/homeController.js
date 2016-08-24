@@ -10,6 +10,15 @@ module.exports = function ($http, $location, resultsService) {
     this.quickStartRestTime = 0;
 
     this.quickStart = () => {
+
+        const taskConfigs = [];
+        taskConfigs.push({
+            arrivalRate: this.quickStartRate,
+            taskLength: this.quickStartTaskTime,
+            proportion: 100,
+            startPeriod: 0,
+            endPeriod: this.quickStartPeriods
+        });
         
         $http({
 
@@ -23,17 +32,9 @@ module.exports = function ($http, $location, resultsService) {
                     additionalTime: 0,
                     restTime: this.quickStartRestTime,
                     arrivalPeriod: 0,
-                    stopPeriod: 0
+                    stopPeriod: this.quickStartPeriods
                 }],
-                taskConfigurations: [{
-                    rate: this.quickStartRate,
-                    length: this.quickStartTaskTime,
-                    startPeriod: 0,
-                    endPeriod: 0,
-                    lowBound: 0,
-                    highBound: 0,
-                    proportion: 100
-                }]
+                taskConfigurations: taskConfigs
             }
 
         }).then((response) => {
