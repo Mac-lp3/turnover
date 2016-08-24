@@ -17,7 +17,6 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 	private List<WorkerConfiguration> workerConfigurations;
 	private List<TaskConfiguration> taskConfigurations;
 	private int totalPeriods = 0;
-	private double rand = Math.random();
 
 	protected ProbabilityQueueSimulationImpl(List<Worker> workers, SimulationParameters simulationParameters)
 			throws TurnoverException {
@@ -67,21 +66,39 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 	protected int getTaskLength() {
 
 		// generate a random int 1-100.
+		double rand = Math.random();
 		double temp = rand * 100;
 		int percentage = (int) temp + 1;
 
 		// compare it with each config's probability.
 		TaskConfiguration currentLowestProportion = null;
-		for (TaskConfiguration tc : this.taskConfigurations) {
-			if (percentage <= tc.getProportion()) {
-				// mark the one with the
-				if (currentLowestProportion == null || currentLowestProportion.getProportion() > tc.getProportion()) {
-					currentLowestProportion = tc;
+		while (currentLowestProportion == null) {
+
+			// compare it with each configuration's proportion
+			for (TaskConfiguration tc : this.taskConfigurations) {
+
+				// mark the one that is >= the percentage
+				if (percentage <= tc.getProportion()) {
+
+					// if there are multiple, take the one with the lowest
+					// proportion
+					if (currentLowestProportion == null
+							|| currentLowestProportion.getProportion() > tc.getProportion()) {
+						currentLowestProportion = tc;
+					}
+
 				}
+			}
+
+			// if none found, generate a new set of numbers
+			if (currentLowestProportion == null) {
+				rand = Math.random();
+				temp = rand * 100;
+				percentage = (int) temp + 1;
 			}
 		}
 
-		// use the config's low/high bound to generate task time
+		// use the lowest config's low/high bound to generate task time
 		Random r = new Random();
 		int taskTime = r.nextInt(currentLowestProportion.getHighBound() - currentLowestProportion.getLowBound())
 				+ currentLowestProportion.getLowBound();
@@ -130,7 +147,6 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 					tempWorker.setWorkerConfigHash(conf.hashCode());
 					workers.add(tempWorker);
 				}
-
 			}
 		}
 
@@ -168,6 +184,7 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 					for (int j = 0; j < tempTotalToAdd; j++) {
 						tempWorkerTask = new WorkerTask(tempTaskLength);
 						tempWorkerTask.setArrivalPeriod(currentPeriod);
+						tempWorkerTask.setConfigHashCode(config.hashCode());
 						this.tasks.add(tempWorkerTask);
 					}
 
