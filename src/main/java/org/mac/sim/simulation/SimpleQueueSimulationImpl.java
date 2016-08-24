@@ -78,6 +78,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 		for (int j = 0; j < tasksPerPeriod; j++) {
 			tempNewTask = new WorkerTask(getTaskLength());
 			tempNewTask.setArrivalPeriod(currentPeriod);
+			tempNewTask.setConfigHashCode(0);
 			this.tasks.add(tempNewTask);
 		}
 
