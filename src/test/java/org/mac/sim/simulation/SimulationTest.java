@@ -3,6 +3,7 @@ package org.mac.sim.simulation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.domain.TaskConfiguration;
@@ -12,6 +13,11 @@ import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.WorkerTask;
 
 public class SimulationTest {
+
+	@Before
+	public void setUpSimConfig() {
+
+	}
 
 	@Test
 	public void buildAndRunTest() throws InterruptedException {
@@ -68,6 +74,59 @@ public class SimulationTest {
 		for (Worker worker : sim.getWorkers()) {
 			System.out.println(worker.getTasksCompleted());
 		}
+	}
+
+	@Test
+	public void probabilityQueueSimulationTest() throws TurnoverException {
+
+		WorkerConfiguration workerConfig1 = new WorkerConfiguration();
+		workerConfig1.setArrivalPeriod(0);
+		workerConfig1.setRestTime(1);
+		workerConfig1.setStopPeriod(33);
+		workerConfig1.setAdditionalTime(0);
+		workerConfig1.setTotal(4);
+
+		List<WorkerConfiguration> workConfs = new ArrayList<WorkerConfiguration>();
+		workConfs.add(workerConfig1);
+
+		TaskConfiguration tc1 = new TaskConfiguration();
+		tc1.setArrivalRate(2);
+		tc1.setStartPeriod(0);
+		tc1.setEndPeriod(100);
+		tc1.setLowBound(3);
+		tc1.setHighBound(7);
+		tc1.setProportion(33);
+
+		TaskConfiguration tc2 = new TaskConfiguration();
+		tc2.setArrivalRate(1);
+		tc2.setStartPeriod(0);
+		tc2.setEndPeriod(100);
+		tc2.setLowBound(5);
+		tc2.setHighBound(7);
+		tc2.setProportion(33);
+
+		TaskConfiguration tc3 = new TaskConfiguration();
+		tc3.setArrivalRate(2);
+		tc3.setStartPeriod(0);
+		tc3.setEndPeriod(100);
+		tc3.setLowBound(1);
+		tc3.setHighBound(4);
+		tc3.setProportion(34);
+
+		List<TaskConfiguration> taskConfs = new ArrayList<TaskConfiguration>();
+		taskConfs.add(tc1);
+		taskConfs.add(tc2);
+		taskConfs.add(tc3);
+
+		SimulationConfigurations simConfig = new SimulationConfigurations();
+		simConfig.setTotalPeriods(100);
+		simConfig.setClockUnits("minutes");
+		simConfig.setWorkerConfigurations(workConfs);
+		simConfig.setTaskConfigurations(taskConfs);
+
+		ProbabilityQueueSimulationBuilder pqsm = new ProbabilityQueueSimulationBuilder(simConfig);
+		Simulation s = pqsm.build();
+
 	}
 
 	@Test
