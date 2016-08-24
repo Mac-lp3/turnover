@@ -3,6 +3,7 @@ package org.mac.sim.mediator;
 import org.mac.sim.domain.SimulationConfigurations;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.simulation.LinearQueueSimulationBuilder;
+import org.mac.sim.simulation.ProbabilityQueueSimulationBuilder;
 import org.mac.sim.simulation.SimpleQueueSimulationBuilder;
 import org.mac.sim.simulation.Simulation;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,17 @@ public class SimulationMediatorImpl implements SimulationMediator {
 			}
 
 		} else if (PROBABILITY_TYPE_NAME.equalsIgnoreCase(type)) {
+
+			ProbabilityQueueSimulationBuilder pqsb = new ProbabilityQueueSimulationBuilder(configurations);
+
+			try {
+
+				sim = pqsb.build();
+
+			} catch (TurnoverException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} else if (LINEAR_TYPE_NAME.equalsIgnoreCase(type)) {
 
