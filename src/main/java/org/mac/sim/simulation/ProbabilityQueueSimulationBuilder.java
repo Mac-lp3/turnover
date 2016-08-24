@@ -9,7 +9,7 @@ import org.mac.sim.exception.TurnoverException;
 
 public class ProbabilityQueueSimulationBuilder extends SimulationBuilder {
 
-	protected ProbabilityQueueSimulationBuilder(SimulationConfigurations simulationConfig) {
+	public ProbabilityQueueSimulationBuilder(SimulationConfigurations simulationConfig) {
 
 		super(simulationConfig);
 
