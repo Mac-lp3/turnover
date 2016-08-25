@@ -14,8 +14,6 @@ import org.mac.sim.thread.WorkerTask;
 
 public class ProbabilityQueueSimulationImpl extends Simulation {
 
-	private List<WorkerConfiguration> workerConfigurations;
-	private List<TaskConfiguration> taskConfigurations;
 	private int totalPeriods = 0;
 
 	protected ProbabilityQueueSimulationImpl(List<Worker> workers, SimulationParameters simulationParameters)
@@ -167,13 +165,13 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 			config = iterator.next();
 
 			// Check if these tasks begin arriving at this time...
-			if (config.getStartPeriod() <= currentPeriod) {
+			if (config.getStartPeriod() <= currentPeriod && config.isActive()) {
 
 				// and make sure that they have not stopped arriving...
 				if (config.getEndPeriod() <= currentPeriod) {
 
 					// ...and remove this configuration if so.
-					iterator.remove();
+					config.setActive(false);
 
 				} else {
 

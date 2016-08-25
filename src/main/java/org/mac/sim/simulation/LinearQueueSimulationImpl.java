@@ -13,8 +13,6 @@ import org.mac.sim.thread.WorkerTask;
 
 public class LinearQueueSimulationImpl extends Simulation {
 
-	private List<WorkerConfiguration> workerConfigurations;
-	private List<TaskConfiguration> taskConfigurations;
 	private int totalPeriods = 0;
 
 	protected LinearQueueSimulationImpl(List<Worker> workers, SimulationParameters simulationParameters)
@@ -32,6 +30,7 @@ public class LinearQueueSimulationImpl extends Simulation {
 		this.totalPeriods = ((LinearQueueSimulationParameters) simulationParameters).getTotalPeriods();
 
 		WorkerTask tempCompletedTask = null;
+
 		for (int currentPeriod = 0; currentPeriod < totalPeriods; currentPeriod++) {
 
 			addTasks(currentPeriod);
@@ -61,7 +60,6 @@ public class LinearQueueSimulationImpl extends Simulation {
 	protected int getTaskLength() {
 
 		// not used in this simulation
-
 		return 0;
 	}
 
@@ -78,13 +76,13 @@ public class LinearQueueSimulationImpl extends Simulation {
 			config = iterator.next();
 
 			// Check if these tasks begin arriving at this time...
-			if (config.getStartPeriod() <= currentPeriod) {
+			if (config.getStartPeriod() <= currentPeriod && config.isActive()) {
 
 				// and make sure that they have not stopped arriving...
 				if (config.getEndPeriod() <= currentPeriod) {
 
 					// ...then remove this configuration from the list.
-					iterator.remove();
+					config.setActive(false);
 
 				} else {
 
@@ -95,19 +93,17 @@ public class LinearQueueSimulationImpl extends Simulation {
 					for (int j = 0; j < tempTotalToAdd; j++) {
 						tempWorkerTask = new WorkerTask(tempTaskLength);
 						tempWorkerTask.setArrivalPeriod(currentPeriod);
+						tempWorkerTask.setConfigHashCode(config.hashCode());
 						this.tasks.add(tempWorkerTask);
 					}
-
 				}
 			}
-
 		}
-
 	}
 
 	/**
 	 * Checks if this is a period to add additional workers. If it is, this
-	 * method will automatically add the specfied number of workers with the
+	 * method will automatically add the specified number of workers with the
 	 * provided configuration.
 	 * 
 	 * @param currentPeriod

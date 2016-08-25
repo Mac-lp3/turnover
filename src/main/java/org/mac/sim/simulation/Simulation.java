@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mac.sim.domain.SimulationParameters;
+import org.mac.sim.domain.TaskConfiguration;
 import org.mac.sim.domain.Worker;
+import org.mac.sim.domain.WorkerConfiguration;
 import org.mac.sim.exception.TurnoverException;
 import org.mac.sim.thread.WorkerTask;
 
@@ -22,6 +24,8 @@ public abstract class Simulation {
 	protected List<WorkerTask> tasks;
 	protected List<Worker> workers;
 	protected SimulationParameters simulationParameters;
+	protected List<WorkerConfiguration> workerConfigurations;
+	protected List<TaskConfiguration> taskConfigurations;
 
 	/**
 	 * Constructor enforces that the simulation logic is executed before the
@@ -71,6 +75,14 @@ public abstract class Simulation {
 
 	public List<Worker> getWorkers() {
 		return workers;
+	}
+
+	public List<WorkerConfiguration> getWorkerConfigurations() {
+		return workerConfigurations;
+	}
+
+	public List<TaskConfiguration> getTaskConfigurations() {
+		return taskConfigurations;
 	}
 
 }
