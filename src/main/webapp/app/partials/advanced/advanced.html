@@ -56,7 +56,6 @@
 			            
 			            <!-- Rate input -->
 			            <div class="form-group col-md-3 col-sm-3">
-			            	
 			            
 				            <label for="{{'linearArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
 				            <input type="number" class="form-control" id="{{'linearArrivalRate' + $index}}" name="{{'linearArrivalRate' + $index}}" min="0" ng-model="linearConfig.arrivalRate" ng-required="advancedCtrl.isLinear">
@@ -307,13 +306,13 @@
 
 			<!-- Button to add more worker configurations -->
 			<div class="col-md-12 text-center">
-				
+
 				<button type="button" class="btn btn-md" ng-click="advancedCtrl.addWorkerConfig()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 
 				<!-- Button to remove more task configurations -->
 				<button type="button" class="btn btn-md" ng-click="advancedCtrl.removeWorkerConfig()" ng-show="advancedCtrl.showWorkerRm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
 			</div>
-			
+
 		</div>
 
 		<div class="row" style="margin-top: 20px;">
