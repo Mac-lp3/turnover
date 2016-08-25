@@ -35,7 +35,7 @@ module.exports = function ($http, $location, resultsService) {
 			}
 
 		} else {
-
+				
 			// If this is the only task config, set proportion to 100. 0 otherwise
 			let tempProportion = this.probabilityTaskConfigs.length > 0 ? 0 : 100;
 
@@ -194,19 +194,62 @@ module.exports = function ($http, $location, resultsService) {
 				taskConfigurations: taskConfigsToPost
 			}
 
-		}).then(function success(response){
+		}).then((response) => {
 
+			resultsService.periodUnits = this.periodUnits;
+			resultsService.totalPeriods = this.totalPeriods;
+			resultsService.isProbability = this.isProbability;
+			resultsService.showProbabilityRm = this.showProbabilityRm;
+			resultsService.isLinear = this.isLinear;
+			resultsService.showLinearRm = this.showLinearRm;
+			resultsService.showWorkerRm = this.showWorkerRm;
+			resultsService.workerConfigs = this.workerConfigs;
+			resultsService.linearTaskConfigs = this.linearTaskConfigs;
+			resultsService.probabilityArrivalRate = this.probabilityArrivalRate;
+			resultsService.probabilityTaskConfigs = this.probabilityTaskConfigs;
 			resultsService.setSimulationResults(response.data);
 
 		});
 
 	};
 
+	/*
+	 * If the user is returning to this form, the old values will be preserved 
+	 * for easier edit.
+	 */
+	this.refillForm = () => {
+
+		this.periodUnits = resultsService.periodUnits;
+		this.totalPeriods = resultsService.totalPeriods;
+		this.isProbability = resultsService.isProbability;
+		this.showProbabilityRm = resultsService.showProbabilityRm;
+		this.isLinear = resultsService.isLinear;
+		this.showLinearRm = resultsService.showLinearRm;
+		this.showWorkerRm = resultsService.showWorkerRm;
+		this.workerConfigs = resultsService.workerConfigs;
+		
+		if (this.workerConfigs.length == 0) {
+			this.addWorkerConfig();
+		}
+
+		this.linearTaskConfigs = resultsService.linearTaskConfigs;
+		if (this.linearTaskConfigs.length == 0) {
+			this.addTaskConfig();
+		}
+
+		this.probabilityArrivalRate = resultsService.probabilityArrivalRate;
+
+		this.probabilityTaskConfigs = resultsService.probabilityTaskConfigs;
+		if (this.probabilityTaskConfigs.length == 0) {
+			this.showProbabilityConfig();
+			this.addTaskConfig();
+		}
+
+		this.showLinearConfig();
+
+	};
+
 	// initialize
-	this.addWorkerConfig();
-	this.addTaskConfig();
-	this.showProbabilityConfig();
-	this.addTaskConfig();
-	this.showLinearConfig();
+	this.refillForm();
 
 };

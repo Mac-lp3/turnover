@@ -5,15 +5,28 @@
  */
 module.exports = function($location) {
 
-	const self = this;
+	// results to pass between pages
 	this.simulationResults = {};
 
-	self.setSimulationResults = function(data) {
+	// list of data to maintain 
+	this.periodUnits = 'minutes';
+	this.totalPeriods = 0;
+	this.isProbability = false;
+	this.showProbabilityRm = false;
+	this.isLinear = true; // default
+	this.showLinearRm = false;
+	this.showWorkerRm = false;
+	this.workerConfigs = [];
+	this.linearTaskConfigs = [];
+	this.probabilityArrivalRate = 0;
+	this.probabilityTaskConfigs = [];
+
+	this.setSimulationResults = (data) => {
 		this.simulationResults = data;
 		$location.path('/results');
 	};
 
-	self.getSimulationResults = function() {
+	this.getSimulationResults = () => {
 		return this.simulationResults;
 	};
 
