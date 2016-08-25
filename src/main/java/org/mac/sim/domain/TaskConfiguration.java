@@ -9,6 +9,7 @@ public class TaskConfiguration {
 	private int lowBound;
 	private int highBound;
 	private int proportion;
+	private boolean isActive;
 
 	public int getArrivalRate() {
 		return arrivalRate;
@@ -64,6 +65,14 @@ public class TaskConfiguration {
 
 	public void setProportion(int proportion) {
 		this.proportion = proportion;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
