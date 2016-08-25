@@ -9,7 +9,7 @@ public class TaskConfiguration {
 	private int lowBound;
 	private int highBound;
 	private int proportion;
-	private boolean isActive;
+	private boolean isActive = true;
 
 	public int getArrivalRate() {
 		return arrivalRate;
