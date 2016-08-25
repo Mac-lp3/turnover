@@ -7,7 +7,8 @@ module.exports = function ($http, $location, resultsService) {
 
 	this.averageWaitTime = 0;
 	this.averageTasksPerWorker = 0;
-	this.colorMap = {};
+	this.workerColorMap = {};
+	this.taskColorMap = {};
 
 	this.advancedConfig = () => {
 
@@ -21,17 +22,17 @@ module.exports = function ($http, $location, resultsService) {
 	this.getGrayScale = (seed) => {
 
 		// if a color has not been generated for this seed, do so
-		if (this.colorMap[seed] == null) {
+		if (this.taskColorMap[seed] == null) {
 			
 			const value = Math.random() * 0xFF | 0;
 			const grayscale = (value << 16) | (value << 8) | value;
 			const color = '#' + grayscale.toString(16);
 			
-			this.colorMap[seed] = color;
+			this.taskColorMap[seed] = color;
 		}
 
 		// return the color
-		return this.colorMap[seed];
+		return this.taskColorMap[seed];
 	};
 
 	this.buildChartData = () => {
@@ -45,7 +46,7 @@ module.exports = function ($http, $location, resultsService) {
 		// Build label and wait time list for tasks
 		let totalWait = 0;
 		for (let i = 0; i < tasks.length; ++i) {
-			taskLables.push(tasks[i].arrivalPeriod);
+			taskLables.push('Arrival: ' + tasks[i].arrivalPeriod);
 			taskWaitTime.push(tasks[i].periodsInQueue);
 			taskBarColors.push(this.getGrayScale(tasks[i].configHashCode));
 			totalWait += tasks[i].periodsInQueue;
@@ -86,12 +87,29 @@ module.exports = function ($http, $location, resultsService) {
 		let workerTotals = [];
 		let workerColors =[];
 
+		this.workerColorMap[-1] = '#333333';
+		this.workerColorMap[0] = '#808080';
+		this.workerColorMap[1] = '#cccccc';
+
 		// Count tasks completed and assign values/labels
 		let totalTasksCompleted = 0;
+		let tempWorkerLabel = '';
+		let srCount = 0;
+		let jrCount = 0;
+		let stCount = 0;
 		for (let i = 0; i < workers.length; ++i) {
-			workerLables.push('Worker ' + (i + 1));
+		
+			if (workers[i].periodsToCompleteTask == -1) {
+				tempWorkerLabel = 'Senior Worker ' + ++srCount;
+			} else if (workers[i].periodsToCompleteTask == 1) {
+				tempWorkerLabel = 'Junior Worker ' + ++jrCount;
+			} else {
+				tempWorkerLabel = 'Worker ' + ++stCount;
+			}
+
+			workerLables.push(tempWorkerLabel);
 			workerTotals.push(workers[i].tasksCompleted);
-			workerColors.push(this.getGrayScale(workers[i].periodsToCompleteTask));
+			workerColors.push(this.workerColorMap[workers[i].periodsToCompleteTask]);
 			totalTasksCompleted += workers[i].tasksCompleted;
 		}
 
