@@ -17,3 +17,22 @@
 .controll-pills:focus {
 	background-color: #000000 !important;
 }
+
+.modal-content-turnover {
+	border-radius: 0px !important;
+}
+
+.modal-content-turnover > .modal-header {
+	border-bottom: 0px; 
+	padding-bottom: 0px; 
+	background-image: url(../media/bw-city-blueprint.jpg); 
+	background-position: 45% 24%;
+}
+
+.modal-content-turnover > .modal-body {
+	padding-top: 0px; 
+}
+
+.modal-content-turnover > .modal-footer {
+	border-top: 0px; 
+}
