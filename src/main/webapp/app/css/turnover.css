@@ -48,3 +48,12 @@
 .error-message {
 	color: red;
 }
+
+.advanced-pills-description {
+	margin-top: 0px; 
+	border-bottom: 1px solid #ccc;
+}
+
+.advanced-row-description {
+	border-bottom: 1px solid #ccc;
+}
