@@ -36,3 +36,15 @@
 .modal-content-turnover > .modal-footer {
 	border-top: 0px; 
 }
+
+.quickstart-form-row {
+	margin-bottom: 10px;
+}
+
+.quickstart-form-row-label {
+	font-weight: normal;
+}
+
+.error-message {
+	color: red;
+}
