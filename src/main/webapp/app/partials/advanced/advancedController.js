@@ -109,7 +109,7 @@ module.exports = function ($http, $location, resultsService) {
 
 	};
 
-	this.goHome = () {
+	this.goHome = () => {
 		$location.path('/');
 	};
 
