@@ -109,6 +109,10 @@ module.exports = function ($http, $location, resultsService) {
 
 	};
 
+	this.goHome = () {
+		$location.path('/');
+	};
+
 	this.addWorkerConfig = () => {
 
 		this.workerConfigs.push({
