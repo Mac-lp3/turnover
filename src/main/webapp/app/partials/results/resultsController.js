@@ -9,6 +9,9 @@ module.exports = function ($http, $location, resultsService) {
 	this.averageTasksPerWorker = 0;
 	this.workerColorMap = {};
 	this.taskColorMap = {};
+	this.hexColorList = ['#d9d9d9', '#bfbfbf', '#a6a6a6', 
+    	'#8c8c8c', '#737373', '#595959', '#404040', '#262626'];
+    this.hexColorIndex = 0;
 
 	this.advancedConfig = () => {
 
@@ -24,11 +27,8 @@ module.exports = function ($http, $location, resultsService) {
 		// if a color has not been generated for this seed, do so
 		if (this.taskColorMap[seed] == null) {
 			
-			const value = Math.random() * 0xFF | 0;
-			const grayscale = (value << 16) | (value << 8) | value;
-			const color = '#' + grayscale.toString(16);
-			
-			this.taskColorMap[seed] = color;
+			this.taskColorMap[seed] = this.hexColorList[this.hexColorIndex];
+			++this.hexColorIndex;
 		}
 
 		// return the color
@@ -69,6 +69,8 @@ module.exports = function ($http, $location, resultsService) {
 		 	options: {
 		 		scales: {
 		 			xAxes: [{
+		 				stacked: true,
+		 				barPercentage: .3,
 		 				display: false
 		 			}],
 		 			yAxes: [{
