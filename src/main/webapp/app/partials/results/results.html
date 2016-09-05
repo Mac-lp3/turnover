@@ -9,13 +9,17 @@
 	</div>
 
 	<div class="row text-center">
-		<div class="col-md-6 col-sm-6">
+		<div class="col-md-4 col-sm-4">
 			<h1>{{resultsCtrl.averageWaitTime | number : 2}}</h1>
-			<small>Average Wait</small>
+			<small>Average Wait Time</small>
 		</div>
-		<div class="col-md-6 col-sm-6">
+		<div class="col-md-4 col-sm-4">
 			<h1>{{resultsCtrl.averageTasksPerWorker | number : 2}}</h1>
-			<small>Average Completed Tasks</small>
+			<small>Tasks Per Worker</small>
+		</div>
+		<div class="col-md-4 col-sm-4">
+			<h1>{{resultsCtrl.totalCompletedTasks}}</h1>
+			<small>Total Tasks Completed</small>
 		</div>
 	</div>
 
