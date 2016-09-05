@@ -9,9 +9,10 @@ module.exports = function ($http, $location, resultsService) {
 	this.averageTasksPerWorker = 0;
 	this.workerColorMap = {};
 	this.taskColorMap = {};
-	this.hexColorList = ['#d9d9d9', '#bfbfbf', '#a6a6a6', 
-    	'#8c8c8c', '#737373', '#595959', '#404040', '#262626'];
+	this.hexColorList = ['#d9d9d9', '#a6a6a6', '#404040', '#bfbfbf',  
+    	 '#262626', '#8c8c8c', '#737373', '#595959'];
     this.hexColorIndex = 0;
+    this.totalCompletedTasks = 0;
 
 	this.advancedConfig = () => {
 
@@ -45,121 +46,54 @@ module.exports = function ($http, $location, resultsService) {
 
 		// Build label and wait time list for tasks
 		let totalWait = 0;
+		let currentTaskConfigurationCode = 0;
+		let taskConfigurationData = [];
+		let startTaskConfigurationIndex = 0;
+
 		for (let i = 0; i < tasks.length; ++i) {
+
+			if (i == 0) {
+
+				// First iteration - set the current config id
+				currentTaskConfigurationCode = tasks[i].configHashCode;
+
+			} else if (currentTaskConfigurationCode != tasks[i].configHashCode) {
+
+				// next config reached - update current config id
+				currentTaskConfigurationCode = tasks[i].configHashCode;
+
+				// create a config data object
+				taskConfigurationData.push({
+					colorCode: this.getGrayScale(currentTaskConfigurationCode),
+					startPeriod: startTaskConfigurationIndex,
+					endPeriod: i,
+					totalCompleted: i - startTaskConfigurationIndex
+				});
+
+				// update start index
+				startTaskConfigurationIndex = i;
+
+			} else if (i == tasks.length - 1) {
+
+				// end of task list - create final task data object
+				taskConfigurationData.push({
+					colorCode: this.getGrayScale(currentTaskConfigurationCode),
+					startPeriod: startTaskConfigurationIndex,
+					endPeriod: i,
+					totalCompleted: i - startTaskConfigurationIndex
+				});
+
+			}
+
+			// add task data to tracked values
 			taskLables.push('Arrival: ' + tasks[i].arrivalPeriod);
 			taskWaitTime.push(tasks[i].periodsInQueue);
-			taskBarColors.push(this.getGrayScale(tasks[i].configHashCode));
+			taskBarColors.push(this.getGrayScale(currentTaskConfigurationCode));
 			totalWait += tasks[i].periodsInQueue;
 		}
 
-
-		/*
-		 * Build task dataset objects based on the has configuration hash code.
-		 */
-		let taskDataSets = [];
-		let tempHashCode = 0;
-		let totalWaitTime = 0;
-		let tempTaskBarLabels = [];
-		let tempWaitTimes = [];
-		let tempBGColors = [];
-		let taskDataSetLable = 'Wait Time';
-		let totalIterations = tasks.length - 1;
-
-		for (let i = 0; i < tasks.length; ++i) {
-			
-			// If this task begins a new set of 
-			if (i == 0) {
-
-				// first roung through the loop. Cachse the hash
-				tempHashCode = tasks[i].configHashCode;
-
-				// push task values to the temp arrays
-				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
-				tempWaitTimes.push(tasks[i].periodsInQueue);
-				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
-
-				// iterate the total time
-				totalWait += tasks[i].periodsInQueue;
-
-
-			} else if (tempHashCode != tasks[i].configHashCode) {
-
-				// next hash code reached. Create dataset object with old data
-				taskDataSets.push({
-					label: taskDataSetLable,
-					data: this.cloneArray(tempWaitTimes),
-					backgroundColor: this.cloneArray(tempBGColors)
-				});
-
-				// reset data arrays
-				tempWaitTimes = [];
-				tempBGColors = [];
-
-				// push values to arrays
-				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
-				tempWaitTimes.push(tasks[i].periodsInQueue);
-				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
-
-				// update current hashcode
-				tempHashCode = tasks[i].configHashCode;
-
-				// iterate the totalWaitTime
-				totalWait += tasks[i].periodsInQueue;
-
-			} else if (i == totalIterations) {
-
-				// end of task list reached. push final values
-				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
-				tempWaitTimes.push(tasks[i].periodsInQueue);
-				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
-
-				// create final dataset object
-				taskDataSets.push({
-					label: taskDataSetLable,
-					data: this.cloneArray(tempWaitTimes),
-					backgroundColor: this.cloneArray(tempBGColors)
-				});
-
-				// iterate total wait time.
-				totalWait += tasks[i].periodsInQueue;
-
-			} else {
-				
-				// task is in same data set - just push values
-				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
-				tempWaitTimes.push(tasks[i].periodsInQueue);
-				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
-
-				// iterate total time
-				totalWait += tasks[i].periodsInQueue;
-			}
-
-		}
-
+		this.totalCompletedTasks = tasks.length;
 		this.averageWaitTime = totalWait / tasks.length;
-
-		// const taskBarChart = new Chart($('#taskBarChart'), {
-		//  	type: 'bar',
-		//  	data: {
-		//  		labels: tempTaskBarLabels,
-		// 	 	datasets: taskDataSets
-		//  	},
-		//  	options: {
-		//  		scales: {
-		//  			xAxes: [{
-		//  				stacked: true,
-		//  				barPercentage: .3,
-		//  				display: false
-		//  			}],
-		//  			yAxes: [{
-		//  				scaleLabel: {
-		//  					display: true,
-		//  					labelString: 'Wait Time'
-		//  				}
-		//  			}]
-		//  		}
-		//  	}
-		// });
 
 		const taskBarChart = new Chart($('#taskBarChart'), {
 		 	type: 'bar',
@@ -169,6 +103,7 @@ module.exports = function ($http, $location, resultsService) {
 			 		{
 			 			label: 'Wait Time',
 			 			data: taskWaitTime,
+			 			type: 'bar',
 			 			backgroundColor: taskBarColors
 			 		}
 			 	]
