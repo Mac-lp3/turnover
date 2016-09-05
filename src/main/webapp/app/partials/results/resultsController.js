@@ -52,19 +52,97 @@ module.exports = function ($http, $location, resultsService) {
 			totalWait += tasks[i].periodsInQueue;
 		}
 
+
+		/*
+		 * Build task dataset objects based on the has configuration hash code.
+		 */
+		let taskDataSets = [];
+		let tempHashCode = 0;
+		let totalWaitTime = 0;
+		let tempTaskBarLabels = [];
+		let tempWaitTimes = [];
+		let tempBGColors = [];
+		let taskDataSetLable = 'Wait Time';
+		let totalIterations = tasks.length - 1;
+
+		for (let i = 0; i < tasks.length; ++i) {
+			
+			// If this task begins a new set of 
+			if (i == 0) {
+
+				// first roung through the loop. Cachse the hash
+				tempHashCode = tasks[i].configHashCode;
+
+				// push task values to the temp arrays
+				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
+				tempWaitTimes.push(tasks[i].periodsInQueue);
+				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
+
+				// iterate the total time
+				totalWait += tasks[i].periodsInQueue;
+
+
+			} else if (tempHashCode != tasks[i].configHashCode) {
+
+				// next hash code reached. Create dataset object with old data
+				taskDataSets.push({
+					label: taskDataSetLable,
+					data: this.cloneArray(tempWaitTimes),
+					backgroundColor: this.cloneArray(tempBGColors)
+				});
+
+				// reset data arrays
+				tempWaitTimes = [];
+				tempBGColors = [];
+
+				// push values to arrays
+				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
+				tempWaitTimes.push(tasks[i].periodsInQueue);
+				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
+
+				// update current hashcode
+				tempHashCode = tasks[i].configHashCode;
+
+				// iterate the totalWaitTime
+				totalWait += tasks[i].periodsInQueue;
+
+			} else if (i == totalIterations) {
+
+				// end of task list reached. push final values
+				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
+				tempWaitTimes.push(tasks[i].periodsInQueue);
+				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
+
+				// create final dataset object
+				taskDataSets.push({
+					label: taskDataSetLable,
+					data: this.cloneArray(tempWaitTimes),
+					backgroundColor: this.cloneArray(tempBGColors)
+				});
+
+				// iterate total wait time.
+				totalWait += tasks[i].periodsInQueue;
+
+			} else {
+				
+				// task is in same data set - just push values
+				tempTaskBarLabels.push('Arrival: ' + tasks[i].arrivalPeriod);
+				tempWaitTimes.push(tasks[i].periodsInQueue);
+				tempBGColors.push(this.getGrayScale(tasks[i].configHashCode));
+
+				// iterate total time
+				totalWait += tasks[i].periodsInQueue;
+			}
+
+		}
+
 		this.averageWaitTime = totalWait / tasks.length;
 
 		const taskBarChart = new Chart($('#taskBarChart'), {
 		 	type: 'bar',
 		 	data: {
-		 		labels: taskLables,
-			 	datasets: [
-			 		{
-			 			label: 'Wait Time',
-			 			data: taskWaitTime,
-			 			backgroundColor: taskBarColors
-			 		}
-			 	]
+		 		labels: tempTaskBarLabels,
+			 	datasets: taskDataSets
 		 	},
 		 	options: {
 		 		scales: {
@@ -82,6 +160,35 @@ module.exports = function ($http, $location, resultsService) {
 		 		}
 		 	}
 		});
+
+		// const taskBarChart = new Chart($('#taskBarChart'), {
+		//  	type: 'bar',
+		//  	data: {
+		//  		labels: taskLables,
+		// 	 	datasets: [
+		// 	 		{
+		// 	 			label: 'Wait Time',
+		// 	 			data: taskWaitTime,
+		// 	 			backgroundColor: taskBarColors
+		// 	 		}
+		// 	 	]
+		//  	},
+		//  	options: {
+		//  		scales: {
+		//  			xAxes: [{
+		//  				stacked: true,
+		//  				barPercentage: .3,
+		//  				display: false
+		//  			}],
+		//  			yAxes: [{
+		//  				scaleLabel: {
+		//  					display: true,
+		//  					labelString: 'Wait Time'
+		//  				}
+		//  			}]
+		//  		}
+		//  	}
+		// });
 
 		// get the workers list for the simulation
 		const workers = resultsService.getSimulationResults().workers;
@@ -161,6 +268,19 @@ module.exports = function ($http, $location, resultsService) {
 		 	}
 		});
 
+	};
+
+	this.cloneArray = (arrayToClone) => {
+
+	    let clone = [];
+
+	    for(let i = 0; i < arrayToClone.length; ++i) {
+
+	    	clone.push(arrayToClone[i]);
+
+	    }
+
+	    return clone;
 	};
 
 	this.buildChartData();
