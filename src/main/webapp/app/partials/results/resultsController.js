@@ -138,40 +138,11 @@ module.exports = function ($http, $location, resultsService) {
 
 		this.averageWaitTime = totalWait / tasks.length;
 
-		const taskBarChart = new Chart($('#taskBarChart'), {
-		 	type: 'bar',
-		 	data: {
-		 		labels: tempTaskBarLabels,
-			 	datasets: taskDataSets
-		 	},
-		 	options: {
-		 		scales: {
-		 			xAxes: [{
-		 				stacked: true,
-		 				barPercentage: .3,
-		 				display: false
-		 			}],
-		 			yAxes: [{
-		 				scaleLabel: {
-		 					display: true,
-		 					labelString: 'Wait Time'
-		 				}
-		 			}]
-		 		}
-		 	}
-		});
-
 		// const taskBarChart = new Chart($('#taskBarChart'), {
 		//  	type: 'bar',
 		//  	data: {
-		//  		labels: taskLables,
-		// 	 	datasets: [
-		// 	 		{
-		// 	 			label: 'Wait Time',
-		// 	 			data: taskWaitTime,
-		// 	 			backgroundColor: taskBarColors
-		// 	 		}
-		// 	 	]
+		//  		labels: tempTaskBarLabels,
+		// 	 	datasets: taskDataSets
 		//  	},
 		//  	options: {
 		//  		scales: {
@@ -189,6 +160,35 @@ module.exports = function ($http, $location, resultsService) {
 		//  		}
 		//  	}
 		// });
+
+		const taskBarChart = new Chart($('#taskBarChart'), {
+		 	type: 'bar',
+		 	data: {
+		 		labels: taskLables,
+			 	datasets: [
+			 		{
+			 			label: 'Wait Time',
+			 			data: taskWaitTime,
+			 			backgroundColor: taskBarColors
+			 		}
+			 	]
+		 	},
+		 	options: {
+		 		scales: {
+		 			xAxes: [{
+		 				stacked: true,
+		 				barPercentage: .3,
+		 				display: false
+		 			}],
+		 			yAxes: [{
+		 				scaleLabel: {
+		 					display: true,
+		 					labelString: 'Wait Time'
+		 				}
+		 			}]
+		 		}
+		 	}
+		});
 
 		// get the workers list for the simulation
 		const workers = resultsService.getSimulationResults().workers;
