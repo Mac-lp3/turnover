@@ -3,7 +3,8 @@
 	<div class="row">
 		<p style="text-align: center;">
 			<button class="btn btn-lg" ng-click="resultsCtrl.advancedConfig()">Back</button>
-			<button type="button" class="btn btn-default btn-lg">Analysis&nbsp;<span
+			<button type="button" class="btn btn-default btn-lg" data-toggle="modal" 
+			data-target="#analysisModal">Analysis&nbsp;<span
 				class="glyphicon glyphicon-dashboard" aria-hidden="true"></span></button>
 		</p>
 	</div>
@@ -53,3 +54,5 @@
 	</div>
 
 </div>
+
+<div ng-include="'app/partials/modal/analysisModal.html'"></div>
