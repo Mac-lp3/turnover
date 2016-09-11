@@ -180,6 +180,11 @@ module.exports = function ($http, $location, resultsService) {
 
 		} else if (this.isProbability) {
 
+			// make sure arrival rate was set
+			this.probabilityTaskConfigs.map((con) => {
+				con.arrivalRate = this.probabilityArrivalRate;
+			});
+
 			taskConfigsToPost = this.probabilityTaskConfigs;
 			url = url + 'probability';
 
