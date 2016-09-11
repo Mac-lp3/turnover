@@ -76,7 +76,7 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 			for (TaskConfiguration tc : this.taskConfigurations) {
 
 				// mark the one that is >= the percentage
-				if (percentage <= tc.getProportion()) {
+				if (percentage <= tc.getProportion() && tc.isActive()) {
 
 					// if there are multiple, take the one with the lowest
 					// proportion
@@ -176,7 +176,7 @@ public class ProbabilityQueueSimulationImpl extends Simulation {
 				} else {
 
 					// ... otherwise add the specified number of tasks.
-					tempTaskLength = config.getTaskLength();
+					tempTaskLength = getTaskLength();
 					tempTotalToAdd = config.getArrivalRate();
 
 					for (int j = 0; j < tempTotalToAdd; j++) {
