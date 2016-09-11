@@ -103,7 +103,6 @@ module.exports = function ($http, $location, resultsService) {
 			 		{
 			 			label: 'Wait Time',
 			 			data: taskWaitTime,
-			 			type: 'bar',
 			 			backgroundColor: taskBarColors
 			 		}
 			 	]
@@ -122,6 +121,19 @@ module.exports = function ($http, $location, resultsService) {
 		 				}
 		 			}]
 		 		}
+		 	}
+		});
+
+		const taskLineChart = new Chart($('#taskLineChart'), {
+		 	type: 'line',
+		 	data: {
+		 		labels: taskLables,
+			 	datasets: [
+			 		{
+			 			label: 'Wait Time',
+			 			data: taskWaitTime
+			 		}
+			 	]
 		 	}
 		});
 
