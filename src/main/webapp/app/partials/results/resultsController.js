@@ -95,34 +95,34 @@ module.exports = function ($http, $location, resultsService) {
 		this.totalCompletedTasks = tasks.length;
 		this.averageWaitTime = totalWait / tasks.length;
 
-		const taskBarChart = new Chart($('#taskBarChart'), {
-		 	type: 'bar',
-		 	data: {
-		 		labels: taskLables,
-			 	datasets: [
-			 		{
-			 			label: 'Wait Time',
-			 			data: taskWaitTime,
-			 			backgroundColor: taskBarColors
-			 		}
-			 	]
-		 	},
-		 	options: {
-		 		scales: {
-		 			xAxes: [{
-		 				stacked: true,
-		 				barPercentage: .3,
-		 				display: false
-		 			}],
-		 			yAxes: [{
-		 				scaleLabel: {
-		 					display: true,
-		 					labelString: 'Wait Time'
-		 				}
-		 			}]
-		 		}
-		 	}
-		});
+		// const taskBarChart = new Chart($('#taskBarChart'), {
+		//  	type: 'bar',
+		//  	data: {
+		//  		labels: taskLables,
+		// 	 	datasets: [
+		// 	 		{
+		// 	 			label: 'Wait Time',
+		// 	 			data: taskWaitTime,
+		// 	 			backgroundColor: taskBarColors
+		// 	 		}
+		// 	 	]
+		//  	},
+		//  	options: {
+		//  		scales: {
+		//  			xAxes: [{
+		//  				stacked: true,
+		//  				barPercentage: .3,
+		//  				display: false
+		//  			}],
+		//  			yAxes: [{
+		//  				scaleLabel: {
+		//  					display: true,
+		//  					labelString: 'Wait Time'
+		//  				}
+		//  			}]
+		//  		}
+		//  	}
+		// });
 
 		const taskLineChart = new Chart($('#taskLineChart'), {
 		 	type: 'line',
