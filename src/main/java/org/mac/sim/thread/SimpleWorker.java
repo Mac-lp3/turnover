@@ -6,10 +6,12 @@ import java.util.List;
 import org.mac.sim.domain.Worker;
 
 public class SimpleWorker implements Worker {
+	
 	private int periodsToCompleteTask = 0;
 	private int bufferPeriods = 0;
 	private int nextActionablePeriod = 0;
 	private int tasksCompleted = 0;
+	private int totalPeriodsBuffering = 0;
 	private int workerConfigHash = 0; // used to track stoppage time
 	private boolean isActive = true;
 
@@ -36,6 +38,7 @@ public class SimpleWorker implements Worker {
 
 				nextActionablePeriod = currentPeriod + tempTaskLength + bufferPeriods + periodsToCompleteTask;
 
+				setTotalPeriodsBuffering(getTotalPeriodsBuffering() + bufferPeriods);
 				tasksCompleted++;
 			}
 		}
@@ -79,4 +82,13 @@ public class SimpleWorker implements Worker {
 	public void setWorkerConfigHash(int workerConfigHash) {
 		this.workerConfigHash = workerConfigHash;
 	}
+
+	public int getTotalPeriodsBuffering() {
+		return totalPeriodsBuffering;
+	}
+
+	public void setTotalPeriodsBuffering(int totalPeriodsBuffering) {
+		this.totalPeriodsBuffering = totalPeriodsBuffering;
+	}
+
 }
