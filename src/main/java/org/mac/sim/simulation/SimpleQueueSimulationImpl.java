@@ -31,8 +31,7 @@ class SimpleQueueSimulationImpl extends Simulation {
 			throws TurnoverException {
 
 		super(null, params);
-		this.workerConfigurations.add(workerConfiguration);
-		this.taskConfigurations.add(this.taskConfiguration);
+
 	}
 
 	protected void execute(final SimulationParameters params) throws TurnoverException {
