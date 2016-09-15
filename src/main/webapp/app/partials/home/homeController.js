@@ -29,7 +29,7 @@ module.exports = function ($http, $location, resultsService) {
                 totalPeriods: this.quickStartPeriods,
                 workerConfigurations: [{
                     total: this.quickStartWorkers,
-                    additionalTime: 0,
+                    additionalTime: '0',
                     restTime: this.quickStartRestTime,
                     arrivalPeriod: 0,
                     stopPeriod: this.quickStartPeriods
