@@ -5,6 +5,7 @@ const Chart = require('chart.js');
 
 module.exports = function ($http, $location, resultsService) {
 
+	this.totalPeriodsBuffering = 0;
 	this.averageWaitTime = 0;
 	this.averageTasksPerWorker = 0;
 	this.workerColorMap = {};
@@ -13,6 +14,8 @@ module.exports = function ($http, $location, resultsService) {
     	 '#262626', '#8c8c8c', '#737373', '#595959'];
     this.hexColorIndex = 0;
     this.totalCompletedTasks = 0;
+    this.taskConfigurationData = [];
+    this.tempConfigArray = [];
 
 	this.advancedConfig = () => {
 
@@ -47,7 +50,6 @@ module.exports = function ($http, $location, resultsService) {
 		// Build label and wait time list for tasks
 		let totalWait = 0;
 		let currentTaskConfigurationCode = 0;
-		let taskConfigurationData = [];
 		let startTaskConfigurationIndex = 0;
 
 		for (let i = 0; i < tasks.length; ++i) {
@@ -56,19 +58,28 @@ module.exports = function ($http, $location, resultsService) {
 
 				// First iteration - set the current config id
 				currentTaskConfigurationCode = tasks[i].configHashCode;
+				this.taskConfigurationData.length = 0;
 
 			} else if (currentTaskConfigurationCode != tasks[i].configHashCode) {
 
+				if (this.taskConfigurationData.hasOwnProperty(currentTaskConfigurationCode)) {
+					this.taskConfigurationData[currentTaskConfigurationCode]
+					  .totalCompleted += (i - startTaskConfigurationIndex);
+				} else {
+
+					// create a config data object
+					this.taskConfigurationData[currentTaskConfigurationCode] = {
+						configurationCode: currentTaskConfigurationCode,
+						colorCode: this.getGrayScale(currentTaskConfigurationCode),
+						startPeriod: startTaskConfigurationIndex,
+						endPeriod: i,
+						totalCompleted: i - startTaskConfigurationIndex,
+						taskTime: tasks[i].serviceTimeRequired
+					};
+				}
+
 				// next config reached - update current config id
 				currentTaskConfigurationCode = tasks[i].configHashCode;
-
-				// create a config data object
-				taskConfigurationData.push({
-					colorCode: this.getGrayScale(currentTaskConfigurationCode),
-					startPeriod: startTaskConfigurationIndex,
-					endPeriod: i,
-					totalCompleted: i - startTaskConfigurationIndex
-				});
 
 				// update start index
 				startTaskConfigurationIndex = i;
@@ -76,13 +87,21 @@ module.exports = function ($http, $location, resultsService) {
 			} else if (i == tasks.length - 1) {
 
 				// end of task list - create final task data object
-				taskConfigurationData.push({
-					colorCode: this.getGrayScale(currentTaskConfigurationCode),
-					startPeriod: startTaskConfigurationIndex,
-					endPeriod: i,
-					totalCompleted: i - startTaskConfigurationIndex
-				});
+				if (this.taskConfigurationData.hasOwnProperty(currentTaskConfigurationCode)) {
+					this.taskConfigurationData[currentTaskConfigurationCode]
+					  .totalCompleted += (i - startTaskConfigurationIndex);
+				} else {
 
+					// create a config data object
+					this.taskConfigurationData[currentTaskConfigurationCode] ={
+						configurationCode: currentTaskConfigurationCode,
+						colorCode: this.getGrayScale(currentTaskConfigurationCode),
+						startPeriod: startTaskConfigurationIndex,
+						endPeriod: i,
+						totalCompleted: i - startTaskConfigurationIndex,
+						taskTime: tasks[i].serviceTimeRequired
+					};
+				}
 			}
 
 			// add task data to tracked values
@@ -92,37 +111,12 @@ module.exports = function ($http, $location, resultsService) {
 			totalWait += tasks[i].periodsInQueue;
 		}
 
+		for (let obj in this.taskConfigurationData) {
+			this.tempConfigArray.push(this.taskConfigurationData[obj]);
+		}
+
 		this.totalCompletedTasks = tasks.length;
 		this.averageWaitTime = totalWait / tasks.length;
-
-		// const taskBarChart = new Chart($('#taskBarChart'), {
-		//  	type: 'bar',
-		//  	data: {
-		//  		labels: taskLables,
-		// 	 	datasets: [
-		// 	 		{
-		// 	 			label: 'Wait Time',
-		// 	 			data: taskWaitTime,
-		// 	 			backgroundColor: taskBarColors
-		// 	 		}
-		// 	 	]
-		//  	},
-		//  	options: {
-		//  		scales: {
-		//  			xAxes: [{
-		//  				stacked: true,
-		//  				barPercentage: .3,
-		//  				display: false
-		//  			}],
-		//  			yAxes: [{
-		//  				scaleLabel: {
-		//  					display: true,
-		//  					labelString: 'Wait Time'
-		//  				}
-		//  			}]
-		//  		}
-		//  	}
-		// });
 
 		const taskLineChart = new Chart($('#taskLineChart'), {
 		 	type: 'line',
@@ -167,6 +161,7 @@ module.exports = function ($http, $location, resultsService) {
 			workerTotals.push(workers[i].tasksCompleted);
 			workerColors.push(this.workerColorMap[workers[i].periodsToCompleteTask]);
 			totalTasksCompleted += workers[i].tasksCompleted;
+			this.totalPeriodsBuffering += workers[i].totalPeriodsBuffering;
 		}
 
 		// calculate average
@@ -233,3 +228,4 @@ module.exports = function ($http, $location, resultsService) {
 	this.buildChartData();
 
 };
+
