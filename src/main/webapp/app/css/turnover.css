@@ -41,6 +41,10 @@
 	border-top: 0px; 
 }
 
+.quickstart-label {
+	width: 25%;
+}
+
 .quickstart-form-row {
 	margin-bottom: 10px;
 }
