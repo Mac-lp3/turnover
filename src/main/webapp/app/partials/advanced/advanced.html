@@ -58,7 +58,7 @@
 			            <div class="form-group col-md-3 col-sm-3">
 			            
 				            <label for="{{'linearArrivalRate' + $index}}" class="control-label">Arrival Rate</label>
-				            <input type="number" class="form-control" id="{{'linearArrivalRate' + $index}}" name="{{'linearArrivalRate' + $index}}" min="0" ng-model="linearConfig.arrivalRate" ng-required="advancedCtrl.isLinear">
+				            <input type="number" class="linear-input form-control" id="{{'linearArrivalRate' + $index}}" name="{{'linearArrivalRate' + $index}}" min="0" ng-model="linearConfig.arrivalRate" ng-required="advancedCtrl.isLinear">
 
 				            <!-- validation message -->
 				            <div ng-messages="advancedForm['linearArrivalRate' + $index].$error" class="error-message" role="alert">
@@ -70,7 +70,7 @@
 			        	<div class="form-group col-md-3 col-sm-3">
 			        	
 			                <label for="{{'linearTaskLength' + $index}}" class="control-label">Task Length</label>
-			                <input type="number" class="form-control" id="{{'linearTaskLength' + $index}}" name="{{'linearTaskLength' + $index}}" min="0" ng-model="linearConfig.taskLength" ng-required="advancedCtrl.isLinear">
+			                <input type="number" class="linear-input form-control" id="{{'linearTaskLength' + $index}}" name="{{'linearTaskLength' + $index}}" min="0" ng-model="linearConfig.taskLength" ng-required="advancedCtrl.isLinear">
 			        		
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['linearTaskLength' + $index].$error" class="error-message" role="alert">
@@ -81,7 +81,7 @@
 
 						<div class="form-group col-md-3 col-sm-3">
 			                <label for="{{'linearStartPeriod' + $index}}" class="control-label">Start Period</label>
-			                <input type="number" class="form-control" id="{{'linearStartPeriod' + $index}}" name="{{'linearStartPeriod' + $index}}" ng-model="linearConfig.startPeriod" min="0" ng-required="advancedCtrl.isLinear">
+			                <input type="number" class="linear-input form-control" id="{{'linearStartPeriod' + $index}}" name="{{'linearStartPeriod' + $index}}" ng-model="linearConfig.startPeriod" min="0" ng-required="advancedCtrl.isLinear">
 			        		
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['linearStartPeriod' + $index].$error" class="error-message" role="alert">
@@ -92,7 +92,7 @@
 
 						<div class="form-group col-md-3 col-sm-3">
 			                <label for="{{'linearEndPeriod' + $index}}" class="control-label">End Period</label>
-			                <input type="number" class="form-control" id="{{'linearEndPeriod' + $index}}" name="{{'linearEndPeriod' + $index}}" ng-model="linearConfig.endPeriod" min="0" ng-required="advancedCtrl.isLinear">
+			                <input type="number" class="linear-input form-control" id="{{'linearEndPeriod' + $index}}" name="{{'linearEndPeriod' + $index}}" ng-model="linearConfig.endPeriod" min="0" ng-required="advancedCtrl.isLinear">
 			        		
 			        		<!-- validation message -->
 			        		<div ng-messages="advancedForm['linearEndPeriod' + $index].$error" class="error-message" role="alert">
@@ -123,7 +123,7 @@
 		<div ng-show="advancedCtrl.isProbability">
 
 			<div class="row">
-				<h2 class="text-center advanced-pills-description">Random Task Rate <small>Tasks are added to the queue at a constant rate, but with a random work time (between provided bounds). For multiple ranges, specify how many out of 100 for each.</small></h2>
+				<h2 class="text-center advanced-pills-description">Random Task Rate <small>Tasks are added at a constant rate, but with a random length (between the provided bounds). For multiple task configurations, specify a % value representing how many  of the new tasks are of this type.</small></h2>
 
 				<!-- Rate input -->
 				<div class="form-inline col-sm-12 quickstart-form-row">
