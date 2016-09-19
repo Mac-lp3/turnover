@@ -18,6 +18,10 @@
 	background-color: #000000 !important;
 }
 
+.linear-input {
+	width: 100%;
+}
+
 .modal-content-turnover {
 	border-radius: 0px !important;
 }
